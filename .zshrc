@@ -111,6 +111,9 @@ fi
 set -o vi
 bindkey -v
 
+# Use GPG for managing keys 
+export GPG_TTY=$TTY
+
 # Use ~/.profile to set $PATH properly
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
