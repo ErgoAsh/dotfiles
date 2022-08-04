@@ -124,3 +124,5 @@ export GPG_TTY=$TTY
 alias dotfiles='/usr/bin/git --git-dir=/home/ergoash/.cfg/ --work-tree=/home/ergoash'
 alias ll='ls -Agvp1 --group-directories-first'
 alias vi='nvim'
+alias path='echo $PATH | tr -s ":" "\n"'
+alias df='df -h | (sed -u 1q; sort)'

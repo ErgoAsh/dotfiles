@@ -1,0 +1,49 @@
+color=#f3f4f5
+separator_block_width=15
+command=/usr/share/i3blocks/$BLOCK_NAME
+markup=none
+
+[temperature_cpu]
+command=/usr/share/i3blocks/temperature --chip k10temp-pci-00c3
+label=CPU
+interval=30
+separator=false
+
+[temperature_gpu]
+command=/usr/share/i3blocks/temperature --chip amdgpu-pci-1c00
+label=GPU
+interval=30
+
+[cpu_usage]
+label=
+interval=5
+
+[memory]
+label=
+interval=10
+
+[disk]
+command=\df -h /dev/nvme0n1p5 | sed 1d | awk '{print $4 "/" $2}'
+label=
+interval=30
+
+#[rofi-calendar]
+#command=~/.local/bin/rofi-calendar
+#interval=5
+
+# Query default IP address only on startup
+[ip]
+command=ip address | grep 'global' | awk '{print $2}'
+interval=once
+color=#91E78B
+
+# Guess the weather hourly
+[weather]
+command=curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo
+interval=3600
+color=#A4C2F4
+
+# Update time 
+[time]
+command=date '+%H:%M:%S - %d.%m.%Y '
+interval=1
