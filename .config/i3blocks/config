@@ -34,7 +34,7 @@ interval=30
 # Query default IP address only on startup
 [ip]
 command=ip address | grep 'global' | awk '{print $2}'
-interval=once
+interval=300
 color=#91E78B
 
 # Guess the weather hourly

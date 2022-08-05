@@ -64,4 +64,9 @@ call plug#end()
 let g:airline_theme='minimalist'
 let g:airline#extensions#whitespace#enabled = 0
 
+let g:vimwiki_list = [{
+    \ 'path':'~/pCloudDrive/VimWiki', 
+    \ 'path_html':'~/pCloudDrive/VimWiki/html/'
+\}]
+
 colorscheme tender

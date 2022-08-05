@@ -1,0 +1,10 @@
+configuration {
+    font: "Fira Code Medium 14";
+    modi: "window,run,drun";
+    drun-display-format: "{icon} {name}";
+    show-icons: true;
+    icon-theme: "Papirus";
+}
+
+@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
+
