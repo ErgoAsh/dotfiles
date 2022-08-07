@@ -70,3 +70,4 @@ let g:vimwiki_list = [{
 \}]
 
 colorscheme tender
+highlight Normal guibg=NONE ctermbg=NONE

@@ -121,7 +121,7 @@ export GPG_TTY=$TTY
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Add alias for dotfile manipulation
-alias dotfiles='/usr/bin/git --git-dir=/home/ergoash/.cfg/ --work-tree=/home/ergoash'
+alias dotfiles='/usr/bin/git --git-dir=/home/ergoash/.cfg --work-tree=/home/ergoash'
 alias ll='ls -Agvp1 --group-directories-first'
 alias vi='nvim'
 alias path='echo $PATH | tr -s ":" "\n"'

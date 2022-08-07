@@ -23,7 +23,7 @@ label=
 interval=10
 
 [disk]
-command=\df -h /dev/nvme0n1p5 | sed 1d | awk '{print $4 "/" $2}'
+command=\df -h /dev/nvme0n1p5 | sed 1d | awk '{print $3 "/" $2 " (" $4 ")"}'
 label=
 interval=30
 
