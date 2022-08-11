@@ -37,7 +37,7 @@ filetype plugin indent on
 
 call plug#begin("~/.vim/plugged")
 
-" Bottom line with Minimalistic theme
+" Status line with Minimalistic theme
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -47,6 +47,9 @@ Plug 'SirVer/ultisnips'
 
 " Theme
 Plug 'jacoborus/tender.vim'
+
+" CSS color highlights
+Plug 'norcalli/nvim-colorizer.lua'
 
 "Plug 'ryanoasis/vim-devicons'
 Plug 'vimwiki/vimwiki'
@@ -68,6 +71,8 @@ let g:vimwiki_list = [{
     \ 'path':'~/pCloudDrive/VimWiki', 
     \ 'path_html':'~/pCloudDrive/VimWiki/html/'
 \}]
+
+"require('colorizer').setup()
 
 colorscheme tender
 highlight Normal guibg=NONE ctermbg=NONE
