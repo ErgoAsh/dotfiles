@@ -126,3 +126,4 @@ alias ll='ls -Agvp1 --group-directories-first'
 alias vi='nvim'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias df='df -h | (sed -u 1q; sort)'
+alias ncspot="env TERM=xterm-256color sh -c 'ncspot'"

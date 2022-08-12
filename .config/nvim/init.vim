@@ -72,7 +72,7 @@ let g:vimwiki_list = [{
     \ 'path_html':'~/pCloudDrive/VimWiki/html/'
 \}]
 
-"require('colorizer').setup()
+lua require'colorizer'.setup()
 
 colorscheme tender
 highlight Normal guibg=NONE ctermbg=NONE
