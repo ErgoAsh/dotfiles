@@ -114,6 +114,9 @@ bindkey -v
 # Use GPG for managing keys 
 export GPG_TTY=$TTY
 
+# Define XDG home config directory
+export XDG_CONIFG_HOME=$HOME/.config
+
 # Use ~/.profile to set $PATH properly
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
@@ -127,3 +130,4 @@ alias vi='nvim'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias df='df -h | (sed -u 1q; sort)'
 alias ncspot="env TERM=xterm-256color sh -c 'ncspot'"
+alias in='task add +in'

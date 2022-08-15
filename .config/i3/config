@@ -77,6 +77,9 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym Print exec flameshot gui
 bindsym Shift+Print exec flameshot screen
 
+# run i3lock 
+bindsym $mod+x exec $HOME/.local/bin/lock
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -240,7 +243,7 @@ exec --no-startup-id ~/Downloads/pcloud
 exec --no-startup-id sleep 5 && picom -b -f
 
 # Use feh script to activate background image
-exec ~/.fehbg
+exec feh --no-fehbg --bg-scale '/home/ergoash/.config/resources/wallpaper.png' 
 
 # Go to console workspace instead of artificial 7th workspace
 exec i3-msg 'workspace "7:"'
