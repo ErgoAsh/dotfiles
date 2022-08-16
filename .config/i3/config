@@ -44,7 +44,6 @@ assign [class="Discord"] $ws9
 
 exec --no-startup-id thunderbird 
 exec --no-startup-id zathura
-exec --no-startup-id kitty
 exec --no-startup-id qutebrowser
 exec --no-startup-id spotify
 exec discord
@@ -78,7 +77,7 @@ bindsym Print exec flameshot gui
 bindsym Shift+Print exec flameshot screen
 
 # run i3lock 
-bindsym $mod+x exec $HOME/.local/bin/lock
+bindsym $mod+Ctrl+l exec $HOME/.local/bin/lock
 
 # change focus
 bindsym $mod+h focus left
@@ -240,7 +239,10 @@ gaps inner 5
 exec --no-startup-id ~/Downloads/pcloud
 
 # Use Picom composition manager to enable transparency in terminal emulators
-exec --no-startup-id sleep 5 && picom -b -f
+exec --no-startup-id sleep 5 && picom -b -f --experimental-backends
+
+# Run terminal
+exec --no-startup-id kitty
 
 # Use feh script to activate background image
 exec feh --no-fehbg --bg-scale '/home/ergoash/.config/resources/wallpaper.png' 
