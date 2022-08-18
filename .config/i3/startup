@@ -1,0 +1,33 @@
+# Setup default i3 font, it provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:Fira Code Semibold 11
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+# Enable polish (programmer) keymap
+exec setxkbmap pl
+
+# Move second monitor to right and rotate 90 deg (vertical setup)
+exec xrandr --output HDMI-A-1 --rotate right
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+
+# Use feh script to activate background image
+exec feh --no-fehbg --bg-scale '/home/ergoash/.config/resources/wallpaper.png' 
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# Run lock script after startup to validate user
+exec --no-startup-id $HOME/.local/bin/lock
+
+# Run pCloud service
+exec --no-startup-id sleep 5 & ~/Downloads/pcloud
+
+# Use Picom composition manager to enable transparency in terminal emulators
+exec --no-startup-id sleep 5 && picom -b -f --experimental-backends && kitty
+
