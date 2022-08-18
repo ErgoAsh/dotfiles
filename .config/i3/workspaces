@@ -1,32 +1,28 @@
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2:"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6:"
-set $ws7 "7:"
-set $ws8 "8:"
-set $ws9 "9:D"
-set $ws10 "10:"
+set $ws_vimwiki "1:V"
+set $ws_thunderbird "2:"
+set $ws_zathura "6:"
+set $ws_kitty "7:"
+set $ws_qutebrowser "8:"
+set $ws_discord "9:D"
+set $ws_spotify "10:"
 
-workspace 2 output HDMI-A-0
-workspace 6 output HDMI-A-0
-workspace 7 output HDMI-A-0
-workspace 8 output HDMI-A-0
+workspace $ws_thunderbird output HDMI-A-0
+workspace $ws_zathura output HDMI-A-0
+workspace $ws_qutebrowser output HDMI-A-0
+workspace $ws_kitty output HDMI-A-0
 
-workspace 9 output HDMI-A-1
-workspace 10 output HDMI-A-1
+workspace $ws_vimwiki output HDMI-A-1
+workspace $ws_discord output HDMI-A-1
+workspace $ws_spotify output HDMI-A-1
 
-for_window [class="Thunderbird"] move to workspace $ws2
-for_window [class="Zathura"] move to workspace $ws6
-for_window [class="kitty"] move to workspace $ws7
-for_window [class="qutebrowser"] move to workspace $ws8
-for_window [class="Discord"] move to workspace $ws9
-for_window [class="Spotify"] move to workspace $ws10
-
-assign [class="Discord"] $ws9
+for_window [class="(?i)Thunderbird"] move to workspace $ws_thunderbird
+for_window [class="(?i)Zathura"] move to workspace $ws_zathura
+for_window [class="(?i)Kitty"] move to workspace $ws_kitty
+for_window [class="(?i)Qutebrowser"] move to workspace $ws_qutebrowser
+for_window [class="(?i)Discord"] move to workspace $ws_discord
+for_window [class="(?i)Spotify"] move to workspace $ws_spotify
 
 exec --no-startup-id thunderbird 
 exec --no-startup-id zathura
@@ -34,32 +30,28 @@ exec --no-startup-id qutebrowser
 exec --no-startup-id spotify
 exec discord
 
+assign [class="(?i)Discord"] $ws_discord
+
 # Go to console workspace instead of artificial 7th workspace
 exec i3-msg 'workspace "7:"'
 
 # Add these bindings here since the workspace variables are defined here
 # Switch to workspace
-bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
-bindsym $mod+3 workspace number $ws3
-bindsym $mod+4 workspace number $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
+bindsym $mod+backslash workspace number $ws_vimwiki
+bindsym $mod+2 workspace number $ws_thunderbird
+bindsym $mod+6 workspace number $ws_zathura
+bindsym $mod+7 workspace number $ws_kitty
+bindsym $mod+8 workspace number $ws_qutebrowser
+bindsym $mod+9 workspace number $ws_discord
+bindsym $mod+0 workspace number $ws_spotify
 
 # Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Shift+backslash move container to workspace number $ws_vimwiki
+bindsym $mod+Shift+2 move container to workspace number $ws_thunderbird
+bindsym $mod+Shift+6 move container to workspace number $ws_zathura
+bindsym $mod+Shift+7 move container to workspace number $ws_kitty
+bindsym $mod+Shift+8 move container to workspace number $ws_qutebrowser
+bindsym $mod+Shift+9 move container to workspace number $ws_discord
+bindsym $mod+Shift+0 move container to workspace number $ws_spotify
 
 
