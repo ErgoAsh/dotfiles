@@ -3,10 +3,10 @@
 
 BLANK='#00000000'
 CLEAR='#ffffff22'
-DEFAULT='#ff00ffcc'
-TEXT='#ee00eeee'
+DEFAULT='#00b3eecc'
+TEXT='#00ffddee'
 WRONG='#880000bb'
-VERIFYING='#bb00bbbb'
+VERIFYING='#005ebbbb'
 
 i3lock \
 --insidever-color=$CLEAR     \
@@ -25,13 +25,12 @@ i3lock \
 --time-color=$TEXT           \
 --date-color=$TEXT           \
 --layout-color=$TEXT         \
---keyhl-color=$WRONG         \
---bshl-color=$WRONG          \
+--keyhl-color=$TEXT          \
+--bshl-color=$TEXT           \
 \
 --screen 1                   \
 --blur 5                     \
 --clock                      \
 --indicator                  \
 --time-str="%H:%M:%S"        \
---date-str="%d.%m.%Y"       \
---keylayout 1                \
+--date-str="%d.%m.%Y"        \

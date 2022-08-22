@@ -1,5 +1,5 @@
 # Zathura config
-set default-bg                  "rgba(5, 51, 45, 0.60)"
+set default-bg                  "rgba(0, 0, 0, 0.60)"
 set default-fg                  "#3B4252"
 
 set statusbar-fg                "#F8F8F2"
@@ -28,7 +28,7 @@ set completion-highlight-bg     "#F4BF75"
 
 # recolor-lightcolor Defines the color value that is used to represent light colors in recoloring mode
 # recolor-darkcolor Defines the color value that is used to represent dark colors in recoloring mode
-set recolor-lightcolor          "rgba(5, 51, 45, 0.60)"
+set recolor-lightcolor          "rgba(0, 0, 0, 0.60)"
 set recolor-darkcolor           "rgba(255, 255, 255, 0.99)"
 
 set guioptions none
@@ -47,5 +47,7 @@ map K zoom in
 map J zoom out
 map L navigate next
 map H navigate previous
+map u scroll half-up
+map d scroll half-down
 
 set adjust-open width
