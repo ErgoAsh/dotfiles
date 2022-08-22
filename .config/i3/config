@@ -18,31 +18,6 @@ gaps outer 8
 gaps inner 5
 smart_borders on
 
-# Start i3blocks to display a workspace bar 
-bar {
-    height                  23
-    status_command          i3blocks
-    bindsym button4         nop
-    bindsym button5         nop
-    position                top
-    tray_output             primary
-    separator_symbol        "·"
-    workspace_buttons       yes
-    strip_workspace_numbers yes
-
-    colors {
-        background  #212121
-        statusline  #dddddd
-        separator   #666666
-        # class             border  backgr. text
-        focused_workspace   #2b83a6 #2b83a6 #ffffff
-        active_workspace    #212121 #212121 #ffffff
-        inactive_workspace  #212121 #212121 #86888c
-        urgent_workspace    #d64e4e #d64e4e #ffffff
-        binding_mode        #229c56 #229c56 #ffffff
-    }
-}
-
 # Reload the configuration file
 bindsym $mod+Shift+c reload
 # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
