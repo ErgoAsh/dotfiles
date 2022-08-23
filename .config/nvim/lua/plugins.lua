@@ -11,8 +11,11 @@ return require('packer').startup({
         use('wbthomason/packer.nvim') -- Packer package
         use('nvim-lua/plenary.nvim') -- Lua package with async utils
 
-        use { -- Tender color scheme
-            'bluz71/vim-nightfly-guicolors'
+        use { -- Nightfly color scheme
+            'bluz71/vim-nightfly-guicolors',
+            config = function()
+                require("plugins.nightfly-config")
+            end
         }
 
         use { -- Bottom status bar
