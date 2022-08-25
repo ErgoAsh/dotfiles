@@ -1,6 +1,7 @@
 # Setup default i3 font, it provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:Fira Code Semibold 11
+font Symbols Nerd Font 11
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -26,10 +27,10 @@ exec --no-startup-id $HOME/.local/bin/lock
 exec --no-startup-id "sh -c 'sleep 5; ~/Downloads/pcloud'"
 
 # Use Picom composition manager to enable transparency in terminal emulators
-exec --no-startup-id "sh -c 'sleep 5; picom -b -f --experimental-backends; kitty'"
+exec --no-startup-id "sh -c 'sleep 2; picom -b -f --experimental-backends; kitty'"
 
 # Use feh script to activate background image
-exec feh --no-fehbg --bg-scale '/home/ergoash/.config/resources/wallpaper.png' 
+exec --no-startup-id "sh -c 'sleep 3; feh --no-fehbg --bg-scale /home/ergoash/.config/resources/wallpaper.png'" 
 
 # Use Polybar for status bar management
 exec_always --no-startup-id $HOME/.local/bin/bar

@@ -4,6 +4,9 @@
 # Set modifier key to Windows/start/super key
 set $mod Mod4
 
+# Set floating modifier that allows to move floating window when pressed
+floating_modifier Mod4
+
 # Include and run partial i3 configs
 include $HOME/.config/i3/startup
 include $HOME/.config/i3/workspaces
