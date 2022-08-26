@@ -117,3 +117,4 @@ if ! shopt -oq posix; then
 fi
 
 #source ~/.profile
+. "$HOME/.cargo/env"
