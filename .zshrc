@@ -115,7 +115,7 @@ bindkey -v
 export GPG_TTY=$TTY
 
 # Define XDG home config directory
-export XDG_CONIFG_HOME=$HOME/.config
+export XDG_CONFIG_HOME=$HOME/.config
 
 # Use ~/.profile to set $PATH properly
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
@@ -133,3 +133,5 @@ alias df='df -h | (sed -u 1q; sort)'
 alias ncspot="env TERM=xterm-256color sh -c 'ncspot'"
 alias tui='taskwarrior-tui'
 alias in='task add +in'
+alias calc='qalc'
+alias c='qalc'

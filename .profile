@@ -36,3 +36,20 @@ pathprepend "$HOME/.local/bin"
 
 # set PATH so it includes kitty terminal emulator if it exists
 pathappend "$HOME/.local/kitty.app/bin"
+
+# set PATH so it includes Rust environment
+pathappend "$HOME/.cargo/env"
+
+# environment config
+# get monitor names using: find /sys/devices -name "edid"
+# other way to find names: xrandr --listmonitors
+# temperature path according to: https://github.com/polybar/polybar/wiki/Module:-temperature
+if [ $(uname -n) = "ErgoPC" ]; then
+    MONITOR_PRIMARY="HDMI-A-0"
+    MONITOR_SECONDARY="HDMI-A-1"
+    TEMP_PATH_GPU="/sys/devices/pci0000:00/0000:00:03.1/0000:1c:00.0/hwmon/hwmon2/temp1_input"
+    TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp2_input"
+elif [ $(uname -n) = "ERGO-LAPTOP" ]; then
+    MONITOR_PRIMARY="eDP"
+    MONITOR_SECONDARY="HDMI-A-0" 
+fi
