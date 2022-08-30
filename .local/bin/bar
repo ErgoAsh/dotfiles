@@ -6,7 +6,7 @@ killall -q polybar
 # polybar-msg cmd quit
 
 # Launch Polybar, using default config location ~/.config/polybar/config.ini
-polybar main 2>&1 | tee -a /tmp/polybar-main.log & disown
-polybar right 2>&1 | tee -a /tmp/polybar-right.log & disown 
+polybar main --config=$XDG_CONFIG_HOME/polybar/config.ini 2>&1 | tee -a /tmp/polybar-main.log & disown
+polybar right --config=$XDG_CONFIG_HOME/polybar/config.ini 2>&1 | tee -a /tmp/polybar-right.log & disown 
 
 echo "Polybar launched..."

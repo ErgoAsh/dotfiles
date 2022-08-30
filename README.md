@@ -1,6 +1,7 @@
 <h1 align=center>ErgoAsh's dotfiles</h1>
 
 ## Arch installation
+set hostname: /etc/hostname
 /etc/iwd/main.conf
 systemctl enable --now iwd
 systemctl enable --now systemd-resolved

@@ -18,7 +18,7 @@ set $refresh_i3status killall -SIGUSR1 i3status
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.local/bin/lock --nofork
 
 # Run lock script after startup to validate user
 exec --no-startup-id $HOME/.local/bin/lock
