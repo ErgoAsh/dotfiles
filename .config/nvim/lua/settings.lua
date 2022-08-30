@@ -3,7 +3,6 @@ local o = vim.o
 
 -- Enables 24-bit RGB color 
 o.termguicolors = true
-vim.cmd [[colorscheme nightfly]]
 
 -- Decrease update time
 o.timeoutlen = 500
@@ -29,9 +28,6 @@ o.textwidth = 300
 o.tabstop = 4
 o.shiftwidth = 0
 o.softtabstop = -1 -- If negative, shiftwidth value is used
-o.list = true
--- o.listchars = 'trail:·,nbsp:◇,tab:→ ,extends:▸,precedes:◂'
-o.listchars = 'eol:¬,space:·,lead: ,trail:·,nbsp:◇,tab:→-,extends:▸,precedes:◂,multispace:···⬝,leadmultispace:│   ,'
 -- o.formatoptions = 'qrn1'
 
 -- Makes neovim and host OS clipboard play nicely with each other
@@ -59,6 +55,11 @@ o.splitbelow = true
 
 -- Preserve view while jumping
 -- o.jumpoptions = 'view'
+
+-- Folding
+vim.o.foldmethod = "indent"
+vim.o.nofoldenable = true
+vim.o.foldlevel = 99
 
 -- Map <leader> to space
 g.mapleader = ' '

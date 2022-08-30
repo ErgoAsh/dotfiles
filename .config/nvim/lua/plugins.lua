@@ -12,9 +12,9 @@ return require('packer').startup({
         use('nvim-lua/plenary.nvim') -- Lua package with async utils
 
         use { -- Nightfly color scheme
-            'bluz71/vim-nightfly-guicolors',
+            'folke/tokyonight.nvim',
             config = function()
-                require("plugins.nightfly-config")
+                require("plugins.theme-config")
             end
         }
 
@@ -24,6 +24,14 @@ return require('packer').startup({
                 require("plugins.lualine-config")
             end,
             requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        }
+
+        use { -- Text highlighting based on language
+            'nvim-treesitter/nvim-treesitter',
+            run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+            config = function()
+                require("plugins.treesitter-config")
+            end
         }
 
         use { -- Hex color codes colorizer
@@ -59,6 +67,45 @@ return require('packer').startup({
             },
         })
 
+        use({ -- LSP server
+            {
+                'neovim/nvim-lspconfig'
+            },
+            {
+                'glepnir/lspsaga.nvim',
+                branch = "main",
+                config = function()
+                    require('plugins.lspsaga-config')
+                end
+            }
+        })
+
+        use { -- Blank line highlighting
+            'lukas-reineke/indent-blankline.nvim',
+            config = function() 
+                require('plugins.blankline-config')
+            end
+        }
+
+        use { -- Git changes on sidebar
+            'lewis6991/gitsigns.nvim',
+            config = function()
+                require('plugins.gitsigns-config')
+            end
+        }
+
+        use { -- Improved file movement
+            'justinmk/vim-sneak'
+        }
+
+        use { -- Git diff
+            'TimUntersberger/neogit', 
+            requires = 'nvim-lua/plenary.nvim',
+            config = function()
+                require('neogit').setup()
+            end
+        }
+	
         use {
             'SirVer/ultisnips'
         }
@@ -67,6 +114,7 @@ return require('packer').startup({
             'lervag/vimtex'
         }
     end,
+-- Plugin configuration end --
     config = {
         display = {
             open_fn = function()
