@@ -55,7 +55,7 @@ export PATH
 # get monitor names using: find /sys/devices -name "edid"
 # other way to find names: xrandr --listmonitors
 # temperature path according to: https://github.com/polybar/polybar/wiki/Module:-temperature
-if [ $(uname -n) = "ErgoPC" ]; then
+if [ $(uname -n) = "ERGO-PC" ]; then
     export MONITOR_PRIMARY="HDMI-A-0"
     export MONITOR_SECONDARY="HDMI-A-1"
     export TEMP_PATH_GPU="/sys/devices/pci0000:00/0000:00:03.1/0000:1c:00.0/hwmon/hwmon2/temp1_input"
