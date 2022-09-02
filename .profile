@@ -40,16 +40,29 @@ pathappend "$HOME/.local/kitty.app/bin"
 # set PATH so it includes Rust environment
 pathappend "$HOME/.cargo/env"
 
+# set PATH so it includes Java environment
+pathappend "/usr/lib/jvm/default/bin"
+
+# set PATH so it includes Perl environment
+pathappend "/usr/bin/site_perl"
+pathappend "/usr/bin/vendor_perl"
+pathappend "/usr/bin/core_perl"
+
+# export path to environmental variables set
+export PATH
+
 # environment config
 # get monitor names using: find /sys/devices -name "edid"
 # other way to find names: xrandr --listmonitors
 # temperature path according to: https://github.com/polybar/polybar/wiki/Module:-temperature
 if [ $(uname -n) = "ErgoPC" ]; then
-    MONITOR_PRIMARY="HDMI-A-0"
-    MONITOR_SECONDARY="HDMI-A-1"
-    TEMP_PATH_GPU="/sys/devices/pci0000:00/0000:00:03.1/0000:1c:00.0/hwmon/hwmon2/temp1_input"
-    TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp2_input"
+    export MONITOR_PRIMARY="HDMI-A-0"
+    export MONITOR_SECONDARY="HDMI-A-1"
+    export TEMP_PATH_GPU="/sys/devices/pci0000:00/0000:00:03.1/0000:1c:00.0/hwmon/hwmon2/temp1_input"
+    export TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp2_input"
 elif [ $(uname -n) = "ERGO-LAPTOP" ]; then
-    MONITOR_PRIMARY="eDP"
-    MONITOR_SECONDARY="HDMI-A-0" 
+    export MONITOR_PRIMARY="eDP"
+    export MONITOR_SECONDARY="HDMI-A-0" 
+    export TEMP_PATH_GPU=""
+    export TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input"
 fi

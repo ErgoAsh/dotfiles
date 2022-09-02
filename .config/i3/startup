@@ -27,7 +27,7 @@ exec --no-startup-id $HOME/.local/bin/lock
 exec --no-startup-id "sh -c 'sleep 5; ~/Downloads/pcloud'"
 
 # Use Picom composition manager to enable transparency in terminal emulators
-exec --no-startup-id "sh -c 'sleep 2; picom -b -f --experimental-backends; kitty'"
+exec --no-startup-id "sh -c 'sleep 2; picom -b -f; kitty'"
 
 # Use feh script to activate background image
 exec --no-startup-id "sh -c 'sleep 3; feh --no-fehbg --bg-scale /home/ergoash/.config/resources/wallpaper.png'" 
