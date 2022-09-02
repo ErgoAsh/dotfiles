@@ -124,8 +124,8 @@ export XDG_CONFIG_HOME=$HOME/.config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Add alias for dotfile manipulation
-alias dotfiles='/usr/bin/git --git-dir=/home/ergoash/.cfg --work-tree=/home/ergoash'
-alias dot='/usr/bin/git --git-dir=/home/ergoash/.cfg --work-tree=/home/ergoash'
+alias dotfiles='/usr/bin/git --git-dir=/home/ergoash/.dotfiles --work-tree=/home/ergoash'
+alias dot='/usr/bin/git --git-dir=/home/ergoash/.dotfiles --work-tree=/home/ergoash'
 alias ll='ls -Agvp1 --group-directories-first'
 alias vi='nvim'
 alias path='echo $PATH | tr -s ":" "\n"'
@@ -135,3 +135,4 @@ alias tui='taskwarrior-tui'
 alias in='task add +in'
 alias calc='qalc'
 alias c='qalc'
+alias pacman='paru'
