@@ -139,7 +139,7 @@
 * ncspot (ncspot-cover)
 * neofetch
 * qalculate (libqualculate)
-* qutebrowser
+* qutebrowser (pdfjs pip:tldextract)
 * rofi
 * zathura
 * taskwarrior (task)
@@ -150,6 +150,8 @@
 * flameshot
 * brightnessctl (for setting brightness)
 * bitwarden-cli (pip install tldextract)
+* obsidian
+* glances
 
 ### Visuals 
 * ttf-dejavu (ttf-fira-code-git ttf-nerd-fonts-symbols)
