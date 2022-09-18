@@ -45,7 +45,8 @@ return require('packer').startup({
             end
         }
 
-        use({ -- Telescope fuzzy finder
+        use(
+        { -- Telescope fuzzy finder
             {
                 'nvim-telescope/telescope.nvim',
                 event = 'CursorHold',
@@ -67,7 +68,8 @@ return require('packer').startup({
             },
         })
 
-        use({ -- LSP server
+        use(
+        { -- LSP server
             {
                 'neovim/nvim-lspconfig'
             },
@@ -98,6 +100,43 @@ return require('packer').startup({
             'justinmk/vim-sneak'
         }
 
+        use {
+            "max397574/better-escape.nvim",
+            config = function()
+                require("better_escape").setup()
+            end,
+        }
+
+        use {
+            "folke/which-key.nvim",
+            config = function()
+                require("which-key").setup (
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+                )
+            end
+        }
+
+        use {
+            'numToStr/Comment.nvim',
+            config = function()
+                require('Comment').setup()
+            end
+        }
+
+        use {
+            "windwp/nvim-autopairs",
+            config = function() require("nvim-autopairs").setup {} end
+        }
+
+        use {
+            'goolord/alpha-nvim',
+            config = function ()
+                require('alpha').setup(require('alpha.themes.dashboard').config)
+            end
+        }
+
         use { -- Git diff
             'TimUntersberger/neogit', 
             requires = 'nvim-lua/plenary.nvim',
@@ -105,16 +144,25 @@ return require('packer').startup({
                 require('neogit').setup()
             end
         }
-	
-        use {
-            'SirVer/ultisnips'
-        }
+
+        use (
+        {
+            {
+                'SirVer/ultisnips'
+            },
+            {
+                'honza/vim-snippets'
+            }
+        })
 
         use {
-            'lervag/vimtex'
+            'lervag/vimtex',
+            config = function()
+                require('plugins.vimtex-config')
+            end
         }
     end,
--- Plugin configuration end --
+    -- Plugin configuration end --
     config = {
         display = {
             open_fn = function()
