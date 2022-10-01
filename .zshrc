@@ -8,10 +8,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-    exec startx
-fi
-
 #fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
 # Path to your oh-my-zsh installation.
@@ -107,11 +103,16 @@ fi
 set -o vi
 bindkey -v
 
-# Use GPG for managing keys 
-export GPG_TTY=$TTY
-
 # Define XDG home config directory
 export XDG_CONFIG_HOME=$HOME/.config
+
+# Run i3 windows manager using startx
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+    exec startx
+fi
+
+# Use GPG for managing keys 
+export GPG_TTY=$TTY
 
 # Aliases
 alias dotfiles='/usr/bin/git --git-dir=/home/ergoash/.dotfiles --work-tree=/home/ergoash'

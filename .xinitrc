@@ -34,4 +34,4 @@ fi
 
 # start i3 and dunst notification manager
 dunst &
-exec /usr/bin/i3
+exec i3

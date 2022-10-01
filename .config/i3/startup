@@ -3,10 +3,6 @@
 font pango:Fira Code Semibold 11
 font Symbols Nerd Font 11
 
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
-
 # Enable polish (programmer) keymap
 exec setxkbmap pl
 
@@ -20,11 +16,8 @@ set $refresh_i3status killall -SIGUSR1 i3status
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.local/bin/lock --nofork
 
-# Run lock script after startup to validate user
-exec --no-startup-id $HOME/.local/bin/lock
-
 # Run pCloud service
-exec --no-startup-id "sh -c 'sleep 5; ~/Downloads/pcloud'"
+exec --no-startup-id "sh -c 'sleep 5; /usr/bin/pcloud'"
 
 # Use Picom composition manager to enable transparency in terminal emulators
 exec --no-startup-id "sh -c 'sleep 2; picom -b -f; kitty'"
@@ -33,4 +26,4 @@ exec --no-startup-id "sh -c 'sleep 2; picom -b -f; kitty'"
 exec --no-startup-id "sh -c 'sleep 3; feh --no-fehbg --bg-scale /home/ergoash/.config/resources/wallpaper.png'" 
 
 # Use Polybar for status bar management
-exec_always --no-startup-id $HOME/.local/bin/bar
+exec_always --no-startup-id ~/.local/bin/bar
