@@ -24,3 +24,5 @@
 [alias]
     tree = log --oneline --graph --all --decorate
 
+[safe]
+	directory = /opt/esp-idf

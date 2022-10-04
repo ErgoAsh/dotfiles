@@ -14,14 +14,14 @@ return require('packer').startup({
         use { -- Nightfly color scheme
             'folke/tokyonight.nvim',
             config = function()
-                require("plugins.theme-config")
+                require("configs.theme-config")
             end
         }
 
         use { -- Bottom status bar
             'nvim-lualine/lualine.nvim',
             config = function()
-                require("plugins.lualine-config")
+                require("configs.lualine-config")
             end,
             requires = { 'kyazdani42/nvim-web-devicons', opt = true },
         }
@@ -30,7 +30,7 @@ return require('packer').startup({
             'nvim-treesitter/nvim-treesitter',
             run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
             config = function()
-                require("plugins.treesitter-config")
+                require("configs.treesitter-config")
             end
         }
 
@@ -41,7 +41,7 @@ return require('packer').startup({
         use { -- Note taking/diary/wiki system
             'vimwiki/vimwiki',
             config = function() 
-                require("plugins.vimwiki-config")
+                require("configs.vimwiki-config")
             end
         }
 
@@ -51,7 +51,7 @@ return require('packer').startup({
                 'nvim-telescope/telescope.nvim',
                 event = 'CursorHold',
                 -- config = function()
-                --    require('plugins.telescope')
+                --    require('configs.telescope')
                 -- end,
             },
             {
@@ -77,7 +77,7 @@ return require('packer').startup({
                 'glepnir/lspsaga.nvim',
                 branch = "main",
                 config = function()
-                    require('plugins.lspsaga-config')
+                    require('configs.lspsaga-config')
                 end
             }
         })
@@ -85,14 +85,14 @@ return require('packer').startup({
         use { -- Blank line highlighting
             'lukas-reineke/indent-blankline.nvim',
             config = function() 
-                require('plugins.blankline-config')
+                require('configs.blankline-config')
             end
         }
 
         use { -- Git changes on sidebar
             'lewis6991/gitsigns.nvim',
             config = function()
-                require('plugins.gitsigns-config')
+                require('configs.gitsigns-config')
             end
         }
 
@@ -158,7 +158,7 @@ return require('packer').startup({
         use {
             'lervag/vimtex',
             config = function()
-                require('plugins.vimtex-config')
+                require('configs.vimtex-config')
             end
         }
     end,

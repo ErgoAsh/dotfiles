@@ -35,9 +35,6 @@ exec discord
 
 assign [class="(?i)Discord"] $ws_discord
 
-# Go to console workspace after loading all apps
-exec i3-msg 'workspace 10; kitty --hold ncspot; workspace 1; kitty --hold nvim; workspace 7'
-
 # Add these bindings here since the workspace variables are defined here
 # Switch to workspace
 bindsym $mod+7 workspace number $ws_kitty

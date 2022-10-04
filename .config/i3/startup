@@ -19,11 +19,8 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.local/bin/lock --nofor
 # Run pCloud service
 exec --no-startup-id "sh -c 'sleep 5; /usr/bin/pcloud'"
 
-# Use Picom composition manager to enable transparency in terminal emulators
-exec --no-startup-id "sh -c 'sleep 2; picom -b -f; kitty'"
-
-# Use feh script to activate background image
-exec --no-startup-id "sh -c 'sleep 3; feh --no-fehbg --bg-scale /home/ergoash/.config/resources/wallpaper.png'" 
+# Run Picom script that enables transparency and setup terminal workspaces during startup
+exec --no-startup-id ~/.local/bin/startup
 
 # Use Polybar for status bar management
 exec_always --no-startup-id ~/.local/bin/bar
