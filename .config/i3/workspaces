@@ -15,19 +15,17 @@ workspace $ws_qutebrowser output HDMI-A-0
 workspace $ws_kitty output HDMI-A-0
 workspace $ws_obsidian output HDMI-A-0
 
-workspace $ws_notes output HDMI-A-1
-workspace $ws_discord output HDMI-A-1
-workspace $ws_spotify output HDMI-A-1
+workspace $ws_notes output HDMI-A-0 # HDMI-A-0 previously
+workspace $ws_discord output HDMI-A-0
+workspace $ws_spotify output HDMI-A-0
 
 for_window [class="(?i)Thunderbird"] move to workspace $ws_thunderbird
-for_window [class="(?i)Zathura"] move to workspace $ws_zathura
 for_window [class="(?i)Qutebrowser"] move to workspace $ws_qutebrowser
 for_window [class="(?i)Discord"] move to workspace $ws_discord
 for_window [class="(?i)Spotify"] move to workspace $ws_spotify
 for_window [class="(?i)Obsidian"] move to workspace $ws_obsidian
 
 exec --no-startup-id thunderbird 
-exec --no-startup-id zathura
 exec --no-startup-id qutebrowser
 exec --no-startup-id spotify
 exec --no-startup-id obsidian
