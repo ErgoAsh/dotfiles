@@ -12,3 +12,10 @@ vim.g.vimtex_view_method = 'zathura'
 -- supported backends and further explanation is provided in the documentation,
 -- see ":help vimtex-compiler".
 vim.g.vimtex_compiler_method = 'latexmk'
+vim.g.tex_flavor = "latex"
+vim.g.vimtex_quickfix_mode = 0
+
+vim.g.UltiSnipsSnippetDirectories = { "~/.config/nvim/snipps" }
+vim.g.UltiSnipsExpandTrigger = "<Tab>"
+vim.g.UltiSnipsJumpForwardTrigger = "<Tab>"
+vim.g.UltiSnipsJumpBackwardTrigger = "<S-Tab>"
