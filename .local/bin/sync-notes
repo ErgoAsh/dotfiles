@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rsync -avz ~/obsidian-vault/fleeting-notes/bezp/ ~/studies/Bezpieczeństwo/Notatki
+rsync -avz ~/obsidian-vault/fleeting-notes/comp/ ~/studies/Kompatybilność/Notatki
+rsync -avz ~/obsidian-vault/fleeting-notes/diag/ ~/studies/Diagnostyka/Notatki
+rsync -avz ~/obsidian-vault/fleeting-notes/mems/ ~/studies/MEMS/Notatki
+rsync -avz ~/obsidian-vault/fleeting-notes/robo/ ~/studies/Robotyka/Notatki

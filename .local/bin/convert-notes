@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pandoc ~/obsidian-vault/fleeting-notes/bezp/*.md -o ~/studies/Bezpieczeństwo/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
+pandoc ~/obsidian-vault/fleeting-notes/comp/*.md -o ~/studies/Kompatybilność/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
+pandoc ~/obsidian-vault/fleeting-notes/diag/*.md -o ~/studies/Diagnostyka/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
+pandoc ~/obsidian-vault/fleeting-notes/mems/*.md -o ~/studies/MEMS/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
+pandoc ~/obsidian-vault/fleeting-notes/robo/*.md -o ~/studies/Robotyka/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
