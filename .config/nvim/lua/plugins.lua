@@ -97,7 +97,10 @@ return require('packer').startup({
         }
 
         use { -- Improved file movement
-            'justinmk/vim-sneak'
+            'phaazon/hop.nvim',
+            config = function()
+                require('configs.hop-config')
+            end
         }
 
         use {
@@ -154,6 +157,10 @@ return require('packer').startup({
                 'honza/vim-snippets'
             }
         })
+
+        use {
+            'ThePrimeagen/vim-be-good'
+        }
 
         use {
             'lervag/vimtex',
