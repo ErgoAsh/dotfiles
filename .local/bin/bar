@@ -2,11 +2,15 @@
 
 # Terminate already running bar instances
 killall -q polybar
-# If all your bars have ipc enabled, you can also use
-# polybar-msg cmd quit
 
-# Launch Polybar, using default config location ~/.config/polybar/config.ini
-polybar main --config=$XDG_CONFIG_HOME/polybar/config.ini 2>&1 | tee -a /tmp/polybar-main.log & disown
-polybar right --config=$XDG_CONFIG_HOME/polybar/config.ini 2>&1 | tee -a /tmp/polybar-right.log & disown 
+# Wait until the processes have been shut down
+while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+
+for m in $(polybar --list-monitors | cut -d":" -f1); do
+    MONITOR=$m polybar --reload main &
+done
+
+ 
+# polybar right --config=$XDG_CONFIG_HOME/polybar/config.ini 2>&1 | tee -a /tmp/polybar-right.log & disown 
 
 echo "Polybar launched..."
