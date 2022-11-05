@@ -167,6 +167,15 @@
 * qjackctl (PulseAudio)
 * latex distro
 
+### Jupyter Lab
+* pacman -S jupyterlab
+* pip install jupyterlab-vim
+* pip install jupyterlab-spreadsheet-editor
+* pip install matplotlib
+* pip install numpy
+* pip install pandas
+* pip install SciencePlots
+
 ## Post-installation maintenance
 * inside nvim: :PackerInstall, :PackerCompile
 * chsh -s /usr/bin/zsh
