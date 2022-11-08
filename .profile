@@ -79,3 +79,5 @@ elif [ $(uname -n) = "ERGO-LAPTOP" ]; then
     export TEMP_PATH_GPU=""
     export TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input"
 fi
+
+source .env
