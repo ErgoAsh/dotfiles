@@ -133,13 +133,6 @@ return require('packer').startup({
             config = function() require("nvim-autopairs").setup {} end
         }
 
-        use {
-            'goolord/alpha-nvim',
-            config = function ()
-                require('alpha').setup(require('alpha.themes.dashboard').config)
-            end
-        }
-
         use { -- Git diff
             'TimUntersberger/neogit', 
             requires = 'nvim-lua/plenary.nvim',
