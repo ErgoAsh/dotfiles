@@ -15,10 +15,10 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym $mod+F11 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 
 # Media keys with playerctl
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
+bindcode 172 exec playerctl play-pause 
+# bindcode 172 is XF86AudioPlayPause
 
 # Adjust brightness
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20
