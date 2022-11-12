@@ -1,0 +1,3 @@
+#!/bin/bash
+
+nvim -o "$HOME/journals/$(date '+%d-%m-%Y').md"
