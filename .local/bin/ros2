@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+xhost si:localuser:root
+
+docker run -it --privileged \
+    --net=host \
+    --device=/dev/dri \
+    --group-add video \
+    --volume=/tmp/.X11-unix:/tmp/.X11-unix \
+    --env="DISPLAY=$DISPLAY" \
+    --env=QT_X11_NO_MITSHM=1 \
+    moveit/moveit2:humble-ci "$@"
+
+#  --env="QT_DEBUG_PLUGINS=1" \
+#  --gpus all \
