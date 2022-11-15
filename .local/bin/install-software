@@ -1,6 +1,6 @@
 pacman -S --needed lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loader lib32-vulkan-icd-loader
 
-paru -S --needed xorg-server xorg-xinit xorg-xrandr xorg-setxkbmap \
+paru -S --needed xorg-server xorg-xinit xorg-xrandr xorg-setxkbmap xorg-xhost \
                  python python-pip python-pynvim python-adblock nvim-packer-git \
                  zsh zsh-completions-git zsh-autosuggestions zsh-syntax-highlighting oh-my-zsh-git zsh-theme-powerlevel10k-git \
                  kitty github-cli libqalculate fzf openssh \

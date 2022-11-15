@@ -126,7 +126,7 @@ alias tui='taskwarrior-tui'
 alias in='task add +in'
 alias calc='qalc'
 alias c='qalc'
-alias pacman='paru'
+alias pacman='yay'
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh

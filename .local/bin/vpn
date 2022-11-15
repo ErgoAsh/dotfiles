@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo openvpn ~/.local/bin/vpn.ovpn
+sudo openvpn ~/.local/bin/vpn.ovpn &
