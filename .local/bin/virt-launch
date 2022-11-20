@@ -1,0 +1,3 @@
+#!/bin/bash
+
+systemctl start libvirtd && sudo virsh net-start default
