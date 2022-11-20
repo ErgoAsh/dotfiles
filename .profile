@@ -48,16 +48,6 @@ pathappend "/usr/bin/site_perl"
 pathappend "/usr/bin/vendor_perl"
 pathappend "/usr/bin/core_perl"
 
-# set PATH so it includes ESP-IDF environment
-#pathappend "/opt/esp-idf/components/esptool_py/esptool"
-#pathappend "/opt/esp-idf/components/espcoredump"
-#pathappend "/opt/esp-idf/components/partition_table:/opt/esp-idf/components/app_update"
-#pathappend "/home/ergoash/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin"
-#pathappend "/home/ergoash/.espressif/tools/esp32ulp-elf/2.28.51-esp-20191205/esp32ulp-elf-binutils/bin"
-#pathappend "/home/ergoash/.espressif/tools/openocd-esp32/v0.11.0-esp32-20220411/openocd-esp32/bin"
-#pathappend "/home/ergoash/.espressif/python_env/idf4.4_py3.10_env/bin"
-#pathappend "/opt/esp-idf/tools"
-
 # export path to environmental variables set
 export PATH
 
