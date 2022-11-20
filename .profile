@@ -74,8 +74,8 @@ if [ $(uname -n) = "ERGO-PC" ]; then
     export TEMP_PATH_GPU="/sys/devices/pci0000:00/0000:00:03.1/0000:1c:00.0/hwmon/hwmon2/temp1_input"
     export TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp2_input"
 elif [ $(uname -n) = "ERGO-LAPTOP" ]; then
-    export MONITOR_PRIMARY="" #HDMI-A-0
-    export MONITOR_SECONDARY="" #eDP
+    export MONITOR_PRIMARY="eDP"
+    export MONITOR_SECONDARY="HDMI-A-0"
     export TEMP_PATH_GPU=""
     export TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input"
 fi

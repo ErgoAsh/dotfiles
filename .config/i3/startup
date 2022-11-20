@@ -6,8 +6,10 @@ font Symbols Nerd Font 11
 # Enable polish (programmer) keymap
 exec setxkbmap pl
 
-# Move second monitor to right and rotate 90 deg (vertical setup)
-exec xrandr --output HDMI-A-1 --rotate right
+# Move second monitor to right and rotate 90 deg (vertical setup) - PC
+# Move second monitor ro right - Laptop
+exec xrandr --output HDMI-A-1 --right-of HDMI-A-0 --rotate right
+exec xrandr --output HDMI-A-0 --left-of eDP
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
