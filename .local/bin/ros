@@ -9,9 +9,9 @@ docker run -it --privileged \
     --volume=/tmp/.X11-unix:/tmp/.X11-unix \
     --env="DISPLAY=$DISPLAY" \
     --env=QT_X11_NO_MITSHM=1 \
-    --shm-size=512m \
-    moveit2-tutorial "$@"
-#    moveit/moveit2:humble-ci "$@"
+    --shm-size=4G \
+    moveit/moveit2:humble-source "$@"
 
+#moveit2-tutorial "$@"
 #  --env="QT_DEBUG_PLUGINS=1" \
 #  --gpus all \
