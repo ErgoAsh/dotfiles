@@ -74,12 +74,19 @@ return require('packer').startup({
                 'neovim/nvim-lspconfig'
             },
             {
-                'glepnir/lspsaga.nvim',
-                branch = "main",
-                config = function()
-                    require('configs.lspsaga-config')
+                'neoclide/coc.nvim',
+                branch = "release",
+                config = function() 
+                    require('configs.coc-config')
                 end
             }
+--            {
+--                'glepnir/lspsaga.nvim',
+--                branch = "main",
+--                config = function()
+--                    require('configs.lspsaga-config')
+--                end
+--            }
         })
 
         use { -- Blank line highlighting

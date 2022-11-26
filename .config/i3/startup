@@ -6,8 +6,8 @@ font Symbols Nerd Font 11
 # Enable polish (programmer) keymap
 exec setxkbmap pl
 
-# Move second monitor to right and rotate 90 deg (vertical setup) - PC
-# Move second monitor ro right - Laptop
+# Move second monitor to right and rotate 90 deg (vertical setup) - PC environment
+# Move second monitor to left - laptop environment
 exec xrandr --output HDMI-A-1 --right-of HDMI-A-0 --rotate right
 exec xrandr --output HDMI-A-0 --left-of eDP
 
