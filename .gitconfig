@@ -26,3 +26,4 @@
 
 [safe]
 	directory = /opt/esp-idf
+	directory = /home/ergoash/projects/roboprinter-ros
