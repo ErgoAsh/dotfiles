@@ -6,8 +6,8 @@ paru -S --needed xorg-server xorg-xinit xorg-xrandr xorg-setxkbmap xorg-xhost \
                  kitty github-cli libqalculate fzf openssh \
                  ttf-dejavu ttf-fira-code ttf-nerd-fonts-symbols ttf-font-awesome ttf-times-new-roman noto-fonts-emoji \
                  picom-git brightnessctl neofetch i3-gaps-next-git i3lock-color-git dunst rofi polybar feh \
-                 alsa-utils pulseaudio-alsa pipewire pipewire-jack qjackctl ncspot playerctl \
-                 discord qutebrowser pcloud-drive zathura bitwarden-cli anki task \
+                 alsa-utils pulseaudio-alsa pipewire pipewire-jack qjackctl ncspot ncpamixer playerctl \
+                 discord qutebrowser pcloud-drive zathura bitwarden-cli arc-gtk-themei task \
                  xclip fd ripgrep zathura-pdf-mupdf pdfjs-legacy pandoc latexmk xdotool glances p7zip 7-zip-full 
 
 paru -S --needed wine-staging giflib lib32-giflib libpng lib32-libpng libldap lib32-libldap gnutls lib32-gnutls \

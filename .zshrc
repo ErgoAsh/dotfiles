@@ -121,7 +121,9 @@ alias ll='ls -Agvp1 --group-directories-first'
 alias vi='nvim'
 alias path='echo $PATH | tr -s ":" "\n"'
 alias df='df -h | (sed -u 1q; sort)'
+alias fonts="fc-list : family | sort"
 alias ncspot="env TERM=xterm-256color sh -c 'ncspot'"
+alias mixer="ncpamixer"
 alias tui='taskwarrior-tui'
 alias in='task add +in'
 alias calc='qalc'
