@@ -1,54 +1,77 @@
 from qutebrowser.api import interceptor
-
 config.load_autoconfig()
 
 c.url.searchengines = {
     'DEFAULT':  'https://google.com/search?hl=en&q={}',
 
-    # Shopping 
-    'a':       'https://allegro.pl/listing?string={}',
-    'sh':      'https://shopee.pl/search?keyword={}',
-
     # Dictionaries
-    'dd':      'https://thefreedictionary.com/{}',
-    'de':      'https://www.etymonline.com/search?q={}',
+    'd':       'https://www.dictionary.com/browse/{}',
+    'dc':      'https://dictionary.cambridge.org/dictionary/english/{}',
+    'dm':      'https://www.merriam-webster.com/dictionary/{}',
+    'e':       'https://www.etymonline.com/search?q={}',
 
-    # Social media
-    'fb':      'https://www.facebook.com/s.php?q={}',
-    'r':       'https://www.reddit.com/search?q={}',
+    # Translators
+    't':       'https://www.deepl.com/en/translator#en/pl/{}',
+    'tg':      'https://translate.google.com/?sl=en&tl=pl&text={}&op=translate',
 
     # Knowledge
     'gh':      'https://github.com/search?o=desc&q={}&s=stars',
     'gist':    'https://gist.github.com/search?q={}',
-    'st':      'https://stackoverflow.com/search?q={}',
+    's':       'https://stackoverflow.com/search?q={}',
     'w':       'https://en.wikipedia.org/wiki/{}',
     'p':       'https://pry.sh/{}',
 
     # Google
-    'gi':      'https://www.google.com/search?tbm=isch&q={}&tbs=imgo:1',
+    'i':      'https://www.google.com/search?tbm=isch&q={}&tbs=imgo:1',
     'm':       'https://www.google.com/maps/search/{}',
-    'yt':      'https://www.youtube.com/results?search_query={}'
+    'yt':      'https://www.youtube.com/results?search_query={}',
+
+    # Shopping 
+    'a':       'https://allegro.pl/listing?string={}',
+    'sh':      'https://shopee.pl/search?keyword={}',
+
+    # Social media
+    'r':       'https://www.reddit.com/search?q={}'
 }
 
+# Open Word/PowerPoint (Office 365) + JupyterLab (localhost:8888) in passthrough mode by default
+config.set("input.mode_override", "passthrough", "*://localhost/*")
+config.set("input.mode_override", "passthrough", "*://onedrive.live.com/*")
+
+# Set default websites
 c.url.start_pages = [ "https://google.com" ]
 c.url.default_page = "https://google.com"
 
-# Remove Mouse 4&5 key bindings
+# Remove mouse 4&5 key bindings
 c.input.mouse.back_forward_buttons = False
+
+# Remove bookmarks and filesystem completion for :open
+c.completion.open_categories = [ "searchengines", "quickmarks", "history" ]
 
 # Disable Youtube autoplay
 c.content.autoplay = False
 
-# Enhance adblocking
-c.content.blocking.method = 'both'
+# Use UTF-8
 c.content.default_encoding = 'utf-8'
+
+# Enhance adblocking
+c.content.blocking.method = 'adblock'
 c.content.geolocation = False
+
+# Do not use browser notification system
+c.content.notifications.enabled = False
 
 # Run pdfjs in new page as a default option
 c.content.pdfjs = True
 
 # Always open scrolling bar
 c.scrolling.bar = 'always'
+
+# Restore windows after restart
+c.auto_save.session = True
+
+# Close finished downloads after 5 seconds
+c.downloads.remove_finished = 5000
 
 config.unbind('d', mode = 'normal')
 config.unbind('u', mode = 'normal')
@@ -69,3 +92,6 @@ config.bind('d', 'scroll-page 0 0.5', mode = 'caret')
 config.bind('u', 'scroll-page 0 -0.5', mode = 'caret')
 
 config.bind("<Ctrl-b>", 'spawn --userscript qute-bitwarden')
+
+config.bind('<Ctrl-J>', 'back', mode = 'passthrough')
+config.bind('<Ctrl-K>', 'forward', mode = 'passthrough')
