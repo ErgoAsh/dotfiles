@@ -1,4 +1,3 @@
-require('settings')
--- require('autocmd')
 require('plugins')
--- require('keybinds')
+require('settings')
+require('keybindings')

@@ -1,182 +1,154 @@
--- Automatically run :PackerCompile whenever plugins.lua is updated with an autocommand:
-vim.api.nvim_create_autocmd('BufWritePost', {
-    group = vim.api.nvim_create_augroup('PACKER', { clear = true }),
-    pattern = 'plugins.lua',
-    command = 'source <afile> | PackerCompile',
-})
+local ensure_packer = function()
+    local fn = vim.fn
+    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
+end
 
-return require('packer').startup({
-    function(use)
+local packer_bootstrap = ensure_packer()
 
-        use('wbthomason/packer.nvim') -- Packer package
-        use('nvim-lua/plenary.nvim') -- Lua package with async utils
+return require('packer').startup(function(use)
+    use('wbthomason/packer.nvim') -- packer package
+    use('nvim-lua/plenary.nvim') -- lua package with async utils
 
-        use { -- Nightfly color scheme
-            'folke/tokyonight.nvim',
-            config = function()
-                require("configs.theme-config")
-            end
-        }
+    use { -- nightfly color scheme
+        'folke/tokyonight.nvim',
+    }
 
-        use { -- Bottom status bar
-            'nvim-lualine/lualine.nvim',
-            config = function()
-                require("configs.lualine-config")
-            end,
-            requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-        }
+    use { -- bottom status bar
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    }
 
-        use { -- Text highlighting based on language
-            'nvim-treesitter/nvim-treesitter',
-            run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
-            config = function()
-                require("configs.treesitter-config")
-            end
-        }
+    use { -- text highlighting based on language
+        'nvim-treesitter/nvim-treesitter',
+        run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+    }
 
-        use { -- Hex color codes colorizer
-            'ap/vim-css-color',
-        }
+    use { -- hex color codes colorizer
+        'ap/vim-css-color',
+    }
 
-        use { -- Note taking/diary/wiki system
-            'vimwiki/vimwiki',
-            config = function() 
-                require("configs.vimwiki-config")
-            end
-        }
-
-        use(
-        { -- Telescope fuzzy finder
-            {
-                'nvim-telescope/telescope.nvim',
-                event = 'CursorHold',
-                -- config = function()
-                --    require('configs.telescope')
-                -- end,
-            },
-            {
-                'nvim-telescope/telescope-fzf-native.nvim',
-                after = 'telescope.nvim',
-                run = 'make',
-                config = function()
-                    require('telescope').load_extension('fzf')
-                end,
-            },
-            {
-                'nvim-telescope/telescope-symbols.nvim',
-                after = 'telescope.nvim',
-            },
-        })
-
-        use(
-        { -- LSP server
-            {
-                'neovim/nvim-lspconfig'
-            },
-            {
-                'neoclide/coc.nvim',
-                branch = "release",
-                config = function() 
-                    require('configs.coc-config')
-                end
-            }
---            {
---                'glepnir/lspsaga.nvim',
---                branch = "main",
---                config = function()
---                    require('configs.lspsaga-config')
---                end
---            }
-        })
-
-        use { -- Blank line highlighting
-            'lukas-reineke/indent-blankline.nvim',
-            config = function() 
-                require('configs.blankline-config')
-            end
-        }
-
-        use { -- Git changes on sidebar
-            'lewis6991/gitsigns.nvim',
-            config = function()
-                require('configs.gitsigns-config')
-            end
-        }
-
-        use { -- Improved file movement
-            'phaazon/hop.nvim',
-            config = function()
-                require('configs.hop-config')
-            end
-        }
-
-        use {
-            "max397574/better-escape.nvim",
-            config = function()
-                require("better_escape").setup()
-            end,
-        }
-
-        use {
-            "folke/which-key.nvim",
-            config = function()
-                require("which-key").setup (
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-                )
-            end
-        }
-
-        use {
-            'numToStr/Comment.nvim',
-            config = function()
-                require('Comment').setup()
-            end
-        }
-
-        use {
-            "windwp/nvim-autopairs",
-            config = function() require("nvim-autopairs").setup {} end
-        }
-
-        use { -- Git diff
-            'TimUntersberger/neogit', 
-            requires = 'nvim-lua/plenary.nvim',
-            config = function()
-                require('neogit').setup()
-            end
-        }
-
-        use (
+    use(
+    { -- telescope fuzzy finder
         {
-            {
-                'SirVer/ultisnips'
-            },
-            {
-                'honza/vim-snippets'
-            }
-        })
-
-        use {
-            'ThePrimeagen/vim-be-good'
-        }
-
-        use {
-            'lervag/vimtex',
+            'nvim-telescope/telescope.nvim',
+            event = 'cursorhold',
+            -- config = function()
+            --    require('configs.telescope')
+            -- end,
+        },
+        {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            after = 'telescope.nvim',
+            run = 'make',
             config = function()
-                require('configs.vimtex-config')
-            end
-        }
-    end,
-    -- Plugin configuration end --
-    config = {
-        display = {
-            open_fn = function()
-                return require('packer.util').float({ border = 'single' })
+                require('telescope').load_extension('fzf')
             end,
         },
-    },
-})
+        {
+            'nvim-telescope/telescope-symbols.nvim',
+            after = 'telescope.nvim',
+        },
+    })
+
+    use {
+        'vonheikemen/lsp-zero.nvim',
+        requires = {
+            -- lsp support
+            {'neovim/nvim-lspconfig'},
+            {'williamboman/mason.nvim'},
+            {'williamboman/mason-lspconfig.nvim'},
+
+            -- autocompletion
+            {'hrsh7th/nvim-cmp'},
+            {'hrsh7th/cmp-buffer'},
+            {'hrsh7th/cmp-path'},
+            {'saadparwaiz1/cmp_luasnip'},
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'hrsh7th/cmp-nvim-lua'},
+
+            -- snippets
+            {'l3mon4d3/luasnip'},
+            {'rafamadriz/friendly-snippets'},
+        }
+    }
+
+    use { -- blank line highlighting
+        'lukas-reineke/indent-blankline.nvim',
+    }
+
+    use { -- git changes on sidebar
+        'lewis6991/gitsigns.nvim',
+    }
+
+    use { -- improved file movement
+        'phaazon/hop.nvim',
+    }
+
+    use {
+        "max397574/better-escape.nvim",
+        config = function()
+            require("better_escape").setup()
+        end,
+    }
+
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            require("which-key").setup()
+        end
+    }
+
+    use {
+        'numtostr/comment.nvim',
+        --config = function()
+        --    require('comment').setup()
+        --end
+    }
+
+    use {
+        "windwp/nvim-autopairs",
+        config = function() 
+            require("nvim-autopairs").setup()
+        end
+    }
+
+    use { -- git diff
+        'timuntersberger/neogit', 
+        requires = 'nvim-lua/plenary.nvim',
+        config = function()
+            require('neogit').setup()
+        end
+    }
+
+    use (
+    {
+        {
+            'sirver/ultisnips'
+        },
+        {
+            'honza/vim-snippets'
+        }
+    })
+
+    use {
+        'theprimeagen/vim-be-good'
+    }
+
+    use {
+        'lervag/vimtex',
+    }
+
+    -- Automatically set up your configuration after cloning packer.nvim
+    -- Put this at the end after all plugins
+    if packer_bootstrap then
+        require('packer').sync()
+    end
+end)
 
 

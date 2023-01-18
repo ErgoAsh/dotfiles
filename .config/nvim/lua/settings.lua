@@ -1,3 +1,4 @@
+-- Documentation reference: https://neovim.io/doc/user/options.html
 local g = vim.g
 local o = vim.o
 
@@ -14,26 +15,28 @@ o.scrolloff = 8
 -- Better editor UI
 o.number = true -- Add line numbering on current line
 o.relativenumber = true -- Add relative line numbering elsewhere
-o.numberwidth = 5
-o.signcolumn = 'yes:2'
+o.signcolumn = 'yes:1' -- number?
 o.cursorline = true
 
--- Better editing experience
-o.expandtab = true
 -- o.smarttab = true
-o.cindent = true
--- o.autoindent = true
-o.wrap = true
-o.textwidth = 300
-o.tabstop = 4
-o.shiftwidth = 0
+-- o.cindent = true
+o.textwidth = 250
+
+-- Better editing experience
+o.expandtab = true -- Insert spaces after presisng Tab
+o.tabstop = 4 -- Number of spaces that Tab equals to
+o.shiftwidth = 4 -- Number of spaces for each autoindent
 o.softtabstop = -1 -- If negative, shiftwidth value is used
-o.list = true
+o.autoindent = true
+o.smartindent = true
+
+o.wrap = true
+o.list = false
 -- o.listchars = 'trail:·,nbsp:◇,tab:→ ,extends:▸,precedes:◂'
 -- o.listchars = 'eol:¬,space:·,lead: ,trail:·,nbsp:◇,tab:→-,extends:▸,precedes:◂,multispace:···⬝,leadmultispace:│   ,'
 -- o.formatoptions = 'qrn1'
 
--- Makes neovim and host OS clipboard play nicely with each other
+-- Makes neovim and host OS clipboard work together; requires xclip
 o.clipboard = 'unnamedplus'
 
 -- Case insensitive searching UNLESS /C or capital in search
@@ -60,43 +63,10 @@ o.splitbelow = true
 -- o.jumpoptions = 'view'
 
 -- Folding
-vim.o.foldmethod = "indent"
+o.foldmethod = "indent"
 -- vim.o.nofoldenable = true
-vim.o.foldlevel = 99
+o.foldlevel = 99
 
 -- Map <leader> to space
 g.mapleader = ' '
 g.maplocalleader = ' '
-
--- -- Disable builtin plugins
-local disabled_built_ins = {
-   "2html_plugin",
-   "getscript",
-   "getscriptPlugin",
-   "gzip",
-   "logipat",
-   "netrw",
-   "netrwPlugin",
-   "netrwSettings",
-   "netrwFileHandlers",
-   "matchit",
-   "tar",
-   "tarPlugin",
-   "rrhelper",
-   "spellfile_plugin",
-   "vimball",
-   "vimballPlugin",
-   "zip",
-   "zipPlugin",
-   "tutor",
-   "rplugin",
-   "synmenu",
-   "optwin",
-   "compiler",
-   "bugreport",
-   "ftplugin",
-}
-
-for _, plugin in pairs(disabled_built_ins) do
-   g["loaded_" .. plugin] = 1
-end
