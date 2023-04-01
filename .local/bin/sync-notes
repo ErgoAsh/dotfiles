@@ -1,7 +1,10 @@
 #!/bin/bash
 
-rsync -avz ~/obsidian-vault/fleeting-notes/bezp/ ~/studies/Bezpieczeństwo/Notatki
-rsync -avz ~/obsidian-vault/fleeting-notes/comp/ ~/studies/Kompatybilność/Notatki
-rsync -avz ~/obsidian-vault/fleeting-notes/diag/ ~/studies/Diagnostyka/Notatki
-rsync -avz ~/obsidian-vault/fleeting-notes/mems/ ~/studies/MEMS/Notatki
-rsync -avz ~/obsidian-vault/fleeting-notes/robo/ ~/studies/Robotyka/Notatki
+from=("diagnostyka" "sys-czasu" "sys-wbud" "termodynamika")
+to=("Diagnostyka" "Systemy czasu rzeczywistego" "Systemy wbudowane" "Termodynamika")
+
+for (( i=0; i<${#from[@]}; i++))
+do
+    rsync -avuz "/home/ergoash/obsidian-vault/fleeting-notes/S8/${from[i]}/" "/home/ergoash/studies/${to[i]}/Notatki"
+done
+

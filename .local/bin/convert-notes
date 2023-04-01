@@ -1,7 +1,11 @@
 #!/bin/bash
 
-pandoc ~/obsidian-vault/fleeting-notes/bezp/*.md -o ~/studies/Bezpieczeństwo/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
-pandoc ~/obsidian-vault/fleeting-notes/comp/*.md -o ~/studies/Kompatybilność/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
-pandoc ~/obsidian-vault/fleeting-notes/diag/*.md -o ~/studies/Diagnostyka/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
-pandoc ~/obsidian-vault/fleeting-notes/mems/*.md -o ~/studies/MEMS/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
-pandoc ~/obsidian-vault/fleeting-notes/robo/*.md -o ~/studies/Robotyka/Notatki/notatki.pdf -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
+from=("diagnostyka" "sys-czasu" "sys-wbud" "termodynamika")
+to=("Diagnostyka" "Systemy czasu rzeczywistego" "Systemy wbudowane" "Termodynamika")
+
+for (( i=0; i<${#from[@]}; i++))
+do
+    pandoc "/home/ergoash/obsidian-vault/fleeting-notes/S8/${from[i]}/"*.md \
+        -o "/home/ergoash/studies/${to[i]}/Notatki/notatki.pdf" \
+        -s -V geometry:margin=1in --pdf-engine=xelatex --wrap=preserve --toc --preserve-tabs -f markdown+hard_line_breaks -t pdf
+done
