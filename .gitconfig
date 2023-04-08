@@ -1,7 +1,10 @@
 [init]
 	defaultBranch = main
+
 [core]
 	editor = /usr/bin/nvim
+    pager = delta --pager less --line-numbers --side-by-side
+
 [user]
 	email = ErgoAsh@users.noreply.github.com
 	name = Marek K.
@@ -12,8 +15,6 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
-[credential "https://dev.azure.com"]
-    useHttpPath = true
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -24,6 +25,19 @@
 [alias]
     tree = log --oneline --graph --all --decorate
 
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
+[delta]
+    navigate = true
+    light = false
+
 [safe]
-	directory = /opt/esp-idf
-	directory = /home/ergoash/projects/roboprinter-ros
+	directory = /opt/esp-idf/
+	directory = /home/ergoash/projects/
