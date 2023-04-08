@@ -34,4 +34,6 @@ fi
 
 # start i3 and dunst notification manager
 dunst &
+#[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 exec i3
+
