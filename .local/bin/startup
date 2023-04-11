@@ -3,7 +3,7 @@ sleep 2
 picom -bcf
 
 # Go to console workspace after loading all apps
-i3-msg 'workspace 10; exec kitty --hold ncspot'
+i3-msg 'workspace 10; exec kitty --hold ncspot-startup'
 i3-msg 'workspace 7; exec kitty'
 
 # Use feh script to activate background image
