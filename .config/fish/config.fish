@@ -45,9 +45,12 @@ if status is-interactive
     set fish_cursor_visual      block
 
     fzf_configure_bindings --git_status=\cs --git_log=\cg --history=\ch --variables=\cv --processes=\cp --directory=\cf 
-    
 end
 
 if status is-login
     exec startx
+end
+
+function fish_greeting
+    fortune | cowsay | lolcat
 end
