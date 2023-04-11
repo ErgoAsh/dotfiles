@@ -34,9 +34,10 @@ c.url.searchengines = {
     'r':       'https://www.reddit.com/search?q={}'
 }
 
-# Open Word/PowerPoint (Office 365) + JupyterLab (localhost:8888) in passthrough mode by default
+# Open Word/PowerPoint (Office 365), Google Suite and JupyterLab (localhost:8888) in passthrough mode by default
 config.set("input.mode_override", "passthrough", "*://localhost/*")
 config.set("input.mode_override", "passthrough", "*://onedrive.live.com/*")
+config.set("input.mode_override", "passthrough", "*://docs.google.com/*")
 
 # Set default websites
 c.url.start_pages = [ "https://google.com" ]
