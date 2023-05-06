@@ -25,6 +25,7 @@ if status is-interactive
     alias fonts "fc-list : family | sort"
     alias ncspot "env TERM=xterm-256color sh -c 'ncspot'"
     alias software "yay -Qett --color=always | bat"
+    alias ssh "kitty +kitten ssh"
 
     abbr cat "bat"
     abbr grep "rg"
