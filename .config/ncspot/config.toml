@@ -1,5 +1,5 @@
 default_keybindings = false
-use_nerdfont = true
+use_nerdfont = false # "Play" button not function properly with noto-fonts-cjk
 gapless = true
 flip_status_indicators = true
 
@@ -44,10 +44,10 @@ body = "%artists | %duration"
 "Enter" = "play"
 
 # Fast forward / rewind
-"b" = "seek -1000"
-"f" = "seek +1000"
-"B" = "seek -10000"
-"F" = "seek +10000"
+"b" = "seek -2500" # 2.5 s
+"f" = "seek +2500"
+"B" = "seek -25000" # 25 s
+"F" = "seek +25000"
 
 # Track manipulation
 "H" = "previous"
@@ -65,10 +65,10 @@ body = "%artists | %duration"
 
 # Queue
 " " = "queue"
-"Ctrl+s" = "save queue"
+"Ctrl+y" = "save queue"
 "J" = "shift down 1" # Move selected song up/down in the queue
 "K" = "shift up 1"
-"C" = "clear"
+"C" = "clear" # Clear queue
 
 # Open the context menu for a Spotify link in the clipboard
 "Ctrl+v" = "insert"
@@ -95,19 +95,18 @@ body = "%artists | %duration"
 "G" = "move bottom"
 "Ctrl+u" = "move up 5"
 "Ctrl+d" = "move down 5"
-"q" = "back"
 "Backspace" = "back"
 
 # Views
-"v" = "focus queue"
-"Ctrl+k" = "focus search"
-"Ctrl+l" = "focus library"
-"c" = "focus library"
-"." = "move playing" # Go to the playing track
+"Ctrl+l" = "focus library" # Exit search view
+"Ctrl+s" = "focus search"
+"Ctrl+q" = "focus queue"
+"v" = "focus library"
+"." = "move playing" # Go to the playing track in queue view
 
 # Sorting
-"t" = "sort added d"
-"T" = "sort title a"
+"t" = "sort title a"
+"T" = "sort added d"
 
 # Sharing
 "Y" = "share selected"
@@ -115,6 +114,7 @@ body = "%artists | %duration"
 
 # Other
 "Q" = "quit"
+"q" = "quit"
 "Z" = "quit"
 "?" = "help"
 "U" = "update"
