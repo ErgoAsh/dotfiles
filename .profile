@@ -54,6 +54,10 @@ export PATH
 # export ESP-IDF location
 export ESPIDF=/opt/esp-idf
 
+# export java libraries
+export JAVA_HOME=/usr/lib/jvm/default
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/default/lib/server
+
 # environment config
 # get monitor names using: find /sys/devices -name "edid"
 # other way to find names: xrandr --listmonitors

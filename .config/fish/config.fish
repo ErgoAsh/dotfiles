@@ -9,7 +9,7 @@ if status is-interactive
     set -xg BROWSER 'qutebrowser'
     set -xg DEFAULT_USER 'ergoash'
 
-    set -xg PAGER "bat --wrap=never --style='numbers,changes'"
+    set -xg PAGER "bat --wrap=never --style=numbers,changes"
     set -xg MANPAGER "sh -c 'col -bx | bat --language=man --style=numbers,rule'" 
     set -xg MANWIDTH (math $COLUMNS - 6)
 
