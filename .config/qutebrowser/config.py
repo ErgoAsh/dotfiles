@@ -38,6 +38,7 @@ c.url.searchengines = {
 config.set("input.mode_override", "passthrough", "*://localhost/*")
 config.set("input.mode_override", "passthrough", "*://onedrive.live.com/*")
 config.set("input.mode_override", "passthrough", "*://docs.google.com/*")
+config.set("input.mode_override", "passthrough", "*://*.overleaf.com/project/*")
 
 # Set default websites
 c.url.start_pages = [ "https://google.com" ]
@@ -72,7 +73,7 @@ c.scrolling.bar = 'always'
 c.auto_save.session = True
 
 # Close finished downloads after 5 seconds
-c.downloads.remove_finished = 5000
+c.downloads.remove_finished = 10000
 
 config.unbind('d', mode = 'normal')
 config.unbind('u', mode = 'normal')

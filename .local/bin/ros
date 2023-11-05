@@ -10,7 +10,7 @@ docker run -it --privileged \
     --env="DISPLAY=$DISPLAY" \
     --env=QT_X11_NO_MITSHM=1 \
     --shm-size=4G \
-    moveit/moveit2:humble-source "$@"
+    moveit/moveit2:rolling-release "$@"
 
 #moveit2-tutorial "$@"
 #  --env="QT_DEBUG_PLUGINS=1" \

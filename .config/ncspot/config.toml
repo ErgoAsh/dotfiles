@@ -3,7 +3,7 @@ use_nerdfont = false # "Play" button not function properly with noto-fonts-cjk
 gapless = true
 flip_status_indicators = true
 
-notify = true
+notify = false
 shuffle = false
 repeat = 'off'
 
@@ -46,8 +46,8 @@ body = "%artists | %duration"
 # Fast forward / rewind
 "b" = "seek -2500" # 2.5 s
 "f" = "seek +2500"
-"B" = "seek -25000" # 25 s
-"F" = "seek +25000"
+"B" = "seek -50000" # 50 s
+"F" = "seek +50000"
 
 # Track manipulation
 "H" = "previous"

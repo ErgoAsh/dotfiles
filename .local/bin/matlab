@@ -1,14 +1,3 @@
 #!/bin/bash
 
-xhost +
-
-docker run -it --rm \
-    --shm-size=512M \
-    --env DISPLAY=$DISPLAY \
-    --device=/dev/dri \
-    --group-add video \
-    --volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
-    --volume "$(pwd):/home/matlab/Documents/MATLAB/" \
-    mathworks/matlab:r2022b bash #-browser
-
-#        -p 8888:8888 \
+/mnt/drive/matlab/bin/matlab

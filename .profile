@@ -37,6 +37,9 @@ pathprepend "$HOME/.local/bin"
 # set PATH so it includes kitty terminal emulator if it exists
 pathappend "$HOME/.local/kitty.app/bin"
 
+# set PATH so it includes DOOM Emacs editor if it exists
+pathappend "$HOME/.emacs.d/doom/bin"
+
 # set PATH so it includes Rust environment
 pathappend "$HOME/.cargo/env"
 

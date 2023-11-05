@@ -1,3 +1,13 @@
+# Media keys with playerctl - next, previous, pause/play
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Play/pause qutebrowser (or other software if there is no active player)
+bindcode 172 exec playerctl play-pause # bindcode 172 is XF86AudioPlayPause
+
+# Play/pause ncspot
+bindsym $mod+F8 exec playerctl play-pause -p ncspot
+
 # Toggle sound
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym $mod+F9 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
@@ -14,11 +24,6 @@ bindsym $mod+F12 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% 
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym $mod+F11 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 
-# Media keys with playerctl
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-bindcode 172 exec playerctl play-pause 
-# bindcode 172 is XF86AudioPlayPause
 
 # Adjust brightness
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20

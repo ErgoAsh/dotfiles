@@ -3,7 +3,7 @@ pacman -S --needed lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-icd-loade
 paru -S --needed xorg-server xorg-xinit xorg-xrandr xorg-setxkbmap xorg-xhost \
                  python python-pip python-pynvim python-adblock nvim-packer-git \
                  zsh zsh-completions-git zsh-autosuggestions zsh-syntax-highlighting oh-my-zsh-git zsh-theme-powerlevel10k-git \
-                 kitty github-cli libqalculate fzf openssh \
+                 kitty github-cli libqalculate fzf openssh hwinfo \
                  ttf-dejavu ttf-fira-code ttf-nerd-fonts-symbols ttf-font-awesome ttf-times-new-roman noto-fonts-emoji \
                  picom-git brightnessctl neofetch i3-gaps-next-git i3lock-color-git dunst rofi polybar feh \
                  alsa-utils pulseaudio-alsa pipewire pipewire-jack qjackctl ncspot ncpamixer playerctl \

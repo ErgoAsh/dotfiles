@@ -11,6 +11,7 @@ if status is-interactive
 
     set -xg PAGER "bat --wrap=never --style=numbers,changes"
     set -xg MANPAGER "sh -c 'col -bx | bat --language=man --style=numbers,rule'" 
+    set -xg MANROFFOPT "-c"
     set -xg MANWIDTH (math $COLUMNS - 6)
 
     set -xg NNN_FIFO '/tmp/nnn.fifo'

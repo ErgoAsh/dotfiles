@@ -2,10 +2,10 @@
 
 docker run -it --rm --privileged \
     --volume /dev:/dev \
-    --volume $(pwd):/workspace \
-    --workdir /workspace \
-    espressif/idf:release-v4.4
-    #microros/esp-idf-microros #\
+    --volume $(pwd):/root/workspace \
+    ergoash/esp32-dev
     #roboprinter_esp bash #"$@"
+    #espressif/idf:release-v4.4
+    #microros/esp-idf-microros #\
 
     #/bin/bash -c "idf.py build"
