@@ -1,7 +1,7 @@
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws_notes 1
-set $ws_thunderbird 2
+set $ws_bluemail 2
 set $ws_zathura 6
 set $ws_kitty 7
 set $ws_qutebrowser 8
@@ -9,7 +9,7 @@ set $ws_discord 9
 set $ws_spotify 10
 set $ws_obsidian 11
 
-workspace $ws_thunderbird output HDMI-A-0
+workspace $ws_bluemail output HDMI-A-0
 workspace $ws_zathura output HDMI-A-0
 workspace $ws_qutebrowser output HDMI-A-0
 workspace $ws_kitty output HDMI-A-0
@@ -19,13 +19,13 @@ workspace $ws_notes output HDMI-A-0 # HDMI-A-0 previously
 workspace $ws_discord output HDMI-A-0
 workspace $ws_spotify output HDMI-A-0
 
-for_window [class="(?i)Thunderbird"] move to workspace $ws_thunderbird
+for_window [class="(?i)Bluemail"] move to workspace $ws_bluemail
 for_window [class="(?i)Qutebrowser"] move to workspace $ws_qutebrowser
 for_window [class="(?i)Discord"] move to workspace $ws_discord
 for_window [class="(?i)Spotify"] move to workspace $ws_spotify
 for_window [class="(?i)Obsidian"] move to workspace $ws_obsidian
 
-exec --no-startup-id thunderbird 
+exec --no-startup-id bluemail 
 exec --no-startup-id qutebrowser
 exec --no-startup-id spotify
 exec --no-startup-id obsidian
@@ -42,7 +42,7 @@ bindsym $mod+0 workspace number $ws_spotify
 bindsym $mod+u workspace number $ws_zathura
 bindsym $mod+i workspace number $ws_obsidian
 bindsym $mod+o workspace number $ws_notes
-bindsym $mod+p workspace number $ws_thunderbird
+bindsym $mod+p workspace number $ws_bluemail
 
 # Move focused container to workspace
 bindsym $mod+Shift+7 move container to workspace number $ws_kitty
@@ -52,5 +52,5 @@ bindsym $mod+Shift+0 move container to workspace number $ws_spotify
 bindsym $mod+Shift+u move container to workspace number $ws_zathura
 bindsym $mod+Shift+i move container to workspace number $ws_obsidian
 bindsym $mod+Shift+o move container to workspace number $ws_notes
-bindsym $mod+Shift+p move container to workspace number $ws_thunderbird
+bindsym $mod+Shift+p move container to workspace number $ws_bluemail
 
