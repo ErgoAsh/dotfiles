@@ -8,8 +8,14 @@ config_version: 2
 settings:
   content.blocking.enabled:
     global: true
+  content.media.audio_capture:
+    https://meet.google.com: true
+  content.media.video_capture:
+    https://meet.google.com: true
   content.notifications.enabled:
     https://my.pcloud.com: false
+  content.pdfjs:
+    global: false
   content.register_protocol_handler:
     https://mail.google.com?extsrc=mailto&url=%25s: false
     https://outlook.office365.com?mailtouri=%25s: false
