@@ -10,22 +10,22 @@
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
+	# include .bashrc if it exists
+	if [ -f "$HOME/.bashrc" ]; then
+		. "$HOME/.bashrc"
+	fi
 fi
 
 pathappend() {
-    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-        PATH="${PATH:+"$PATH:"}$1"
-    fi
+	if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+		PATH="${PATH:+"$PATH:"}$1"
+	fi
 }
 
 pathprepend() {
-    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-        PATH="$1${PATH:+":$PATH"}"
-    fi
+	if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+		PATH="$1${PATH:+":$PATH"}"
+	fi
 }
 
 # set PATH so it includes user's private bin if it exists
@@ -51,6 +51,9 @@ pathappend "/usr/bin/site_perl"
 pathappend "/usr/bin/vendor_perl"
 pathappend "/usr/bin/core_perl"
 
+# set PATH so it includes different clang-format environment
+pathappend "/opt/clang-format-static"
+
 # export path to environmental variables set
 export PATH
 
@@ -66,15 +69,15 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/default/lib/server
 # other way to find names: xrandr --listmonitors
 # temperature path according to: https://github.com/polybar/polybar/wiki/Module:-temperature
 if [ $(uname -n) = "ERGO-PC" ]; then
-    export MONITOR_PRIMARY="HDMI-A-0"
-    export MONITOR_SECONDARY="HDMI-A-1"
-    export TEMP_PATH_GPU="/sys/devices/pci0000:00/0000:00:03.1/0000:1c:00.0/hwmon/hwmon2/temp1_input"
-    export TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp2_input"
+	export MONITOR_PRIMARY="HDMI-A-0"
+	export MONITOR_SECONDARY="HDMI-A-1"
+	export TEMP_PATH_GPU="/sys/devices/pci0000:00/0000:00:03.1/0000:1c:00.0/hwmon/hwmon2/temp1_input"
+	export TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp2_input"
 elif [ $(uname -n) = "ERGO-LAPTOP" ]; then
-    export MONITOR_PRIMARY="eDP"
-    export MONITOR_SECONDARY="HDMI-A-0"
-    export TEMP_PATH_GPU=""
-    export TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input"
+	export MONITOR_PRIMARY="eDP"
+	export MONITOR_SECONDARY="HDMI-A-0"
+	export TEMP_PATH_GPU=""
+	export TEMP_PATH_CPU="/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input"
 fi
 
-source .env
+source "$HOME/.env"

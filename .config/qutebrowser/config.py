@@ -93,7 +93,7 @@ config.bind('x', 'tab-close', mode = 'normal')
 config.bind('d', 'scroll-page 0 0.5', mode = 'caret')
 config.bind('u', 'scroll-page 0 -0.5', mode = 'caret')
 
-config.bind("<Ctrl-b>", 'spawn --userscript qute-bitwarden')
+config.bind("<Ctrl-b>", 'spawn --userscript qute-custom-bitwarden')
 
 config.bind('<Ctrl-J>', 'back', mode = 'passthrough')
 config.bind('<Ctrl-K>', 'forward', mode = 'passthrough')
