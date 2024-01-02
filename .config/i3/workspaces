@@ -24,11 +24,13 @@ for_window [class="(?i)Qutebrowser"] move to workspace $ws_qutebrowser
 for_window [class="(?i)Discord"] move to workspace $ws_discord
 for_window [class="(?i)Spotify"] move to workspace $ws_spotify
 for_window [class="(?i)Obsidian"] move to workspace $ws_obsidian
+for_window [class="(?i)Zotero"] move to workspace $ws_obsidian
 
-exec --no-startup-id bluemail 
+exec --no-startup-id bluemail
 exec --no-startup-id qutebrowser
 exec --no-startup-id spotify
 exec --no-startup-id obsidian
+exec --no-startup-id zotero
 exec discord
 
 assign [class="(?i)Discord"] $ws_discord

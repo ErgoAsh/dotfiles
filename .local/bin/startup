@@ -7,6 +7,6 @@ i3-msg 'workspace 10; exec kitty --hold ncspot-startup'
 i3-msg 'workspace 7; exec kitty'
 
 # Use feh script to activate background image
-feh --no-fehbg --bg-scale ~/.config/resources/wallpaper.png 
+# feh --no-fehbg --bg-scale ~/.config/resources/wallpaper.png 
 
 

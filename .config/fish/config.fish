@@ -18,7 +18,7 @@ if status is-interactive
     set -xg NNN_BMS 'd:/home/ergoash/Downloads;c:/home/ergoash/.config;p:/home/ergoash/pCloudDrive;m:/mnt/drive;l:/home/ergoash/.local'
     set -xg NNN_PLUG_COPY 'c:!convert "$nnn" png:- | xclip -sel clipboard -t image/png*'
     set -xg NNN_PLUG 'o:fzopen;p:mocq;d:diffs;t:nmount;v:preview-tui;c:$NNN_PLUG_COPY'
-    set -xg NNN_PAGER 'bat --wrap=never --style=numbers,changes'
+    set -xg NNN_PAGER 'bat --wrap=never --style=changes'
     set -xg NNN_BATTHEME gruvbox-dark
 
     alias dotfiles '/usr/bin/git --git-dir=/home/ergoash/.dotfiles --work-tree=/home/ergoash'
@@ -57,5 +57,5 @@ if status is-login
 end
 
 function fish_greeting
-    fortune | lolcat
+    #fortune | lolcat
 end
