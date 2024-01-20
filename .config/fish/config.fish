@@ -50,6 +50,9 @@ if status is-interactive
 
     fzf_configure_bindings --git_status=\cs --git_log=\cg --history=\ch --variables=\cv --processes=\cp --directory=\cf
 
+    cat ~/.cache/wal/sequences
+    bass source ~/.cache/wal/colors-tty.sh
+
 end
 
 if status is-login

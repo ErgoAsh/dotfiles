@@ -4,9 +4,12 @@ picom -bcf
 
 # Go to console workspace after loading all apps
 i3-msg 'workspace 10; exec kitty --hold ncspot-startup'
+i3-msg 'workspace 10; exec kitty --hold ncpamixer'
 i3-msg 'workspace 7; exec kitty'
+
+# Restart audio on startup
+exec pulseaudio -k
 
 # Use feh script to activate background image
 # feh --no-fehbg --bg-scale ~/.config/resources/wallpaper.png 
-
-
+wal -i ~/.config/resources/ghibli-japanese-walled-garden.png

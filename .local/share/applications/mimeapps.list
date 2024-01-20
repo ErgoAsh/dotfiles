@@ -26,3 +26,6 @@ application/x-wine-extension-ini=wine-extension-ini.desktop;
 application/x-wine-extension-msp=wine-extension-msp.desktop;
 application/xaml+xml=wine-extension-xaml.desktop;
 application/xml=wine-extension-xml.desktop;
+x-scheme-handler/mw-matlab=mw-matlab.desktop
+x-scheme-handler/mw-simulink=mw-simulink.desktop
+x-scheme-handler/mw-matlabconnector=mw-matlabconnector.desktop

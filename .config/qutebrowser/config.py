@@ -37,6 +37,7 @@ c.url.searchengines = {
 # Open Word/PowerPoint (Office 365), Google Suite and JupyterLab (localhost:8888) in passthrough mode by default
 config.set("input.mode_override", "passthrough", "*://localhost/*")
 config.set("input.mode_override", "passthrough", "*://onedrive.live.com/*")
+config.set("input.mode_override", "passthrough", "*://*.sharepoint.com/*")
 config.set("input.mode_override", "passthrough", "*://docs.google.com/*")
 config.set("input.mode_override", "passthrough", "*://*.overleaf.com/project/*")
 
