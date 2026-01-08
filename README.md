@@ -14,7 +14,7 @@ nix-shell -p git --run "git clone https://github.com/ErgoAsh/dotfiles.git ~/dotf
 cd ~/dotfiles
 
 # 3. Apply the configuration
-# Replace 'HOSTNAME' with: ergo-laptop, ergo-pc, ergo-home-server or ergo-flat-server
+# Replace 'HOSTNAME' with: ergo-laptop, ergo-pc, ergo-vm, ergo-home-server or ergo-flat-server
 sudo nixos-rebuild switch --flake .#HOSTNAME --option extra-experimental-features "nix-command flakes"
 ```
 

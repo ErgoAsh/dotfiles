@@ -30,12 +30,20 @@
     btop
     unzip
     zip
+
+    yubioath-flutter
+    yubikey-manager
   ];
 
   # --- Shell ---
   programs.fish = {
     enable = true;
     interactiveShellInit = "set fish_greeting";
+  };
+
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
   };
 
   # --- Terminal ---
@@ -92,6 +100,16 @@
         command = "nixd";
       };
     };
+  };
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode;
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 
   # --- Browser ---

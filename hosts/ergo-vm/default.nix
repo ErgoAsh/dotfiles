@@ -4,13 +4,13 @@
   imports = [ ./hardware-configuration.nix ];
 
   # --- Boot & Kernel ---
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 1; # 96 MB EFI partition :C
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # --- Networking ---
-  networking.hostName = "ergo-laptop"; # MUST match flake entry name
+  networking.hostName = "ergo-vm"; # MUST match flake entry name
   networking.networkmanager.enable = true;
 
   # --- Locale & Time ---
@@ -50,10 +50,6 @@
     jack.enable = true;
   };
 
-  # --- Security and authentication ---
-  services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-
   # --- User ---
   users.users.ergoash = {
     isNormalUser = true;
@@ -78,13 +74,5 @@
     "nix-command"
     "flakes"
   ];
-
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    stdenv.cc.cc.lib # specific C++ libraries
-    zlib # common compression
-    openssl # common crypto
-  ];
-
   system.stateVersion = "25.11";
 }
