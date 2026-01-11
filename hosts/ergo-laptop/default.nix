@@ -54,6 +54,31 @@
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
+  # --- Battery and performance ---
+
+  services.auto-cpufreq.enable = true;
+  services.auto-cpufreq.settings = {
+    battery = {
+      governor = "powersave";
+      turbo = "never";
+    };
+    charger = {
+      governor = "performance";
+      turbo = "auto";
+    };
+  };
+
+  services.power-profiles-daemon.enable = false;
+  services.tlp.enable = false;
+
+  services.logind.settings = {
+    Login = {
+      HandleLidSwitch = "suspend";
+      HandleLidSwitchDocked = "ignore";
+      HandleLidSwitchExternalPower = "ignore";
+    };
+  };
+
   # --- User ---
   users.users.ergoash = {
     isNormalUser = true;
