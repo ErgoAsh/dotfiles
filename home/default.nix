@@ -7,9 +7,8 @@
   home.packages = with pkgs; [
     # Apps
     obsidian
-    discord
+    vesktop
     anki
-    flameshot
     (lib.lowPrio pcloud) # Explicitly lower permissions
     zotero
     fastfetch
@@ -18,6 +17,11 @@
     xournalpp
     hardinfo2
     steam
+    #flameshot
+    grim
+    slurp
+    swappy
+    wl-clipboard
 
     # # Media
     vlc
@@ -44,7 +48,329 @@
 
     yubioath-flutter
     yubikey-manager
+
+    # Hyprland
+    waybar
+    swww
+    gammastep
+    dunst
+    networkmanagerapplet
+    brightnessctl
   ];
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+
+    plugins = [
+      pkgs.hyprlandPlugins.hyprgrass
+    ];
+
+    # This imports your separate hyprland.conf file if you prefer it separate,
+    # OR you can put the config right here in 'settings'.
+    # Let's put it here for simplicity.
+    settings = {
+
+      # -- Startup --
+      exec-once = [
+        "waybar"
+        "swww init"
+        "nm-applet --indicator"
+        "dunst"
+        "gammastep"
+      ];
+
+      input = {
+        kb_layout = "pl";
+        follow_mouse = 1;
+
+        touchpad = {
+          natural_scroll = true;
+          tap-to-click = true;
+          disable_while_typing = true;
+        };
+
+        touchdevice = {
+          output = "eDP-1"; # Forces touch to internal laptop screen
+          transform = 0;
+        };
+      };
+
+      # -- Display --
+      monitor = ",preferred,auto,1"; # Auto-detect resolution
+
+      # -- General Look --
+      general = {
+        "$modifier" = "SUPER";
+        gaps_in = 5;
+        gaps_out = 10;
+        border_size = 2;
+        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        "col.inactive_border" = "rgba(595959aa)";
+        layout = "dwindle"; # The fancy tiling mode
+      };
+
+      # -- Decorations --
+      decoration = {
+        rounding = 5;
+        blur = {
+          enabled = true;
+          size = 3;
+          passes = 1;
+        };
+      };
+
+      cursor = {
+        sync_gsettings_theme = true;
+        no_hardware_cursors = 2; # change to 1 if want to disable
+        enable_hyprcursor = false;
+        warp_on_change_workspace = 2;
+        no_warps = true;
+      };
+
+      gestures = {
+        gesture = [ "3, horizontal, workspace" ];
+        workspace_swipe_distance = 500;
+        workspace_swipe_invert = true;
+        workspace_swipe_min_speed_to_force = 30;
+        workspace_swipe_cancel_ratio = 0.5;
+        workspace_swipe_create_new = true;
+        workspace_swipe_forever = true;
+      };
+
+      plugin = {
+        touch_gestures = {
+          # default sensitivity is 1.0
+          sensitivity = 4.0;
+
+          # must be >= 3
+          workspace_swipe_fingers = 3;
+
+          # switching workspaces by swiping from an edge
+          workspace_swipe_edge = "d"; # 'd' = down (swipe up from bottom)
+
+          # enable long-press to send right-click
+          long_press_delay = 400;
+        };
+      };
+
+      # -- KEYBINDINGS --
+      bind = [
+        # TODO clean
+
+        # Apps
+        "$modifier, Q, killactive,"
+        "$modifier, RETURN, exec, rio"
+        "$modifier, SPACE, exec, rofi -show drun"
+        "$modifier, E, exec, nnn" # File manager
+        "$modifier, B, exec, librewolf" # Browser
+
+        # Windows
+        "$modifier, V, togglefloating,"
+        "$modifier, F, fullscreen,"
+
+        # Focus
+        "$modifier, left, movefocus, l"
+        "$modifier, right, movefocus, r"
+        "$modifier, up, movefocus, u"
+        "$modifier, down, movefocus, d"
+
+        # ============= WORKSPACE OVERVIEW =============
+        "$modifier CTRL, D, exec, dock"
+        "$modifier, TAB, exec, qs ipc -c overview call overview toggle"
+
+        # ============= TERMINALS =============
+        # "$modifier, Return, exec, ${terminal}"
+
+        # ============= APPLICATION LAUNCHERS =============
+        "$modifier, K, exec, qs-keybinds"
+        "$modifier CTRL, C, exec, qs-cheatsheets"
+        "$modifier SHIFT, K, exec, list-keybinds"
+        "$modifier SHIFT, D, exec, discord"
+        "$modifier ALT, W, exec, web-search"
+        "$modifier SHIFT, W, exec, qs-wallpapers-apply"
+        "$modifier SHIFT, N, exec, swaync-client -rs"
+        # "$modifier, W, exec, ${browser}"
+        "$modifier, Y, exec, rio -e yazi"
+        "$modifier, E, exec, emopicker9000"
+        "$modifier, S, exec, screenshootin"
+
+        # ============= SCREENSHOTS =============
+        "$modifier CTRL, S, exec, hyprshot -m output -o $HOME/Pictures/ScreenShots"
+        "$modifier SHIFT, S, exec, hyprshot -m window -o $HOME/Pictures/ScreenShots"
+        "$modifier ALT, S, exec, hyprshot -m region -o $HOME/Pictures/ScreenShots"
+        "$modifier, O, exec, obs"
+        "$modifier ALT, C, exec, hyprpicker -a"
+        "$modifier, G, exec, gimp"
+        "$modifier SHIFT, T, exec, pypr toggle term"
+        "$modifier, T, exec, thunar"
+        "$modifier ALT, M, exec, ncpamixer"
+
+        # ============= WINDOW MANAGEMENT =============
+        "$modifier, Q, killactive,"
+        "$modifier, P, pseudo,"
+        "$modifier SHIFT, I, togglesplit,"
+        "$modifier, F, fullscreen,"
+        "$modifier SHIFT, F, togglefloating,"
+        "$modifier ALT, F, workspaceopt, allfloat"
+        "$modifier SHIFT, C, exit,"
+
+        # ============= WINDOW MOVEMENT (ARROW KEYS) =============
+        "$modifier SHIFT, left, movewindow, l"
+        "$modifier SHIFT, right, movewindow, r"
+        "$modifier SHIFT, up, movewindow, u"
+        "$modifier SHIFT, down, movewindow, d"
+
+        # ============= WINDOW MOVEMENT (VI STYLE) =============
+        "$modifier SHIFT, h, movewindow, l"
+        "$modifier SHIFT, l, movewindow, r"
+        "$modifier SHIFT, k, movewindow, u"
+        "$modifier SHIFT, j, movewindow, d"
+
+        # ============= WINDOW SWAPPING (ARROW KEYS) =============
+        "$modifier ALT, left, swapwindow, l"
+        "$modifier ALT, right, swapwindow, r"
+        "$modifier ALT, up, swapwindow, u"
+        "$modifier ALT, down, swapwindow, d"
+
+        # ============= WINDOW SWAPPING (VI KEYCODES) =============
+        "$modifier ALT, 43, swapwindow, l"
+        "$modifier ALT, 46, swapwindow, r"
+        "$modifier ALT, 45, swapwindow, u"
+        "$modifier ALT, 44, swapwindow, d"
+
+        # ============= FOCUS MOVEMENT (ARROW KEYS) =============
+        "$modifier, left, movefocus, l"
+        "$modifier, right, movefocus, r"
+        "$modifier, up, movefocus, u"
+        "$modifier, down, movefocus, d"
+
+        # ============= FOCUS MOVEMENT (VI STYLE) =============
+        "$modifier, h, movefocus, l"
+        "$modifier, l, movefocus, r"
+        "$modifier, k, movefocus, u"
+        "$modifier, j, movefocus, d"
+
+        # ============= WORKSPACE SWITCHING (1-10) =============
+        "$modifier, 1, workspace, 1"
+        "$modifier, 2, workspace, 2"
+        "$modifier, 3, workspace, 3"
+        "$modifier, 4, workspace, 4"
+        "$modifier, 5, workspace, 5"
+        "$modifier, 6, workspace, 6"
+        "$modifier, 7, workspace, 7"
+        "$modifier, 8, workspace, 8"
+        "$modifier, 9, workspace, 9"
+        "$modifier, 0, workspace, 10"
+
+        # ============= MOVE WINDOW TO WORKSPACE (1-10) =============
+        "$modifier SHIFT, SPACE, movetoworkspace, special"
+        "$modifier, SPACE, togglespecialworkspace"
+        "$modifier SHIFT, 1, movetoworkspace, 1"
+        "$modifier SHIFT, 2, movetoworkspace, 2"
+        "$modifier SHIFT, 3, movetoworkspace, 3"
+        "$modifier SHIFT, 4, movetoworkspace, 4"
+        "$modifier SHIFT, 5, movetoworkspace, 5"
+        "$modifier SHIFT, 6, movetoworkspace, 6"
+        "$modifier SHIFT, 7, movetoworkspace, 7"
+        "$modifier SHIFT, 8, movetoworkspace, 8"
+        "$modifier SHIFT, 9, movetoworkspace, 9"
+        "$modifier SHIFT, 0, movetoworkspace, 10"
+
+        # ============= WORKSPACE NAVIGATION =============
+        "$modifier CONTROL, right, workspace, e+1"
+        "$modifier CONTROL, left, workspace, e-1"
+        "$modifier, mouse_down, workspace, e+1"
+        "$modifier, mouse_up, workspace, e-1"
+
+        # ============= WINDOW CYCLING =============
+        "ALT, Tab, cyclenext"
+        "ALT, Tab, bringactivetotop"
+
+        # ============= MEDIA & HARDWARE CONTROLS =============
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioPlay, exec, playerctl play-pause"
+        ", XF86AudioPause, exec, playerctl play-pause"
+        ", XF86AudioNext, exec, playerctl next"
+        ", XF86AudioPrev, exec, playerctl previous"
+        ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
+        ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
+
+        # Screenshots (Simulating Flameshot behavior)
+        # Shift+PrintScreen -> Select area -> Opens Swappy editor
+        ", Print, exec, grim -g \"$(slurp)\" - | swappy -f -"
+      ];
+
+      # Move/Resize windows with mouse
+      bindm = [
+        "$modifier, mouse:272, movewindow"
+        "$modifier, mouse:273, resizewindow"
+      ];
+    };
+  };
+
+  # 2. Configure Night Mode (Gammastep)
+  services.gammastep = {
+    enable = true;
+    provider = "manual"; # Or "geoclue2" for auto-location
+    latitude = 52.2; # Example (Warsaw), change to yours!
+    longitude = 21.0;
+    temperature = {
+      day = 5700;
+      night = 3500; # Warm!
+    };
+    settings = {
+      general.adjustment-method = "wayland";
+    };
+  };
+
+  # 3. Configure Bar (Waybar)
+  # Basic setup to get you started
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        height = 30;
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ "clock" ];
+        modules-right = [
+          "network"
+          "cpu"
+          "memory"
+          "battery"
+          "tray"
+        ];
+
+        "hyprland/workspaces" = {
+          disable-scroll = true;
+          all-outputs = true;
+        };
+        "battery" = {
+          format = "{capacity}% {icon}";
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
+        };
+      };
+    };
+    style = ''
+      * {
+        font-family: "JetBrainsMono Nerd Font";
+        font-size: 13px;
+      }
+      window#waybar {
+        background-color: rgba(43, 48, 59, 0.9);
+        color: #ffffff;
+      }
+    '';
+  };
 
   programs.rofi = {
     enable = true;
@@ -337,23 +663,40 @@
           installation_mode = "force_installed";
         };
       };
+
+      SearchEngines = {
+        Default = "Google";
+        Add = [
+          {
+            Name = "Google";
+            URLTemplate = "https://www.google.com/search?q={searchTerms}";
+            Method = "GET";
+            IconURL = "https://www.google.com/favicon.ico";
+            Alias = "@g";
+          }
+        ];
+      };
     };
 
     profiles.ergoash = {
       isDefault = true;
 
       settings = {
+        "privacy.resistFingerprinting" = false;
+        "browser.privatebrowsing.autostart" = false;
+        "privacy.history.custom" = true;
+
         "browser.startup.homepage" = "https://google.com";
         "browser.search.region" = "PL";
         "browser.search.isUS" = false;
+        "librewolf.cfg.default_search_engine" = "Google";
 
         "browser.startup.page" = 3; # Resume previous session
-        "privacy.clearOnShutdown.sessions" = false;
-
         "network.cookie.lifetimePolicy" = 0;
 
         "privacy.clearOnShutdown.history" = false;
         "privacy.clearOnShutdown.cookies" = false;
+        "privacy.clearOnShutdown.sessions" = false;
         "privacy.sanitize.sanitizeOnShutdown" = false;
 
         "media.eme.enabled" = true;

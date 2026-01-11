@@ -29,15 +29,30 @@
   };
 
   # --- Desktop (Cinnamon) ---
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.cinnamon.enable = true;
-  services.xserver.xkb = {
-    layout = "pl";
-    variant = "";
-  };
+  # services.xserver.enable = true;
+  # services.xserver.displayManager.lightdm.enable = true;
+  # services.xserver.desktopManager.cinnamon.enable = true;
+  # services.xserver.xkb = {
+  #   layout = "pl";
+  #   variant = "";
+  # };
   console.keyMap = "pl2";
   programs.fish.enable = true;
+
+  programs.hyprland = {
+    enable = true;
+    #xwayland.enable = true; # For older apps like Discord/Steam
+  };
+
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    # Optional: Install a theme later, default is fine for now
+  };
+
+  # Keyring (Fixes "Enter Password" for WiFi/VS Code)
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
 
   # --- Audio & Services ---
   services.printing.enable = true;
@@ -49,6 +64,7 @@
     pulse.enable = true;
     jack.enable = true;
   };
+  services.libinput.enable = true;
 
   # --- Security and authentication ---
   services.pcscd.enable = true;
