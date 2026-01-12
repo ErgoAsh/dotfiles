@@ -17,7 +17,7 @@
     xournalpp
     hardinfo2
     steam
-    #flameshot
+    flameshot
     grim
     slurp
     swappy
@@ -30,6 +30,7 @@
     imv # image viewer
 
     # # Utils
+    psmisc # killall cmd
     xclip
     tree
     bat
@@ -45,6 +46,7 @@
     ncpamixer
     libqalculate
     libnotify
+    nerd-fonts.fira-code
 
     yubioath-flutter
     yubikey-manager
@@ -70,6 +72,13 @@
     # Let's put it here for simplicity.
     settings = {
 
+      windowrulev2 = [
+        # Syntax: "workspace [ID], class:^(AppClassName)$"
+        "workspace 1, title:(LibreWolf)"
+        "workspace 2, class:^(rio)$"
+        "workspace 5, class:^(vesktop)$" # Discord
+      ];
+
       # -- Startup --
       exec-once = [
         "waybar"
@@ -77,6 +86,11 @@
         "nm-applet --indicator"
         "dunst"
         "gammastep"
+        "flameshot"
+
+        "[workspace 1 silent] LibreWolf"
+        "[workspace 2 silent] rio"
+        "[workspace 5 silent] vesktop"
       ];
 
       input = {
@@ -117,6 +131,15 @@
           size = 3;
           passes = 1;
         };
+      };
+
+      animations = {
+        enabled = true;
+        bezier = [ "linear, 0.0, 0.0, 1.0, 1.0" ];
+
+        animation = [
+          "workspaces, 1, 5, default, fade"
+        ];
       };
 
       cursor = {
@@ -299,7 +322,10 @@
 
         # Screenshots (Simulating Flameshot behavior)
         # Shift+PrintScreen -> Select area -> Opens Swappy editor
-        ", Print, exec, grim -g \"$(slurp)\" - | swappy -f -"
+        #", Print, exec, grim -g \"$(slurp)\" - | swappy -f -"
+        #", Print, exec, grim -g \"$(slurp)\" /tmp/screenshot.png && swappy -f /tmp/screenshot.png"
+        ", Print, exec, XDG_CURRENT_DESKTOP=sway flameshot gui"
+        #", Print, exec, flameshot gui"
       ];
 
       # Move/Resize windows with mouse
@@ -310,12 +336,12 @@
     };
   };
 
-  # 2. Configure Night Mode (Gammastep)
+  # Configure night mode
   services.gammastep = {
     enable = true;
     provider = "manual"; # Or "geoclue2" for auto-location
-    latitude = 52.2; # Example (Warsaw), change to yours!
-    longitude = 21.0;
+    latitude = 51.246452;
+    longitude = 22.568445;
     temperature = {
       day = 5700;
       night = 3500; # Warm!
@@ -334,22 +360,106 @@
         layer = "top";
         position = "top";
         height = 30;
-        modules-left = [ "hyprland/workspaces" ];
-        modules-center = [ "clock" ];
+        modules-left = [
+          "hyprland/workspaces"
+        ];
         modules-right = [
-          "network"
+          "tray"
           "cpu"
           "memory"
+          "custom/disk"
           "battery"
-          "tray"
+          "clock"
         ];
 
-        "hyprland/workspaces" = {
-          disable-scroll = true;
-          all-outputs = true;
+        tooltip = {
+          enabled = true;
+          interval = 50;
         };
+
+        "tray" = {
+          icon-size = 16;
+          spacing = 10;
+        };
+
+        "clock" = {
+          # date (left) | time (middle) | icon (right)
+          format = "{:%Y-%m-%d | %H:%M }";
+
+          tooltip-format = "<span size='20pt'>{:%Y %B}</span>\n<tt><span size='16pt'>{calendar}</span></tt>";
+          calendar = {
+            mode = "month";
+            mode-mon-col = 3;
+            weeks-pos = "right";
+            on-scroll = 1;
+            format = {
+              months = "<span color='#ffead3'><b>{}</b></span>";
+              days = "<span color='#ecc6d9'><b>{}</b></span>";
+              weeks = "<span color='#99ffdd'><b>W{}</b></span>";
+              today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+            };
+          };
+          actions = {
+            on-click-right = "mode";
+            on-scroll-up = "shift_down";
+            on-scroll-down = "shift_up";
+          };
+        };
+
+        "cpu" = {
+          interval = 5;
+          format = "{usage}% "; # Value Left, Icon Right
+          tooltip = true;
+        };
+
+        "memory" = {
+          interval = 5;
+          format = "{}% "; # Value Left, Icon Right
+          tooltip-format = "RAM: {used:0.1f} GiB / {total:0.1f} GiB\nSwap: {swapUsed:0.1f} GiB / {swapTotal:0.1f} GiB";
+        };
+
+        "custom/disk" = {
+          interval = 30;
+          exec = "df -B1 / | awk 'NR==2 {printf \"%s (%.1f GiB / %.1f GiB)\", $5, $3/1073741824, $2/1073741824}'";
+          format = "{} ";
+          tooltip = true;
+          tooltip-format = "Mount point: /";
+        };
+
+        "disk" = {
+          interval = 30;
+          format = "{percentage_used}% ({used} / {total}) "; # Value Left, Icon Right
+          path = "/";
+          tooltip-format = "{used} used out of {total} on {path}";
+        };
+
+        "network" = {
+          # Value Left, Icon Right
+          format-ethernet = "{ipaddr} 󰈀";
+          format-wifi = "{essid} ({signalStrength}%) {icon}";
+          format-disconnected = "Disconnected 󰤮";
+
+          tooltip-format = "{ifname} via {gwaddr}";
+          format-icons = [
+            "󰤯"
+            "󰤟"
+            "󰤢"
+            "󰤥"
+            "󰤨"
+          ];
+          on-click = "nm-connection-editor";
+        };
+
         "battery" = {
-          format = "{capacity}% {icon}";
+          interval = 60;
+          states = {
+            warning = 30;
+            critical = 15;
+          };
+          # Shows: 80% (01:20) [Icon]
+          format = "{capacity}% ({time}) {icon}";
+          format-charging = "{capacity}% (Charging) {icon}";
+
           format-icons = [
             ""
             ""
@@ -357,19 +467,130 @@
             ""
             ""
           ];
+          tooltip-format = "{timeTo}";
+        };
+
+        "hyprland/workspaces" = {
+          disable-scroll = true;
+          all-outputs = true;
         };
       };
     };
+    # style = ''
+    #   * {
+    #     border: none;
+    #     border-radius: 0;
+    #     font-family: Source Code Pro;
+    #   }
+    #   window#waybar {
+    #     background: #16191C;
+    #     color: #AAB2BF;
+    #   }
+    #   #workspaces button {
+    #     padding: 0 5px;
+    #   }
+    # '';
     style = ''
-      * {
-        font-family: "JetBrainsMono Nerd Font";
-        font-size: 13px;
+            * {
+              border: none;
+              border-radius: 0;
+              /* Ensure the font matches what you installed! */
+              font-family: "FiraCode Nerd Font", "Fira Code", sans-serif;
+              min-height: 0;
+            }
+
+            window#waybar {
+              background: rgba(43, 48, 59, 0.9);
+              color: #ffffff;
+            }
+
+            #workspaces {
+          margin: 0;
+          padding: 0;
+          background: transparent;
       }
-      window#waybar {
-        background-color: rgba(43, 48, 59, 0.9);
-        color: #ffffff;
+
+      #workspaces button {
+          /* Vertical padding 0, Horizontal 10px */
+          padding: 0 10px;
+          margin: 0; 
+          border-radius: 0;
+          background-color: transparent;
+          color: #ffffff;
+          
+          /* Crucial: Forces button to fill the bar's height */
+          min-height: 30px; 
       }
+
+      #workspaces button:hover {
+          background: rgba(255, 255, 255, 0.2);
+          box-shadow: none; /* remove any weird shadow lines */
+      }
+
+      #workspaces button.active {
+          background-color: #64727D;
+          /* Optional: A line at the bottom to show it's active */
+          border-bottom: 3px solid #ffffff; 
+      }
+
+            /* Fix Spacing between modules on the right */
+            #clock,
+            #battery,
+            #cpu,
+            #disk,
+            #custom-disk,
+            #memory,
+            #disk,
+            #temperature,
+            #backlight,
+            #network,
+            #pulseaudio,
+            #custom-media,
+            #tray,
+            #mode,
+            #idle_inhibitor,
+            #scratchpad,
+            #mpd {
+              padding: 0 15px 0 10px;
+              margin: 0 4px;
+              color: #ffffff;
+              background-color: rgba(255, 255, 255, 0.1); /* Slight background to see bounds */
+              border-radius: 5px;
+            }
+
+            #battery.charging, #battery.plugged {
+              color: #ffffff;
+              background-color: #26A65B;
+            }
+
+            #battery.critical:not(.charging) {
+              background-color: #f53c3c;
+              animation-name: blink;
+              animation-duration: 0.5s;
+              animation-timing-function: linear;
+              animation-iteration-count: infinite;
+              animation-direction: alternate;
+            }
+
+            @keyframes blink {
+              to {
+                background-color: #ffffff;
+                color: #000000;
+              }
+            }
     '';
+  };
+
+  services.flameshot = {
+    # Also installs/enables flameshot
+    enable = true;
+    settings = {
+      General = {
+        useGrimAdapter = true;
+        # Stops warnings for using Grim
+        disabledGrimWarning = true;
+      };
+    };
   };
 
   programs.rofi = {
