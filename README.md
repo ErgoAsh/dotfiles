@@ -45,3 +45,8 @@ Remove NixOS garbage manually (automatic cleanup is set to every 7 days):
 ```shell
 sudo nix-collect-garbage -d
 ```
+
+Add downloaded Cisco Packet from Netacad (v8.2.2)
+```shell
+nix-store --add-fixed sha256 CiscoPacketTracer822_amd64_signed.deb
+```

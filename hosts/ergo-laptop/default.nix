@@ -9,9 +9,18 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  zramSwap = {
+    enable = true;
+    # Optional: Limit max RAM usage (default is 50%)
+    # memoryPercent = 50;
+  };
+
   # --- Networking ---
   networking.hostName = "ergo-laptop"; # MUST match flake entry name
   networking.networkmanager.enable = true;
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   # --- Locale & Time ---
   time.timeZone = "Europe/Warsaw";
@@ -47,12 +56,14 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    # Optional: Install a theme later, default is fine for now
+    theme = "catppuccin-mocha";
+    package = pkgs.kdePackages.sddm;
   };
 
   # Keyring (Fixes "Enter Password" for WiFi/VS Code)
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
+  security.pam.services.hyprlock = { };
 
   # --- Audio & Services ---
   services.printing.enable = true;
@@ -70,8 +81,11 @@
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
-  # --- Battery and performance ---
+  nixpkgs.config.permittedInsecurePackages = [
+    "ciscoPacketTracer8-8.2.2"
+  ];
 
+  # --- Battery and performance ---
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
     battery = {

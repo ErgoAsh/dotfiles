@@ -22,6 +22,10 @@
     slurp
     swappy
     wl-clipboard
+    pavucontrol
+    wdisplays
+
+    ciscoPacketTracer8
 
     # # Media
     vlc
@@ -32,6 +36,7 @@
     # # Utils
     psmisc # killall cmd
     xclip
+    ffmpeg
     tree
     bat
     eza
@@ -44,6 +49,7 @@
     unzip
     zip
     ncpamixer
+    blueman
     libqalculate
     libnotify
     nerd-fonts.fira-code
@@ -76,6 +82,7 @@
         # Syntax: "workspace [ID], class:^(AppClassName)$"
         "workspace 1, title:(LibreWolf)"
         "workspace 2, class:^(rio)$"
+        "workspace 4, class:^(obsidian)$"
         "workspace 5, class:^(vesktop)$" # Discord
       ];
 
@@ -87,9 +94,11 @@
         "dunst"
         "gammastep"
         "flameshot"
+        "hyprctl setcursor Bibata-Modern-Ice 24"
 
         "[workspace 1 silent] LibreWolf"
         "[workspace 2 silent] rio"
+        "[workspace 4 silent] obsidian"
         "[workspace 5 silent] vesktop"
       ];
 
@@ -184,8 +193,10 @@
         "$modifier, Q, killactive,"
         "$modifier, RETURN, exec, rio"
         "$modifier, SPACE, exec, rofi -show drun"
+        "$modifier, D, exec, rofi -show drun"
         "$modifier, E, exec, nnn" # File manager
         "$modifier, B, exec, librewolf" # Browser
+        "$modifier, L, exec, hyprlock"
 
         # Windows
         "$modifier, V, togglefloating,"
@@ -300,8 +311,8 @@
         "$modifier SHIFT, 0, movetoworkspace, 10"
 
         # ============= WORKSPACE NAVIGATION =============
-        "$modifier CONTROL, right, workspace, e+1"
-        "$modifier CONTROL, left, workspace, e-1"
+        "$modifier CTRL, left, movecurrentworkspacetomonitor, l"
+        "$modifier CTRL, right, movecurrentworkspacetomonitor, r"
         "$modifier, mouse_down, workspace, e+1"
         "$modifier, mouse_up, workspace, e-1"
 
@@ -351,6 +362,10 @@
     };
   };
 
+  # Optional: If you want to force specific mpris (media control) support
+  services.mpris-proxy.enable = true;
+  services.blueman-applet.enable = true;
+
   # 3. Configure Bar (Waybar)
   # Basic setup to get you started
   programs.waybar = {
@@ -360,21 +375,33 @@
         layer = "top";
         position = "top";
         height = 30;
+        fixed-center = false;
+
         modules-left = [
           "hyprland/workspaces"
         ];
+        modules-center = [
+          "hyprland/window"
+        ];
         modules-right = [
+          "bluetooth"
           "tray"
           "cpu"
           "memory"
           "custom/disk"
           "battery"
+          "pulseaudio"
           "clock"
         ];
 
         tooltip = {
           enabled = true;
           interval = 50;
+        };
+
+        "hyprland/window" = {
+          max-length = 75;
+          separate-outputs = true;
         };
 
         "tray" = {
@@ -386,7 +413,7 @@
           # date (left) | time (middle) | icon (right)
           format = "{:%Y-%m-%d | %H:%M }";
 
-          tooltip-format = "<span size='20pt'>{:%Y %B}</span>\n<tt><span size='16pt'>{calendar}</span></tt>";
+          tooltip-format = "<span size='24pt'>{:%Y %B}</span>\n<tt><span size='16pt'>{calendar}</span></tt>";
           calendar = {
             mode = "month";
             mode-mon-col = 3;
@@ -433,6 +460,40 @@
           tooltip-format = "{used} used out of {total} on {path}";
         };
 
+        "bluetooth" = {
+          format = "{icon}";
+          format-disabled = "󰂲";
+          format-off = "󰂲";
+          format-connected = ""; # Solid icon when connected (or {icon})
+
+          tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
+          tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
+          tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
+          on-click = "blueman-manager";
+        };
+
+        pulseaudio = {
+          format = "{volume}% {icon}";
+          format-bluetooth = "{volume}% {icon} ";
+          format-muted = "🔇";
+          format-icons = {
+            headphone = "";
+            hands-free = "";
+            headset = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = [
+              "🔈"
+              "🔉"
+              "🔊"
+            ];
+          };
+          scroll-step = 1;
+          on-click = "pavucontrol";
+          ignored-sinks = [ "Easy Effects Sink" ];
+        };
+
         "network" = {
           # Value Left, Icon Right
           format-ethernet = "{ipaddr} 󰈀";
@@ -459,6 +520,7 @@
           # Shows: 80% (01:20) [Icon]
           format = "{capacity}% ({time}) {icon}";
           format-charging = "{capacity}% (Charging) {icon}";
+          format-full = "{capacity}% {icon}";
 
           format-icons = [
             ""
@@ -472,113 +534,205 @@
 
         "hyprland/workspaces" = {
           disable-scroll = true;
-          all-outputs = true;
+          all-outputs = false;
         };
       };
     };
-    # style = ''
-    #   * {
-    #     border: none;
-    #     border-radius: 0;
-    #     font-family: Source Code Pro;
-    #   }
-    #   window#waybar {
-    #     background: #16191C;
-    #     color: #AAB2BF;
-    #   }
-    #   #workspaces button {
-    #     padding: 0 5px;
-    #   }
-    # '';
+
     style = ''
-            * {
-              border: none;
-              border-radius: 0;
-              /* Ensure the font matches what you installed! */
-              font-family: "FiraCode Nerd Font", "Fira Code", sans-serif;
-              min-height: 0;
-            }
+      * {
+        border: none;
+        border-radius: 0;
+        font-family: "FiraCode Nerd Font", "Fira Code", sans-serif;
+        min-height: 0;
+      }
 
-            window#waybar {
-              background: rgba(43, 48, 59, 0.9);
-              color: #ffffff;
-            }
+      window#waybar {
+        background: rgba(43, 48, 59, 0.9);
+        color: #ffffff;
+      }
 
-            #workspaces {
-          margin: 0;
-          padding: 0;
-          background: transparent;
+      #workspaces {
+        margin: 0;
+        padding: 0;
+        background: transparent;
       }
 
       #workspaces button {
-          /* Vertical padding 0, Horizontal 10px */
-          padding: 0 10px;
-          margin: 0; 
-          border-radius: 0;
-          background-color: transparent;
-          color: #ffffff;
-          
-          /* Crucial: Forces button to fill the bar's height */
-          min-height: 30px; 
+        /* Vertical padding 0, Horizontal 10px */
+        padding: 0 10px;
+        margin: 0;
+        border-radius: 0;
+        background-color: transparent;
+        color: #ffffff;
+
+        /* Crucial: Forces button to fill the bar's height */
+        min-height: 30px;
       }
 
       #workspaces button:hover {
-          background: rgba(255, 255, 255, 0.2);
-          box-shadow: none; /* remove any weird shadow lines */
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: none; /* remove any weird shadow lines */
       }
 
       #workspaces button.active {
-          background-color: #64727D;
-          /* Optional: A line at the bottom to show it's active */
-          border-bottom: 3px solid #ffffff; 
+        background-color: #64727d;
+        /* Optional: A line at the bottom to show it's active */
+        border-bottom: 3px solid #ffffff;
       }
 
-            /* Fix Spacing between modules on the right */
-            #clock,
-            #battery,
-            #cpu,
-            #disk,
-            #custom-disk,
-            #memory,
-            #disk,
-            #temperature,
-            #backlight,
-            #network,
-            #pulseaudio,
-            #custom-media,
-            #tray,
-            #mode,
-            #idle_inhibitor,
-            #scratchpad,
-            #mpd {
-              padding: 0 15px 0 10px;
-              margin: 0 4px;
-              color: #ffffff;
-              background-color: rgba(255, 255, 255, 0.1); /* Slight background to see bounds */
-              border-radius: 5px;
-            }
+      #clock,
+      #battery,
+      #cpu,
+      #disk,
+      #custom-disk,
+      #memory,
+      #disk,
+      #temperature,
+      #backlight,
+      #bluetooth #network,
+      #pulseaudio,
+      #custom-media,
+      #tray,
+      #mode,
+      #idle_inhibitor,
+      #scratchpad,
+      #mpd {
+        padding: 0 15px 0 10px;
+        margin: 0 4px;
+        color: #ffffff;
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.1
+        ); /* Slight background to see bounds */
+        border-radius: 5px;
+      }
 
-            #battery.charging, #battery.plugged {
-              color: #ffffff;
-              background-color: #26A65B;
-            }
+      #battery.charging,
+      #battery.plugged {
+        color: #ffffff;
+        background-color: #26a65b;
+      }
 
-            #battery.critical:not(.charging) {
-              background-color: #f53c3c;
-              animation-name: blink;
-              animation-duration: 0.5s;
-              animation-timing-function: linear;
-              animation-iteration-count: infinite;
-              animation-direction: alternate;
-            }
+      #battery.critical:not(.charging) {
+        background-color: #f53c3c;
+        animation-name: blink;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
 
-            @keyframes blink {
-              to {
-                background-color: #ffffff;
-                color: #000000;
-              }
-            }
+      @keyframes blink {
+        to {
+          background-color: #ffffff;
+          color: #000000;
+        }
+      }
+
+      #bluetooth {
+        color: #7f849c; /* Grey (Disconnected) */
+      }
+
+      #bluetooth.connected {
+        color: #89b4fa; /* Blue (Connected) */
+      }
+
+      #bluetooth.off,
+      #bluetooth.disabled {
+        color: #f38ba8; /* Red (Off/Disabled) */
+      }
     '';
+  };
+
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = {
+        no_fade_in = false;
+        grace = 0;
+        disable_loading_bar = true;
+      };
+
+      background = [
+        {
+          path = "screenshot"; # Keep the blurred screenshot, or change to "/path/to/wallpaper.jpg"
+          blur_passes = 2;
+          contrast = 0.8916;
+          brightness = 0.8172;
+          vibrancy = 0.1696;
+          vibrancy_darkness = 0.0;
+        }
+      ];
+
+      # INPUT FIELD
+      input-field = [
+        {
+          size = "250, 60";
+          position = "0, -20";
+          monitor = "";
+          dots_center = true;
+          fade_on_empty = false;
+          font_color = "rgb(202, 211, 245)";
+          inner_color = "rgb(91, 96, 120)";
+          outer_color = "rgb(24, 25, 38)";
+          outline_thickness = 5;
+          placeholder_text = "<i>Password...</i>";
+          shadow_passes = 2;
+        }
+      ];
+
+      # CLOCK LABEL
+      label = [
+        {
+          text = "$TIME";
+          color = "rgb(202, 211, 245)";
+          font_size = 65;
+          font_family = "JetBrains Mono";
+          position = "0, 100"; # Move up
+          halign = "center";
+          valign = "center";
+          shadow_passes = 2;
+        }
+      ];
+    };
+  };
+
+  services.hypridle = {
+    enable = true;
+    settings = {
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock"; # What to run when asked to lock
+        before_sleep_cmd = "loginctl lock-session"; # Lock BEFORE suspend
+        after_sleep_cmd = "hyprctl dispatch dpms on"; # Turn screen on when waking
+      };
+
+      listener = [
+        {
+          timeout = 150; # 2.5min
+          on-timeout = "brightnessctl -s set 10";
+          on-resume = "brightnessctl -r";
+        }
+        {
+          timeout = 300; # 5min
+          on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 330; # 5.5min
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+      ];
+    };
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    name = "Bibata-Modern-Ice";
+    package = pkgs.bibata-cursors;
+    size = 24;
   };
 
   services.flameshot = {
@@ -714,7 +868,7 @@
       dotfiles = "/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
       dot = "/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
       ll = "eza -ahl --no-user --time-style=long-iso --group-directories-first";
-      path = "echo $PATH | tr -s ':' '\n'";
+      paths = "echo $PATH | tr -s ':' '\n'";
       fonts = "fc-list : family | sort";
     };
 
@@ -767,6 +921,9 @@
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
+    options = [
+      "--cmd cd"
+    ];
   };
 
   programs.starship = {
@@ -794,9 +951,12 @@
   programs.rio = {
     enable = true;
     settings = {
+      confirm-before-quit = false;
       window = {
         width = 900;
         height = 600;
+        opacity = 0.5;
+        blur = true;
       };
     };
   };
