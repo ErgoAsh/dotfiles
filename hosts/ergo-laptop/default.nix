@@ -66,7 +66,6 @@
   security.pam.services.hyprlock = { };
 
   # --- Audio & Services ---
-  services.printing.enable = true;
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -76,6 +75,17 @@
     jack.enable = true;
   };
   services.libinput.enable = true;
+
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.gutenprint ];
+  };
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
 
   # --- Security and authentication ---
   services.pcscd.enable = true;

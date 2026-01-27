@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
+let
+  wallpaper = ../wallpapers/wallhaven-lyz3d2.png;
+in
 {
   home.username = "ergoash";
   home.homeDirectory = "/home/ergoash";
@@ -24,12 +27,13 @@
     wl-clipboard
     pavucontrol
     wdisplays
+    thunderbird
+    inputs.hytale-launcher.packages.${pkgs.system}.default
 
     ciscoPacketTracer8
 
     # # Media
     vlc
-    flameshot
     zathura
     imv # image viewer
 
@@ -80,7 +84,7 @@
 
       windowrulev2 = [
         # Syntax: "workspace [ID], class:^(AppClassName)$"
-        "workspace 1, title:(LibreWolf)"
+        "workspace 1, class:^(librewolf)$"
         "workspace 2, class:^(rio)$"
         "workspace 4, class:^(obsidian)$"
         "workspace 5, class:^(vesktop)$" # Discord
@@ -89,17 +93,19 @@
       # -- Startup --
       exec-once = [
         "waybar"
-        "swww init"
         "nm-applet --indicator"
         "dunst"
         "gammastep"
-        "flameshot"
         "hyprctl setcursor Bibata-Modern-Ice 24"
 
-        "[workspace 1 silent] LibreWolf"
-        "[workspace 2 silent] rio"
+        #"[workspace 1 silent] librewolf"
+        "librewolf"
         "[workspace 4 silent] obsidian"
         "[workspace 5 silent] vesktop"
+
+        "[workspace 2 silent] rio"
+
+        "swww-daemon --format xrgb & sleep 0.5 && swww img ${wallpaper}"
       ];
 
       input = {
@@ -865,8 +871,8 @@
     '';
 
     shellAliases = {
-      dotfiles = "/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
-      dot = "/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
+      dotfiles = "/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME";
+      dot = "/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME";
       ll = "eza -ahl --no-user --time-style=long-iso --group-directories-first";
       paths = "echo $PATH | tr -s ':' '\n'";
       fonts = "fc-list : family | sort";
@@ -955,7 +961,7 @@
       window = {
         width = 900;
         height = 600;
-        opacity = 0.5;
+        opacity = 0.75;
         blur = true;
       };
     };
