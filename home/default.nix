@@ -26,11 +26,22 @@ in
     swappy
     wl-clipboard
     pavucontrol
+    geany # change/fix
     wdisplays
+    ticktick
     thunderbird
-    inputs.hytale-launcher.packages.${pkgs.system}.default
+    spotify
+    zotero
+    jetbrains.pycharm
+    inputs.hytale-launcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 
+    teams-for-linux
     ciscoPacketTracer8
+    libreoffice-fresh
+
+    hunspell
+    hunspellDicts.en_US
+    hunspellDicts.pl_PL
 
     # # Media
     vlc
@@ -52,11 +63,15 @@ in
     btop
     unzip
     zip
+    playerctl
     ncpamixer
     blueman
     libqalculate
     libnotify
     nerd-fonts.fira-code
+    hyperfine
+    devenv
+    devbox
 
     yubioath-flutter
     yubikey-manager
@@ -65,7 +80,7 @@ in
     waybar
     swww
     gammastep
-    dunst
+    #dunst
     networkmanagerapplet
     brightnessctl
   ];
@@ -84,17 +99,23 @@ in
 
       windowrulev2 = [
         # Syntax: "workspace [ID], class:^(AppClassName)$"
-        "workspace 1, class:^(librewolf)$"
-        "workspace 2, class:^(rio)$"
-        "workspace 4, class:^(obsidian)$"
-        "workspace 5, class:^(vesktop)$" # Discord
+        "workspace 1 silent, class:^([Ll]ibre[Ww]olf)$"
+        "workspace 2, class:^([Rr]io)$"
+        "workspace 3 silent, class:^(jetbrains-.*)$" # PyCharm/IntelliJ
+        "workspace 3 silent, class:^(code-url-handler|code-oss|Code)$" # VSCode
+        "workspace 4 silent, class:^([Oo]bsidian)$"
+        "workspace 5 silent, class:^([Vv]esktop|[Dd]iscord)$"
+        "workspace 6 silent, class:^([Ss]potify)$"
+        "workspace 7 silent, class:^([Tt]hunderbird)$"
+        "workspace 8 silent, class:^([Zz]otero)$"
+        "workspace 9 silent, title:^([Tt]ick[Tt]ick).*$"
       ];
 
       # -- Startup --
       exec-once = [
         "waybar"
         "nm-applet --indicator"
-        "dunst"
+        #"dunst"
         "gammastep"
         "hyprctl setcursor Bibata-Modern-Ice 24"
 
@@ -102,8 +123,12 @@ in
         "librewolf"
         "[workspace 4 silent] obsidian"
         "[workspace 5 silent] vesktop"
+        "[workspace 6 silent] spotify"
+        "[workspace 7 silent] thunderbird"
+        "[workspace 8 silent] zotero"
+        "[workspace 9 silent] ticktick"
 
-        "[workspace 2 silent] rio"
+        "[workspace 2 silent] wezterm"
 
         "swww-daemon --format xrgb & sleep 0.5 && swww img ${wallpaper}"
       ];
@@ -197,10 +222,10 @@ in
 
         # Apps
         "$modifier, Q, killactive,"
-        "$modifier, RETURN, exec, rio"
+        "$modifier, RETURN, exec, wezterm"
         "$modifier, SPACE, exec, rofi -show drun"
         "$modifier, D, exec, rofi -show drun"
-        "$modifier, E, exec, nnn" # File manager
+        "$modifier, E, exec, thunar" # File manager
         "$modifier, B, exec, librewolf" # Browser
         "$modifier, L, exec, hyprlock"
 
@@ -230,7 +255,7 @@ in
         "$modifier SHIFT, W, exec, qs-wallpapers-apply"
         "$modifier SHIFT, N, exec, swaync-client -rs"
         # "$modifier, W, exec, ${browser}"
-        "$modifier, Y, exec, rio -e yazi"
+        "$modifier, Y, exec, wezterm -e yazi"
         "$modifier, E, exec, emopicker9000"
         "$modifier, S, exec, screenshootin"
 
@@ -337,12 +362,14 @@ in
         ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
         ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
 
+        "SUPER, F8, exec, ${pkgs.playerctl}/bin/playerctl -p spotify play-pause"
+
         # Screenshots (Simulating Flameshot behavior)
         # Shift+PrintScreen -> Select area -> Opens Swappy editor
         #", Print, exec, grim -g \"$(slurp)\" - | swappy -f -"
         #", Print, exec, grim -g \"$(slurp)\" /tmp/screenshot.png && swappy -f /tmp/screenshot.png"
-        ", Print, exec, XDG_CURRENT_DESKTOP=sway flameshot gui"
         #", Print, exec, flameshot gui"
+        ", Print, exec, XDG_CURRENT_DESKTOP=sway flameshot gui"
       ];
 
       # Move/Resize windows with mouse
@@ -541,6 +568,36 @@ in
         "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = false;
+
+          format = "{icon}";
+          on-click = "activate";
+
+          format-icons = {
+            "1" = ""; # LibreWolf
+            "2" = ""; # Terminal
+            "3" = ""; # Code
+            "4" = ""; # Obsidian/Notes
+            "5" = "💬"; # Discord
+            "6" = ""; # Spotify
+            "7" = ""; # Thunderbird
+            "8" = ""; # Obsidian
+            "9" = ""; # TickTick (Task Icon)
+            "default" = "";
+          };
+
+          persistent-workspaces = {
+            "*" = [
+              1
+              2
+              3
+              4
+              5
+              6
+              7
+              8
+              9
+            ];
+          };
         };
       };
     };
@@ -651,6 +708,45 @@ in
         color: #f38ba8; /* Red (Off/Disabled) */
       }
     '';
+  };
+
+  services.mako = {
+    enable = true;
+    settings = {
+      anchor = "top-right";
+      width = 350;
+      height = 150;
+      margin = "20";
+      padding = "15";
+      border-size = 2;
+      border-radius = 8;
+
+      font = "FiraCode Nerd Font 12";
+      icons = true;
+      max-icon-size = 48;
+
+      background-color = "#1e1e2eff";
+      text-color = "#cdd6f4ff";
+      border-color = "#89b4faff";
+      progress-color = "over #313244ff";
+
+      default-timeout = 5000;
+      ignore-timeout = false;
+      group-by = "app-name";
+
+      "urgency=low" = {
+        border-color = "#a6e3a1ff";
+      };
+
+      "urgency=normal" = {
+        border-color = "#89b4faff";
+      };
+
+      "urgency=critical" = {
+        border-color = "#f38ba8ff";
+        default-timeout = 0;
+      };
+    };
   };
 
   programs.hyprlock = {
@@ -864,15 +960,14 @@ in
         bass source ~/.cache/wal/colors-tty.sh
       end
 
-      # Greeting
       function fish_greeting
-        # fortune | lolcat # Uncomment if you install fortune/lolcat
+        fastfetch
       end
     '';
 
     shellAliases = {
-      dotfiles = "/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME";
-      dot = "/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME";
+      dotfiles = "git --git-dir=$HOME/dotfiles --work-tree=$HOME";
+      dot = "git --git-dir=$HOME/dotfiles --work-tree=$HOME";
       ll = "eza -ahl --no-user --time-style=long-iso --group-directories-first";
       paths = "echo $PATH | tr -s ':' '\n'";
       fonts = "fc-list : family | sort";
@@ -887,6 +982,7 @@ in
       calc = "qalc";
       c = "qalc";
       vi = "hx";
+      neofetch = "fastfetch";
 
       rebuild = "sudo nixos-rebuild switch --flake .#$hostname";
     };
@@ -954,17 +1050,19 @@ in
   };
 
   # --- Terminal ---
-  programs.rio = {
+  programs.wezterm = {
     enable = true;
-    settings = {
-      confirm-before-quit = false;
-      window = {
-        width = 900;
-        height = 600;
-        opacity = 0.75;
-        blur = true;
-      };
-    };
+    extraConfig = ''
+      local wezterm = require 'wezterm'
+      return {
+        font = wezterm.font 'FiraCode Nerd Font',
+        font_size = 12.0,
+        color_scheme = 'Catppuccin Mocha',
+        window_background_opacity = 0.75,
+        enable_tab_bar = true,
+        window_close_confirmation = 'NeverPrompt',
+      }
+    '';
   };
 
   # --- Editor ---

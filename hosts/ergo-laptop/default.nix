@@ -7,12 +7,26 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 1; # 96 MB EFI partition :C
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   zramSwap = {
     enable = true;
     # Optional: Limit max RAM usage (default is 50%)
     # memoryPercent = 50;
+  };
+
+  # --- Hardware specific ---
+  hardware.enableRedistributableFirmware = true;
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+
+    extraPackages = with pkgs; [
+      # OpenCL support
+      rocmPackages.clr
+      rocmPackages.rocminfo
+    ];
   };
 
   # --- Networking ---
@@ -59,6 +73,17 @@
     theme = "catppuccin-mocha";
     package = pkgs.kdePackages.sddm;
   };
+
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+      thunar-volman
+    ];
+  };
+
+  services.gvfs.enable = true; # Mount, Trash, and other file system services
+  services.tumbler.enable = true; # Thumbnail support for images
 
   # Keyring (Fixes "Enter Password" for WiFi/VS Code)
   services.gnome.gnome-keyring.enable = true;
@@ -136,6 +161,8 @@
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
+
+  services.fstrim.enable = true;
 
   # --- System Settings ---
   nixpkgs.config.allowUnfree = true;
