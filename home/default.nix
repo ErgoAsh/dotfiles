@@ -33,10 +33,10 @@ in
     spotify
     zotero
     jetbrains.pycharm
-    inputs.hytale-launcher.packages.${pkgs.stdenv.hostPlatform.system}.default
+    #inputs.hytale-launcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     teams-for-linux
-    ciscoPacketTracer8
+    #ciscoPacketTracer8
     libreoffice-fresh
 
     hunspell

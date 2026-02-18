@@ -34,11 +34,29 @@
               home-manager.users.ergoash = import ./home/default.nix;
 
               home-manager.extraSpecialArgs = { inherit inputs; };
-
               home-manager.backupFileExtension = "backup";
             }
           ];
         };
+
+        # Host: ergo-pc
+        ergo-pc = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/ergo-pc/new_default.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.ergoash = import ./home/new_default.nix;
+
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.backupFileExtension = "backup";
+            }
+          ];
+        };
+
       };
     };
 }
