@@ -33,6 +33,7 @@ in
     spotify
     zotero
     jetbrains.pycharm
+    jetbrains.clion
     #inputs.hytale-launcher.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     teams-for-linux
@@ -133,6 +134,35 @@ in
         "swww-daemon --format xrgb & sleep 0.5 && swww img ${wallpaper}"
       ];
 
+      monitor = [
+        # LEFT: LG Small (1280x1024 native)
+        "desc:LG Electronics L1740P 0x00016B3F, 1280x1024@60, 0x0, 1"
+
+        # MIDDLE: Synaptics (Forced to 1920x1080)
+        "desc:Synaptics Inc Non-PnP 0x00BC614E, 1920x1080@60, 1280x0, 1"
+
+        # RIGHT: Laptop (1920x1200 native)
+        "desc:BOE 0x0A2A, 1920x1200@60, 3200x0, 1"
+      ];
+
+      workspace = [
+        # --- LEFT MONITOR (Small LG) -> 4, 8, 0 ---
+        "3, monitor:desc:LG Electronics L1740P 0x00016B3F"
+        "4,  monitor:desc:LG Electronics L1740P 0x00016B3F"
+        "8,  monitor:desc:LG Electronics L1740P 0x00016B3F"
+        "9,  monitor:desc:LG Electronics L1740P 0x00016B3F, default:true"
+        "10, monitor:desc:LG Electronics L1740P 0x00016B3F"
+
+        # --- MIDDLE MONITOR (Synaptics) -> 1, 3 ---
+        "1, monitor:desc:Synaptics Inc Non-PnP 0x00BC614E, default:true"
+
+        # --- RIGHT MONITOR (Laptop) -> 2, 5, 6, 7 ---
+        "2, monitor:desc:BOE 0x0A2A, default:true"
+        "5, monitor:desc:BOE 0x0A2A"
+        "6, monitor:desc:BOE 0x0A2A"
+        "7, monitor:desc:BOE 0x0A2A"
+      ];
+
       input = {
         kb_layout = "pl";
         follow_mouse = 1;
@@ -149,27 +179,28 @@ in
         };
       };
 
-      # -- Display --
-      monitor = ",preferred,auto,1"; # Auto-detect resolution
-
       # -- General Look --
       general = {
         "$modifier" = "SUPER";
         gaps_in = 5;
         gaps_out = 10;
-        border_size = 2;
+        border_size = 4;
         "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
         "col.inactive_border" = "rgba(595959aa)";
-        layout = "dwindle"; # The fancy tiling mode
+        layout = "dwindle";
       };
 
       # -- Decorations --
       decoration = {
-        rounding = 5;
+        rounding = 2;
         blur = {
           enabled = true;
           size = 3;
           passes = 1;
+        };
+
+        shadow = {
+          enabled = false;
         };
       };
 
@@ -404,20 +435,17 @@ in
   programs.waybar = {
     enable = true;
     settings = {
+
       mainBar = {
         layer = "top";
         position = "top";
         height = 30;
-        fixed-center = false;
+        output = "DP-8";
+        "fixed-center" = false;
 
-        modules-left = [
-          "hyprland/workspaces"
-        ];
-        modules-center = [
-          "hyprland/window"
-        ];
-        modules-right = [
-          "bluetooth"
+        "modules-left" = [ "hyprland/workspaces" ];
+        "modules-center" = [ "hyprland/window" ];
+        "modules-right" = [
           "tray"
           "cpu"
           "memory"
@@ -427,31 +455,46 @@ in
           "clock"
         ];
 
-        tooltip = {
-          enabled = true;
-          interval = 50;
+        "hyprland/workspaces" = {
+          "disable-scroll" = true;
+          "all-outputs" = false;
+          "show-special" = true;
+          format = "{icon}";
+          "on-click" = "activate";
+
+          "persistent-workspaces" = {
+            "DP-8" = [
+              1
+              3
+            ];
+          };
+
+          "format-icons" = {
+            "1" = "";
+            "3" = "";
+            "default" = "";
+          };
         };
 
         "hyprland/window" = {
-          max-length = 75;
-          separate-outputs = true;
+          "max-length" = 75;
+          "separate-outputs" = true;
         };
 
         "tray" = {
-          icon-size = 16;
+          "icon-size" = 16;
           spacing = 10;
         };
 
         "clock" = {
-          # date (left) | time (middle) | icon (right)
           format = "{:%Y-%m-%d | %H:%M }";
-
-          tooltip-format = "<span size='24pt'>{:%Y %B}</span>\n<tt><span size='16pt'>{calendar}</span></tt>";
+          "tooltip-format" =
+            "<span size='24pt'>{:%Y %B}</span>\n<tt><span size='16pt'>{calendar}</span></tt>";
           calendar = {
             mode = "month";
-            mode-mon-col = 3;
-            weeks-pos = "right";
-            on-scroll = 1;
+            "mode-mon-col" = 3;
+            "weeks-pos" = "right";
+            "on-scroll" = 1;
             format = {
               months = "<span color='#ffead3'><b>{}</b></span>";
               days = "<span color='#ecc6d9'><b>{}</b></span>";
@@ -460,22 +503,23 @@ in
             };
           };
           actions = {
-            on-click-right = "mode";
-            on-scroll-up = "shift_down";
-            on-scroll-down = "shift_up";
+            "on-click-right" = "mode";
+            "on-scroll-up" = "shift_down";
+            "on-scroll-down" = "shift_up";
           };
         };
 
         "cpu" = {
           interval = 5;
-          format = "{usage}% "; # Value Left, Icon Right
+          format = "{usage}% ";
           tooltip = true;
         };
 
         "memory" = {
           interval = 5;
-          format = "{}% "; # Value Left, Icon Right
-          tooltip-format = "RAM: {used:0.1f} GiB / {total:0.1f} GiB\nSwap: {swapUsed:0.1f} GiB / {swapTotal:0.1f} GiB";
+          format = "{}% ";
+          "tooltip-format" =
+            "RAM: {used:0.1f} GiB / {total:0.1f} GiB\nSwap: {swapUsed:0.1f} GiB / {swapTotal:0.1f} GiB";
         };
 
         "custom/disk" = {
@@ -483,35 +527,16 @@ in
           exec = "df -B1 / | awk 'NR==2 {printf \"%s (%.1f GiB / %.1f GiB)\", $5, $3/1073741824, $2/1073741824}'";
           format = "{} ";
           tooltip = true;
-          tooltip-format = "Mount point: /";
-        };
-
-        "disk" = {
-          interval = 30;
-          format = "{percentage_used}% ({used} / {total}) "; # Value Left, Icon Right
-          path = "/";
-          tooltip-format = "{used} used out of {total} on {path}";
-        };
-
-        "bluetooth" = {
-          format = "{icon}";
-          format-disabled = "󰂲";
-          format-off = "󰂲";
-          format-connected = ""; # Solid icon when connected (or {icon})
-
-          tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
-          tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
-          tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
-          on-click = "blueman-manager";
+          "tooltip-format" = "Mount point: /";
         };
 
         pulseaudio = {
           format = "{volume}% {icon}";
-          format-bluetooth = "{volume}% {icon} ";
-          format-muted = "🔇";
-          format-icons = {
+          "format-bluetooth" = "{volume}% {icon} ";
+          "format-muted" = "🔇";
+          "format-icons" = {
             headphone = "";
-            hands-free = "";
+            "hands-free" = "";
             headset = "";
             phone = "";
             portable = "";
@@ -522,26 +547,24 @@ in
               "🔊"
             ];
           };
-          scroll-step = 1;
-          on-click = "pavucontrol";
-          ignored-sinks = [ "Easy Effects Sink" ];
+          "scroll-step" = 1;
+          "on-click" = "pavucontrol";
+          "ignored-sinks" = [ "Easy Effects Sink" ];
         };
 
         "network" = {
-          # Value Left, Icon Right
-          format-ethernet = "{ipaddr} 󰈀";
-          format-wifi = "{essid} ({signalStrength}%) {icon}";
-          format-disconnected = "Disconnected 󰤮";
-
-          tooltip-format = "{ifname} via {gwaddr}";
-          format-icons = [
+          "format-ethernet" = "{ipaddr} 󰈀";
+          "format-wifi" = "{essid} ({signalStrength}%) {icon}";
+          "format-disconnected" = "Disconnected 󰤮";
+          "tooltip-format" = "{ifname} via {gwaddr}";
+          "format-icons" = [
             "󰤯"
             "󰤟"
             "󰤢"
             "󰤥"
             "󰤨"
           ];
-          on-click = "nm-connection-editor";
+          "on-click" = "nm-connection-editor";
         };
 
         "battery" = {
@@ -550,58 +573,73 @@ in
             warning = 30;
             critical = 15;
           };
-          # Shows: 80% (01:20) [Icon]
           format = "{capacity}% ({time}) {icon}";
-          format-charging = "{capacity}% (Charging) {icon}";
-          format-full = "{capacity}% {icon}";
-
-          format-icons = [
+          "format-charging" = "{capacity}% (Charging) {icon}";
+          "format-full" = "{capacity}% {icon}";
+          "format-icons" = [
             ""
             ""
             ""
             ""
             ""
           ];
-          tooltip-format = "{timeTo}";
+          "tooltip-format" = "{timeTo}";
         };
+      };
+
+      sideBar = {
+        layer = "top";
+        position = "top";
+        height = 30;
+        output = [
+          "DP-9"
+          "eDP-1"
+        ];
+        "fixed-center" = false;
+
+        "modules-left" = [ "hyprland/workspaces" ];
+        "modules-center" = [ ];
+        "modules-right" = [ "clock" ];
 
         "hyprland/workspaces" = {
-          disable-scroll = true;
-          all-outputs = false;
-
+          "disable-scroll" = true;
+          "all-outputs" = false;
           format = "{icon}";
-          on-click = "activate";
+          "on-click" = "activate";
 
-          format-icons = {
-            "1" = ""; # LibreWolf
-            "2" = ""; # Terminal
-            "3" = ""; # Code
-            "4" = ""; # Obsidian/Notes
-            "5" = "💬"; # Discord
-            "6" = ""; # Spotify
-            "7" = ""; # Thunderbird
-            "8" = ""; # Obsidian
-            "9" = ""; # TickTick (Task Icon)
-            "default" = "";
-          };
-
-          persistent-workspaces = {
-            "*" = [
-              1
-              2
-              3
+          "persistent-workspaces" = {
+            "DP-9" = [
               4
+              8
+              10
+            ];
+            "eDP-1" = [
+              2
               5
               6
               7
-              8
-              9
             ];
           };
+
+          "format-icons" = {
+            "2" = "";
+            "4" = "";
+            "5" = "💬";
+            "6" = "";
+            "7" = "";
+            "8" = "";
+            "9" = "";
+            "default" = "";
+          };
+        };
+
+        "clock" = {
+          format = "{:%H:%M}";
+          tooltip = false;
         };
       };
-    };
 
+    };
     style = ''
       * {
         border: none;
@@ -622,25 +660,22 @@ in
       }
 
       #workspaces button {
-        /* Vertical padding 0, Horizontal 10px */
         padding: 0 10px;
         margin: 0;
         border-radius: 0;
         background-color: transparent;
         color: #ffffff;
-
-        /* Crucial: Forces button to fill the bar's height */
         min-height: 30px;
+        border-bottom: 3px solid transparent;
       }
 
       #workspaces button:hover {
         background: rgba(255, 255, 255, 0.2);
-        box-shadow: none; /* remove any weird shadow lines */
+        box-shadow: none;
       }
 
       #workspaces button.active {
         background-color: #64727d;
-        /* Optional: A line at the bottom to show it's active */
         border-bottom: 3px solid #ffffff;
       }
 
@@ -650,10 +685,9 @@ in
       #disk,
       #custom-disk,
       #memory,
-      #disk,
       #temperature,
       #backlight,
-      #bluetooth #network,
+      #network,
       #pulseaudio,
       #custom-media,
       #tray,
@@ -664,13 +698,10 @@ in
         padding: 0 15px 0 10px;
         margin: 0 4px;
         color: #ffffff;
-        background-color: rgba(
-          255,
-          255,
-          255,
-          0.1
-        ); /* Slight background to see bounds */
+        background-color: rgba(255, 255, 255, 0.1);
         border-radius: 5px;
+        min-height: 30px;
+        border-bottom: 3px solid transparent; 
       }
 
       #battery.charging,
@@ -693,19 +724,6 @@ in
           background-color: #ffffff;
           color: #000000;
         }
-      }
-
-      #bluetooth {
-        color: #7f849c; /* Grey (Disconnected) */
-      }
-
-      #bluetooth.connected {
-        color: #89b4fa; /* Blue (Connected) */
-      }
-
-      #bluetooth.off,
-      #bluetooth.disabled {
-        color: #f38ba8; /* Red (Off/Disabled) */
       }
     '';
   };
@@ -1059,7 +1077,7 @@ in
         font_size = 12.0,
         color_scheme = 'Catppuccin Mocha',
         window_background_opacity = 0.75,
-        enable_tab_bar = true,
+        enable_tab_bar = false,
         window_close_confirmation = 'NeverPrompt',
       }
     '';
@@ -1123,7 +1141,7 @@ in
   # --- Browser ---
   programs.firefox = {
     enable = true;
-    package = pkgs.librewolf; # Using LibreWolf instead of standard Firefox
+    package = pkgs.librewolf;
 
     policies = {
       DisableTelemetry = true;
@@ -1139,25 +1157,49 @@ in
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
           installation_mode = "force_installed";
         };
+
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+          installation_mode = "force_installed";
+        };
+
         "tridactyl.vim@cmcaine.co.uk" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/tridactyl-vim/latest.xpi";
           installation_mode = "force_installed";
         };
-        "bitwarden-password-manager@bitwarden.com" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+
+        "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/return-youtube-dislikes/latest.xpi";
+          installation_mode = "force_installed";
+        };
+
+        "sponsorBlocker@ajay.app" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi";
+          installation_mode = "force_installed";
+        };
+
+        "zotero@chnm.gmu.edu" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/zotero-connector/latest.xpi";
+          installation_mode = "force_installed";
+        };
+
+        "besttimetracker@example.com" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/besttimetracker/latest.xpi";
           installation_mode = "force_installed";
         };
       };
 
       SearchEngines = {
-        Default = "Google";
+        Default = "Google Search";
+        PreventInstalls = false;
         Add = [
           {
-            Name = "Google";
+            Name = "Google Search";
             URLTemplate = "https://www.google.com/search?q={searchTerms}";
             Method = "GET";
             IconURL = "https://www.google.com/favicon.ico";
             Alias = "@g";
+            Description = "Google Search";
           }
         ];
       };
@@ -1166,17 +1208,26 @@ in
     profiles.ergoash = {
       isDefault = true;
 
+      userContent = ''
+        * {
+          scrollbar-width: auto !important;
+          scrollbar-color: #888888 #1a1a1a !important;
+        }
+      '';
+
       settings = {
+        "widget.gtk.overlay-scrollbars.enabled" = false;
+        "widget.non-native-theme.scrollbar.size.override" = 24;
+        "widget.non-native-theme.scrollbar.style" = 4;
+
+        "keyword.enabled" = true;
+        "browser.search.widget.inNavBar" = true;
+        "browser.urlbar.suggest.searches" = true;
+
         "privacy.resistFingerprinting" = false;
         "browser.privatebrowsing.autostart" = false;
         "privacy.history.custom" = true;
-
         "browser.startup.homepage" = "https://google.com";
-        "browser.search.region" = "PL";
-        "browser.search.isUS" = false;
-        "librewolf.cfg.default_search_engine" = "Google";
-
-        "browser.startup.page" = 3; # Resume previous session
         "network.cookie.lifetimePolicy" = 0;
 
         "privacy.clearOnShutdown.history" = false;
@@ -1187,6 +1238,10 @@ in
         "media.eme.enabled" = true;
         "media.gmp-widevinecdm.visible" = true;
         "media.gmp-widevinecdm.enabled" = true;
+
+        "browser.safebrowsing.malware.enabled" = true;
+        "browser.safebrowsing.phishing.enabled" = true;
+        "browser.safebrowsing.blockedURIs.enabled" = true;
       };
     };
   };

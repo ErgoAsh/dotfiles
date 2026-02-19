@@ -103,7 +103,14 @@
 
   services.printing = {
     enable = true;
-    drivers = [ pkgs.gutenprint ];
+    drivers = with pkgs; [
+      gutenprint
+      gutenprintBin
+      foomatic-db
+      #foomatic-db-ppds-with-nonfree-db
+      #foomatic-db-ppds-withNonfreeDb
+      brlaser
+    ];
   };
 
   services.avahi = {
