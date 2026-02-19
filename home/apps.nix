@@ -17,6 +17,14 @@
     teams-for-linux
     libreoffice-fresh
 
+    openrgb-with-all-plugins
+    mission-center
+
+    # --- Music ---
+    ardour
+    qpwgraph
+    sfizz-ui
+
     # --- Chat & social ---
     vesktop
     teams-for-linux
@@ -35,7 +43,14 @@
     tridactyl-native
   ];
 
-  # --- Browser ---
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = [ "thunar.desktop" ];
+    };
+  };
+
+  # --- Browser (LibreWolf) ---
   programs.firefox = {
     enable = true;
     package = pkgs.librewolf;

@@ -37,6 +37,33 @@
     jack.enable = true;
   };
 
+  security.pam.loginLimits = [
+    {
+      domain = "@audio";
+      item = "memlock";
+      type = "-";
+      value = "unlimited";
+    }
+    {
+      domain = "@audio";
+      item = "rtprio";
+      type = "-";
+      value = "99";
+    }
+    {
+      domain = "@audio";
+      item = "nofile";
+      type = "soft";
+      value = "99999";
+    }
+    {
+      domain = "@audio";
+      item = "nofile";
+      type = "hard";
+      value = "99999";
+    }
+  ];
+
   # --- File Management Services ---
   # Thunar is here because it often requires system services (GVFS/Tumbler)
   # to work correctly for mounting drives.

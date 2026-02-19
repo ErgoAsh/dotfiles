@@ -24,6 +24,10 @@
 
   # Use the Zen kernel for better desktop responsiveness
   boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelModules = [
+    "i2c-dev"
+    "i2c-piix4"
+  ];
 
   # --- Graphics (AMD specific) ---
   boot.initrd.kernelModules = [ "amdgpu" ];
@@ -59,6 +63,8 @@
   # Disable conflicting power services
   services.power-profiles-daemon.enable = false;
   services.tlp.enable = false;
+
+  services.hardware.openrgb.enable = true;
 
   # --- Storage Optimization ---
   # Enable ZRAM (swap in RAM)

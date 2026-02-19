@@ -46,6 +46,7 @@
       "wheel"
       "video"
       "audio"
+      "realtime"
     ];
     shell = pkgs.fish;
   };

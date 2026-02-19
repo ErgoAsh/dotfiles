@@ -49,8 +49,6 @@
       set fish_cursor_replace_one underscore blink
       set fish_cursor_visual block
 
-      fzf_configure_bindings --git_status=\cs --git_log=\cg --history=\ch --variables=\cv --processes=\cp --directory=\cf
-
       if test -e ~/.cache/wal/sequences
         cat ~/.cache/wal/sequences
       end
@@ -61,6 +59,14 @@
       function fish_greeting
         fastfetch
       end
+    '';
+
+    functions.fish_user_key_bindings = ''
+      fzf_configure_bindings --git_status=\cs --git_log=\cg --history=\ch --variables=\e\cv --processes=\cp --directory=\cf
+
+      bind --erase \cv
+      bind -M insert --erase \cv
+      bind -M default --erase \cv
     '';
 
     shellAliases = {

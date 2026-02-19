@@ -43,6 +43,25 @@ in
         "workspace 8 silent, class:^([Zz]otero)$"
         "workspace 9 silent, title:^([Tt]ick[Tt]ick).*$"
 
+        # Float Steam
+        # Default to floating for ALL Steam windows
+        "float, class:^(steam)$"
+        "noshadow, class:^(steam)$, title:^(^$)$" # Empty titles are often menus
+        # Force the main window (and Big Picture) to tile
+        "tile, class:^(steam)$, title:^(Steam)$"
+        "tile, class:^(steam)$, title:^(Big Picture)$"
+
+        # Float Bitwarden window
+        "float, class:^(librewolf)$, title:^(Extension:.*)$"
+        "size 450 650, class:^(librewolf)$, title:^(Extension:.*)$"
+        "center, class:^(librewolf)$, title:^(Extension:.*)$"
+        "float, title:(Bitwarden Password Manager)"
+
+        # Float file manager
+        "float, class:^([Tt]hunar)$"
+        "center, class:^([Tt]hunar)$"
+        "size 900 600, class:^([Tt]hunar)$"
+
         # Float volume control (pavucontrol)
         "float, class:^(pavucontrol|org.pulseaudio.pavucontrol)$"
         "size 800 600, class:^(pavucontrol|org.pulseaudio.pavucontrol)$"
@@ -281,6 +300,11 @@ in
         "$modifier, mouse:272, movewindow"
         "$modifier, mouse:273, resizewindow"
       ];
+
+      env = [
+        "LV2_PATH, /etc/profiles/per-user/ergoash/lib/lv2:/run/current-system/sw/lib/lv2"
+        "VST_PATH, /etc/profiles/per-user/ergoash/lib/vst:/run/current-system/sw/lib/vst"
+      ];
     };
   };
 
@@ -326,6 +350,8 @@ in
         modules-center = [ "hyprland/window" ];
         modules-right = [
           "tray"
+          "temperature#cpu"
+          "temperature#gpu"
           "cpu"
           "memory"
           "custom/disk"
@@ -336,7 +362,7 @@ in
 
         tooltip = {
           enabled = true;
-          interval = 50;
+          interval = 25;
         };
 
         "hyprland/window" = {
@@ -347,6 +373,20 @@ in
         "tray" = {
           icon-size = 16;
           spacing = 10;
+        };
+
+        "temperature#cpu" = {
+          hwmon-path = "/sys/class/hwmon/hwmon3/temp1_input";
+          critical-threshold = 80;
+          format = "{temperatureC}°C ";
+          tooltip-format = "CPU Temp";
+        };
+
+        "temperature#gpu" = {
+          hwmon-path = "/sys/class/hwmon/hwmon0/temp1_input";
+          critical-threshold = 80;
+          format = "{temperatureC}°C ";
+          tooltip-format = "GPU Temp";
         };
 
         "clock" = {

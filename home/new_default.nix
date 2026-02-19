@@ -5,6 +5,7 @@
     ./shell.nix
     ./gui.nix
     ./apps.nix
+    ./games.nix
   ];
 
   home.username = "ergoash";
