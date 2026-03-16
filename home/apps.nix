@@ -18,7 +18,12 @@
     libreoffice-fresh
 
     openrgb-with-all-plugins
+
     mission-center
+    qdirstat
+    gnome-disk-utility
+    file-roller
+    xarchiver
 
     # --- Music ---
     ardour

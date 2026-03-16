@@ -35,6 +35,14 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+
+    wireplumber.extraConfig = {
+      "99-no-logind-mute" = {
+        "wireplumber.settings" = {
+          "logind.screen-lock-timeout" = 0;
+        };
+      };
+    };
   };
 
   security.pam.loginLimits = [

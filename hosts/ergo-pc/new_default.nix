@@ -21,6 +21,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 15;
+  boot.loader.systemd-boot.consoleMode = "max";
 
   # Use the Zen kernel for better desktop responsiveness
   boot.kernelPackages = pkgs.linuxPackages_zen;
