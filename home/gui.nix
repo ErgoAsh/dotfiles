@@ -18,7 +18,6 @@ in
     slurp # Screen area selection
     swappy # Screenshot editor
     pavucontrol # Audio control GUI
-    brightnessctl # Screen brightness control
     playerctl # Media player control
     nerd-fonts.fira-code
 
@@ -28,12 +27,11 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
 
-    plugins = [
-      pkgs.hyprlandPlugins.hyprgrass
-    ];
-
     settings = {
       windowrulev2 = [
+        # Terminal transparency (WezTerm needs Hyprland rule on Wayland)
+        "opacity 0.75 0.75, class:^(org.wezfurlong.wezterm)$"
+
         "workspace 1 silent, class:^([Ll]ibre[Ww]olf)$"
         "workspace 2, class:^([Rr]io)$"
         "workspace 3 silent, class:^(jetbrains-.*)$"
@@ -44,6 +42,7 @@ in
         "workspace 7 silent, class:^([Tt]hunderbird)$"
         "workspace 8 silent, class:^([Zz]otero)$"
         "workspace 9 silent, title:^([Tt]ick[Tt]ick).*$"
+        "workspace name:audio silent, class:^([Aa]rdour.*)$"
 
         # Float Steam
         # Default to floating for ALL Steam windows
@@ -99,17 +98,6 @@ in
       input = {
         kb_layout = "pl";
         follow_mouse = 1;
-
-        touchpad = {
-          natural_scroll = true;
-          tap-to-click = true;
-          disable_while_typing = true;
-        };
-
-        touchdevice = {
-          output = "eDP-1";
-          transform = 0;
-        };
       };
 
       monitor = [
@@ -151,25 +139,6 @@ in
         enable_hyprcursor = false;
         warp_on_change_workspace = 2;
         no_warps = true;
-      };
-
-      gestures = {
-        gesture = [ "3, horizontal, workspace" ];
-        workspace_swipe_distance = 500;
-        workspace_swipe_invert = true;
-        workspace_swipe_min_speed_to_force = 30;
-        workspace_swipe_cancel_ratio = 0.5;
-        workspace_swipe_create_new = true;
-        workspace_swipe_forever = true;
-      };
-
-      plugin = {
-        touch_gestures = {
-          sensitivity = 4.0;
-          workspace_swipe_fingers = 3;
-          workspace_swipe_edge = "d";
-          long_press_delay = 400;
-        };
       };
 
       bind = [
@@ -237,7 +206,8 @@ in
         "$modifier, 7, workspace, 7"
         "$modifier, 8, workspace, 8"
         "$modifier, 9, workspace, 9"
-        "$modifier, 0, workspace, 10"
+        "$modifier, 0, workspace, name:audio"
+        "$modifier, backslash, workspace, 10"
 
         # --- Move window to workspace ---
         "$modifier SHIFT, 1, movetoworkspace, 1"
@@ -249,7 +219,8 @@ in
         "$modifier SHIFT, 7, movetoworkspace, 7"
         "$modifier SHIFT, 8, movetoworkspace, 8"
         "$modifier SHIFT, 9, movetoworkspace, 9"
-        "$modifier SHIFT, 0, movetoworkspace, 10"
+        "$modifier SHIFT, 0, movetoworkspace, name:audio"
+        "$modifier SHIFT, backslash, movetoworkspace, 10"
 
         # --- Special workspace (scratchpad) ---
         #"$modifier SHIFT, SPACE, movetoworkspace, special"
@@ -275,9 +246,6 @@ in
         ", XF86AudioPause, exec, playerctl --player=librewolf,firefox,spotify,%any play-pause"
         ", XF86AudioNext, exec, playerctl --player=spotify,%any next"
         ", XF86AudioPrev, exec, playerctl --player=spotify,%any previous"
-
-        ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
-        ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
 
         "$modifier, F8, exec, ${pkgs.playerctl}/bin/playerctl -p spotify play-pause"
 
@@ -357,7 +325,6 @@ in
           "cpu"
           "memory"
           "custom/disk"
-          "battery"
           "pulseaudio"
           "clock"
         ];
@@ -488,24 +455,6 @@ in
           on-click = "nm-connection-editor";
         };
 
-        "battery" = {
-          interval = 60;
-          states = {
-            warning = 30;
-            critical = 15;
-          };
-          format = "{capacity}% ({time}) {icon}";
-          format-charging = "{capacity}% (Charging) {icon}";
-          format-full = "{capacity}% {icon}";
-          format-icons = [
-            ""
-            ""
-            ""
-            ""
-            ""
-          ];
-          tooltip-format = "{timeTo}";
-        };
 
         "hyprland/workspaces" = {
           disable-scroll = true;
@@ -522,6 +471,8 @@ in
             "7" = "";
             "8" = "";
             "9" = "";
+            "10" = "";
+            "audio" = "";
             "default" = "";
           };
           persistent-workspaces = {
@@ -601,21 +552,6 @@ in
         color: #ffffff;
         background-color: rgba(255, 255, 255, 0.1);
         border-radius: 5px;
-      }
-
-      #battery.charging,
-      #battery.plugged {
-        color: #ffffff;
-        background-color: #26a65b;
-      }
-
-      #battery.critical:not(.charging) {
-        background-color: #f53c3c;
-        animation-name: blink;
-        animation-duration: 0.5s;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
       }
 
       @keyframes blink {
@@ -706,6 +642,8 @@ in
           font_color = "rgb(202, 211, 245)";
           inner_color = "rgb(91, 96, 120)";
           outer_color = "rgb(24, 25, 38)";
+          check_color = "rgb(249, 226, 175)";  # Yellow while checking
+          fail_color = "rgb(243, 139, 168)";   # Red on wrong password
           outline_thickness = 5;
           placeholder_text = "<i>Password...</i>";
           shadow_passes = 2;
@@ -738,16 +676,11 @@ in
 
       listener = [
         {
-          timeout = 150;
-          on-timeout = "brightnessctl -s set 10";
-          on-resume = "brightnessctl -r";
-        }
-        {
-          timeout = 300;
+          timeout = 600;
           on-timeout = "loginctl lock-session";
         }
         {
-          timeout = 330;
+          timeout = 660;
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }

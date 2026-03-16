@@ -3,11 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    hytale-launcher.url = "github:JPyke3/hytale-launcher-nix";
   };
 
   outputs =
@@ -15,45 +12,55 @@
       self,
       nixpkgs,
       home-manager,
-      hytale-launcher,
       ...
     }@inputs:
+    let
+      system = "x86_64-linux";
+
+      # Base home-manager modules (shared by all hosts)
+      homeBase = [
+        ./home/shell.nix
+        ./home/apps.nix
+        ./home/gui.nix
+      ];
+
+      # Home-manager config generator
+      mkHome = { extraModules ? [] }: {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.ergoash = {
+          imports = homeBase ++ extraModules;
+
+          home.username = "ergoash";
+          home.homeDirectory = "/home/ergoash";
+          home.stateVersion = "24.11";
+        };
+        home-manager.extraSpecialArgs = { inherit inputs; };
+        home-manager.backupFileExtension = "backup";
+      };
+    in
     {
       nixosConfigurations = {
 
         # Host: ergo-laptop
         ergo-laptop = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          inherit system;
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/ergo-laptop/default.nix
             home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.ergoash = import ./home/default.nix;
-
-              home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.backupFileExtension = "backup";
-            }
+            (mkHome { extraModules = [ ./home/gui-laptop.nix ]; })
           ];
         };
 
         # Host: ergo-pc
         ergo-pc = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          inherit system;
           specialArgs = { inherit inputs; };
           modules = [
-            ./hosts/ergo-pc/new_default.nix
+            ./hosts/ergo-pc/default.nix
             home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.ergoash = import ./home/new_default.nix;
-
-              home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.backupFileExtension = "backup";
-            }
+            (mkHome { extraModules = [ ./home/games.nix ]; })
           ];
         };
 

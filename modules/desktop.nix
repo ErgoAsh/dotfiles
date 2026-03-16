@@ -12,7 +12,13 @@
 
   programs.regreet = {
     enable = true;
-    # settings.GTK.application_prefer_dark_theme = true;
+    settings = {
+      background = {
+        path = ../wallpapers/wallhaven-lyz3d2.png;
+        fit = "Cover";
+      };
+      GTK.application_prefer_dark_theme = true;
+    };
   };
 
   services.greetd = {
@@ -89,7 +95,7 @@
   # --- Security & Keyring ---
   # Fixes "Enter Password" for WiFi/VS Code/Chrome
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.hyprlock = { }; # Unlock keyring on unlock
 
   # --- Printing & Discovery ---

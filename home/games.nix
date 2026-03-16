@@ -1,9 +1,10 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    steam
+  # Steam is enabled at system level in modules/gaming.nix
+  # This file contains home-manager gaming tools only
 
+  home.packages = with pkgs; [
     # --- Modding ---
     steamtinkerlaunch
     protontricks

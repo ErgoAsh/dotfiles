@@ -1,132 +1,55 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/core.nix
+    ../../modules/desktop.nix
+    ../../modules/gaming.nix
+  ];
 
-  # --- Boot & Kernel ---
+  # --- Networking ---
+  networking.hostName = "ergo-pc";
+  networking.networkmanager.enable = true;
+
+  # --- Bootloader and kernel ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 15;
+  boot.loader.systemd-boot.consoleMode = "max";
+
+  # Use the Zen kernel for better desktop responsiveness
   boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelModules = [
+    "i2c-dev"
+    "i2c-piix4"
+  ];
 
-  zramSwap = {
-    enable = true;
-    # Optional: Limit max RAM usage (default is 50%)
-    # memoryPercent = 50;
-  };
+  # --- Graphics (AMD specific) ---
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
-  # --- Hardware specific ---
-  hardware.enableRedistributableFirmware = true;
-  boot.initrd.kernelModules = [ "amdgpu" ]; # kernel space
-  services.xserver.videoDrivers = [ "amdgpu" ]; # user space
   hardware.graphics = {
     enable = true;
-    enable32Bit = true;
+    enable32Bit = true; # Essential for Steam/Wine
 
     extraPackages = with pkgs; [
-      # OpenCL support
       rocmPackages.clr
       rocmPackages.rocminfo
     ];
   };
 
-  # --- Networking ---
-  networking.hostName = "ergo-pc"; # MUST match flake entry name
-  networking.networkmanager.enable = true;
-
+  # --- Hardware and power ---
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
-  # --- Locale & Time ---
-  time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "en_GB.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "pl_PL.UTF-8";
-    LC_IDENTIFICATION = "pl_PL.UTF-8";
-    LC_MEASUREMENT = "pl_PL.UTF-8";
-    LC_MONETARY = "pl_PL.UTF-8";
-    LC_NAME = "pl_PL.UTF-8";
-    LC_NUMERIC = "pl_PL.UTF-8";
-    LC_PAPER = "pl_PL.UTF-8";
-    LC_TELEPHONE = "pl_PL.UTF-8";
-    LC_TIME = "pl_PL.UTF-8";
-  };
-
-  # --- Desktop (Cinnamon) ---
-  # services.xserver.enable = true;
-  # services.xserver.displayManager.lightdm.enable = true;
-  # services.xserver.desktopManager.cinnamon.enable = true;
-  # services.xserver.xkb = {
-  #   layout = "pl";
-  #   variant = "";
-  # };
-  console.keyMap = "pl2";
-  programs.fish.enable = true;
-
-  programs.hyprland = {
-    enable = true;
-    #xwayland.enable = true; # For older apps like Discord/Steam
-  };
-
-  environment.systemPackages = [ pkgs.cage ];
-  programs.regreet = {
-    enable = true;
-    # Optional: Fix for high-DPI screens if needed
-    # settings.GTK.application_prefer_dark_theme = true;
-  };
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.cage}/bin/cage -s -- ${pkgs.regreet}/bin/regreet";
-        user = "greeter";
-      };
-    };
-  };
-
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs.xfce; [
-      thunar-archive-plugin
-      thunar-volman
-    ];
-  };
-
-  services.gvfs.enable = true; # Mount, Trash, and other file system services
-  services.tumbler.enable = true; # Thumbnail support for images
-
-  # Keyring (Fixes "Enter Password" for WiFi/VS Code)
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
-  security.pam.services.hyprlock = { };
-
-  # --- Audio & Services ---
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
-  services.libinput.enable = true;
-
-  services.printing = {
-    enable = true;
-    drivers = [ pkgs.gutenprint ];
-  };
-
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
-  # --- Security and authentication ---
-  services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-
-  # --- Battery and performance ---
+  # CPU power management
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
     battery = {
@@ -139,50 +62,19 @@
     };
   };
 
+  # Disable conflicting power services
   services.power-profiles-daemon.enable = false;
   services.tlp.enable = false;
 
-  services.logind.settings = {
-    Login = {
-      HandleLidSwitch = "suspend";
-      HandleLidSwitchDocked = "ignore";
-      HandleLidSwitchExternalPower = "ignore";
-    };
+  services.hardware.openrgb.enable = true;
+
+  # --- Storage Optimization ---
+  # Enable ZRAM (swap in RAM)
+  zramSwap = {
+    enable = true;
+    # memoryPercent = 50; # Default is 50%
   };
 
-  # --- User ---
-  users.users.ergoash = {
-    isNormalUser = true;
-    description = "Marek Kida";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    shell = pkgs.fish;
-  };
-
-  # --- Periodic system cleanup ---
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
-
+  # SSD trim (weekly)
   services.fstrim.enable = true;
-
-  # --- System Settings ---
-  nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    stdenv.cc.cc.lib # specific C++ libraries
-    zlib # common compression
-    openssl # common crypto
-  ];
-
-  system.stateVersion = "25.11";
 }

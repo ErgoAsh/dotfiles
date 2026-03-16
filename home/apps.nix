@@ -38,11 +38,16 @@
     spotify
     vlc
     imv
+    zathura
 
     # --- Development & tools ---
     hardinfo2
+    claude-code
     jetbrains.pycharm
     jetbrains.clion
+
+    # --- Audio ---
+    ncpamixer
 
     # --- Browser extensions (native connectors) ---
     tridactyl-native
@@ -124,6 +129,34 @@
 
     profiles.ergoash = {
       isDefault = true;
+
+      bookmarks = {
+        force = true;
+        settings = [
+          {
+            name = "Toolbar";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "Hydrogreen";
+                url = "https://services.hydrogreen.pl";
+              }
+              {
+                name = "Homelab";
+                url = "http://192.168.1.134:5005/";
+              }
+              {
+                name = "NixOS Packages";
+                url = "https://search.nixos.org/packages?channel=unstable";
+              }
+              {
+                name = "Home Manager Options";
+                url = "https://home-manager-options.extranix.com/";
+              }
+            ];
+          }
+        ];
+      };
 
       userContent = ''
         * {

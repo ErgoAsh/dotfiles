@@ -236,8 +236,13 @@
     hunspellDicts.en_US
     hunspellDicts.pl_PL
 
-    tio
+tio
     usbutils
     usbview
+
+    gcc
+    cmake
+    gnumake
+    gdb
   ];
 }
