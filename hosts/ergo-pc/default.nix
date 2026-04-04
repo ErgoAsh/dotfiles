@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   inputs,
   ...
 }:
@@ -49,13 +50,9 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
-  # CPU power management
+  # CPU power management (desktop - always performance)
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
-    battery = {
-      governor = "powersave";
-      turbo = "never";
-    };
     charger = {
       governor = "performance";
       turbo = "auto";

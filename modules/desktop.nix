@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   # --- Hyprland (system level) ---
@@ -8,8 +8,6 @@
 
   # --- Display manager (greeter) ---
   # Using Regreet sitting on top of Cage (Wayland kiosk)
-  environment.systemPackages = [ pkgs.cage ];
-
   programs.regreet = {
     enable = true;
     settings = {
