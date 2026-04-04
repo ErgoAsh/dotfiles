@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, pkgs-unstable, lib, ... }:
 
 {
   home.packages = with pkgs; [
@@ -11,7 +11,6 @@
     xournalpp
     hardinfo2
     geany
-    wdisplays
     ticktick
     thunderbird
     teams-for-linux
@@ -28,11 +27,6 @@
     # --- Music ---
     ardour
     qpwgraph
-    sfizz-ui
-
-    # --- Chat & social ---
-    vesktop
-    teams-for-linux
 
     # --- Media ---
     spotify
@@ -51,7 +45,9 @@
 
     # --- Browser extensions (native connectors) ---
     tridactyl-native
-  ];
+  ] ++ (with pkgs-unstable; [
+    sfizz-ui
+  ]);
 
   xdg.mimeApps = {
     enable = true;
@@ -74,41 +70,16 @@
         Fingerprinting = true;
       };
 
-      ExtensionSettings = {
-        "uBlock0@raymondhill.net" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-          installation_mode = "force_installed";
-        };
-
-        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
-          installation_mode = "force_installed";
-        };
-
-        "tridactyl.vim@cmcaine.co.uk" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/tridactyl-vim/latest.xpi";
-          installation_mode = "force_installed";
-        };
-
-        "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/return-youtube-dislikes/latest.xpi";
-          installation_mode = "force_installed";
-        };
-
-        "sponsorBlocker@ajay.app" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi";
-          installation_mode = "force_installed";
-        };
-
-        "zotero@chnm.gmu.edu" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/zotero-connector/latest.xpi";
-          installation_mode = "force_installed";
-        };
-
-        "besttimetracker@example.com" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/besttimetracker/latest.xpi";
-          installation_mode = "force_installed";
-        };
+      Extensions = {
+        Install = [
+          "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+          "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi"
+          "https://addons.mozilla.org/firefox/downloads/latest/tridactyl-vim/latest.xpi"
+          "https://addons.mozilla.org/firefox/downloads/latest/return-youtube-dislikes/latest.xpi"
+          "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi"
+          "https://addons.mozilla.org/firefox/downloads/latest/besttimetracker/latest.xpi"
+          "https://www.zotero.org/download/connector/dl?browser=firefox"
+        ];
       };
 
       SearchEngines = {
@@ -128,6 +99,7 @@
     };
 
     profiles.ergoash = {
+      id = 0;
       isDefault = true;
 
       bookmarks = {
@@ -192,6 +164,8 @@
         "browser.safebrowsing.malware.enabled" = true;
         "browser.safebrowsing.phishing.enabled" = true;
         "browser.safebrowsing.blockedURIs.enabled" = true;
+
+        "browser.newtabpage.enabled" = true;
       };
     };
   };
@@ -228,4 +202,10 @@
       };
     };
   };
+
+  home.activation.linkLibreWolfProfile = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    if [ ! -e "$HOME/.librewolf" ]; then
+      $DRY_RUN_CMD ln -s $VERBOSE_ARG "$HOME/.mozilla/firefox" "$HOME/.librewolf"
+    fi
+  '';
 }
