@@ -75,6 +75,7 @@
       ll = "eza -ahl --no-user --time-style=long-iso --group-directories-first";
       paths = "echo $PATH | tr -s ':' '\n'";
       fonts = "fc-list : family | sort";
+      disk-usage = "ncdu -x /";
     };
 
     shellAbbrs = {
@@ -223,6 +224,7 @@
     ripgrep
     fd
     btop
+    ncdu
     unzip
     zip
     libqalculate

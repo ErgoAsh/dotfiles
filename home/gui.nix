@@ -396,10 +396,16 @@ in
 
         "custom/disk" = {
           interval = 30;
-          exec = "df -B1 / | awk 'NR==2 {printf \"%s (%.1f GiB / %.1f GiB)\", $5, $3/1073741824, $2/1073741824}'";
-          format = "{} ";
-          tooltip = true;
-          tooltip-format = "Mount point: /";
+          exec = pkgs.writeShellScript "disk-usage" ''
+            read -r _ _ used avail _ _ <<< $(df -B1 / | tail -1)
+            used_gb=$(awk "BEGIN {printf \"%.1f\", $used/1073741824}")
+            total_gb=$(awk "BEGIN {printf \"%.1f\", ($used+$avail)/1073741824}")
+            free_gb=$(awk "BEGIN {printf \"%.1f\", $avail/1073741824}")
+            percent=$(awk "BEGIN {printf \"%.0f\", 100*$used/($used+$avail)}")
+            echo "{\"text\":\"$percent% ($used_gb GiB / $total_gb GiB)\",\"tooltip\":\"Free: $free_gb GiB\"}"
+          '';
+          return-type = "json";
+          format = "{} 󰋊";
         };
 
         "disk" = {
