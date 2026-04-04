@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, pkgs-unstable, inputs, ... }:
 
 let
   wallpaper = ../wallpapers/wallhaven-lyz3d2.png;
@@ -20,8 +20,10 @@ in
     pavucontrol # Audio control GUI
     playerctl # Media player control
     nerd-fonts.fira-code
+    nerd-fonts.symbols-only
 
     alsa-utils
+    nwg-displays
   ];
 
   wayland.windowManager.hyprland = {
@@ -421,7 +423,7 @@ in
         pulseaudio = {
           format = "{volume}% {icon}";
           format-bluetooth = "{volume}% {icon}";
-          format-muted = "🔇";
+          format-muted = "󰖁";
           format-icons = {
             headphone = "";
             hands-free = "󰋎";
@@ -430,9 +432,9 @@ in
             portable = "";
             car = "";
             default = [
-              "🔈"
-              "🔉"
-              "🔊"
+              "󰕿"
+              "󰖀"
+              "󰕾"
             ];
           };
           scroll-step = 1;
@@ -455,7 +457,6 @@ in
           on-click = "nm-connection-editor";
         };
 
-
         "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = false;
@@ -466,13 +467,13 @@ in
             "2" = "";
             "3" = "";
             "4" = "";
-            "5" = "💬";
+            "5" = "󰭹";
             "6" = "";
             "7" = "";
             "8" = "";
             "9" = "";
-            "10" = "";
-            "audio" = "";
+            "10" = "󰝚";
+            "audio" = "󰎆";
             "default" = "";
           };
           persistent-workspaces = {
@@ -496,7 +497,9 @@ in
       * {
         border: none;
         border-radius: 0;
-        font-family: "FiraCode Nerd Font", "Fira Code", sans-serif;
+        font-family: "FiraCode Nerd Font", "Symbols Nerd Font", sans-serif;
+        font-size: 13px;
+        font-weight: 400;
         min-height: 0;
       }
 
@@ -518,6 +521,7 @@ in
         background-color: transparent;
         color: #ffffff;
         min-height: 30px;
+        border-bottom: 3px solid transparent;
       }
 
       #workspaces button:hover {
@@ -642,8 +646,8 @@ in
           font_color = "rgb(202, 211, 245)";
           inner_color = "rgb(91, 96, 120)";
           outer_color = "rgb(24, 25, 38)";
-          check_color = "rgb(249, 226, 175)";  # Yellow while checking
-          fail_color = "rgb(243, 139, 168)";   # Red on wrong password
+          check_color = "rgb(249, 226, 175)";
+          fail_color = "rgb(243, 139, 168)";
           outline_thickness = 5;
           placeholder_text = "<i>Password...</i>";
           shadow_passes = 2;

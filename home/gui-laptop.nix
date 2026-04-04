@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, pkgs-unstable, lib, ... }:
 
 {
   home.packages = with pkgs; [
@@ -92,9 +92,10 @@
         critical = 15;
       };
       format = "{capacity}% ({time}) {icon}";
-      format-charging = "{capacity}% (Charging) {icon}";
-      format-full = "{capacity}% {icon}";
-      format-icons = [ "" "" "" "" "" ];
+      format-charging = "{capacity}% (Charging) 󰂄";
+      format-full = "{capacity}% 󰁹";
+      format-plugged = "{capacity}% 󰂄";
+      format-icons = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
       tooltip-format = "{timeTo}";
     };
   };
