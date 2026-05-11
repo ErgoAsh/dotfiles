@@ -18,6 +18,11 @@
   networking.hostName = "ergo-pc";
   networking.networkmanager.enable = true;
 
+  # --- Display Manager ---
+  # Check monitor name with: hyprctl monitors
+  # Common options: HDMI-A-1, DP-1, DP-2
+  customConfig.primaryMonitor = ""; # Empty = span all monitors
+
   # --- Bootloader and kernel ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;

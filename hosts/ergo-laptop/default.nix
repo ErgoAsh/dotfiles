@@ -12,6 +12,9 @@
   networking.hostName = "ergo-laptop";
   networking.networkmanager.enable = true;
 
+  # --- Display Manager ---
+  customConfig.primaryMonitor = "eDP-1";
+
   # --- Bootloader and kernel ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 1; # 96 MB EFI partition

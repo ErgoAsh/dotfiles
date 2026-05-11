@@ -76,6 +76,7 @@
       paths = "echo $PATH | tr -s ':' '\n'";
       fonts = "fc-list : family | sort";
       disk-usage = "ncdu -x /";
+      codex = "npx @openai/codex@latest";
     };
 
     shellAbbrs = {
@@ -238,7 +239,7 @@
     hunspellDicts.en_US
     hunspellDicts.pl_PL
 
-tio
+    tio
     usbutils
     usbview
 
@@ -246,5 +247,8 @@ tio
     cmake
     gnumake
     gdb
+    perf
+    valgrind
+    nodejs_22
   ];
 }
