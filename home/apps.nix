@@ -1,53 +1,62 @@
-{ pkgs, pkgs-unstable, lib, ... }:
+{
+  pkgs,
+  pkgs-unstable,
+  lib,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [
-    # --- Productivity & office ---
-    obsidian
-    vesktop
-    anki
-    (lib.lowPrio pcloud)
-    zotero
-    xournalpp
-    hardinfo2
-    geany
-    ticktick
-    thunderbird
-    teams-for-linux
-    libreoffice-fresh
+  home.packages =
+    with pkgs;
+    [
+      # --- Productivity & office ---
+      obsidian
+      vesktop
+      anki
+      (lib.lowPrio pcloud)
+      xournalpp
+      hardinfo2
+      geany
+      ticktick
+      thunderbird
+      teams-for-linux
+      libreoffice-fresh
 
-    openrgb-with-all-plugins
+      openrgb-with-all-plugins
 
-    mission-center
-    qdirstat
-    gnome-disk-utility
-    file-roller
-    xarchiver
+      mission-center
+      qdirstat
+      gnome-disk-utility
+      file-roller
+      xarchiver
 
-    # --- Music ---
-    ardour
-    qpwgraph
+      # --- Music ---
+      ardour
+      qpwgraph
 
-    # --- Media ---
-    spotify
-    vlc
-    imv
-    zathura
+      # --- Media ---
+      spotify
+      vlc
+      imv
+      zathura
 
-    # --- Development & tools ---
-    hardinfo2
-    claude-code
-    jetbrains.pycharm
-    jetbrains.clion
+      # --- Development & tools ---
+      hardinfo2
+      claude-code
+      jetbrains.pycharm
+      jetbrains.clion
+      jre25_minimal
 
-    # --- Audio ---
-    ncpamixer
+      # --- Audio ---
+      ncpamixer
 
-    # --- Browser extensions (native connectors) ---
-    tridactyl-native
-  ] ++ (with pkgs-unstable; [
-    sfizz-ui
-  ]);
+      # --- Browser extensions (native connectors) ---
+      tridactyl-native
+    ]
+    ++ (with pkgs-unstable; [
+      sfizz-ui
+      zotero
+    ]);
 
   xdg.mimeApps = {
     enable = true;
@@ -203,7 +212,7 @@
     };
   };
 
-  home.activation.linkLibreWolfProfile = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.linkLibreWolfProfile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if [ ! -e "$HOME/.librewolf" ]; then
       $DRY_RUN_CMD ln -s $VERBOSE_ARG "$HOME/.mozilla/firefox" "$HOME/.librewolf"
     fi
