@@ -1,4 +1,9 @@
-{ pkgs, pkgs-unstable, inputs, ... }:
+{
+  pkgs,
+  pkgs-unstable,
+  inputs,
+  ...
+}:
 
 let
   wallpaper = ../wallpapers/wallhaven-lyz3d2.png;
@@ -34,17 +39,18 @@ in
         # Terminal transparency (WezTerm needs Hyprland rule on Wayland)
         "opacity 0.75 0.75, class:^(org.wezfurlong.wezterm)$"
 
+        "workspace 10 silent, class:^([Aa]nki)$"
         "workspace 1 silent, class:^([Ll]ibre[Ww]olf)$"
         "workspace 2, class:^([Rr]io)$"
         "workspace 3 silent, class:^(jetbrains-.*)$"
         "workspace 3 silent, class:^(code-url-handler|code-oss|Code)$"
-        "workspace 4 silent, class:^([Oo]bsidian)$"
+        "workspace 4 silent, class:^([Ss]potify)$"
         "workspace 5 silent, class:^([Vv]esktop|[Dd]iscord)$"
-        "workspace 6 silent, class:^([Ss]potify)$"
-        "workspace 7 silent, class:^([Tt]hunderbird)$"
-        "workspace 8 silent, class:^([Zz]otero)$"
+        "workspace 6 silent, class:^([Oo]bsidian)$"
+        "workspace 7 silent, class:^([Zz]otero)$"
+        "workspace 8 silent, class:^([Tt]hunderbird)$"
         "workspace 9 silent, title:^([Tt]ick[Tt]ick).*$"
-        "workspace name:audio silent, class:^([Aa]rdour.*)$"
+        "workspace 11 silent, class:^([Aa]rdour.*)$"
 
         # Float Steam
         # Default to floating for ALL Steam windows
@@ -84,17 +90,19 @@ in
         "nm-applet --indicator"
         "gammastep"
         "hyprctl setcursor Bibata-Modern-Ice 24"
-        "swww-daemon --format xrgb & sleep 0.5 && swww img ${wallpaper}"
+        "swww-daemon --format xrgb"
+        ''sleep 2 && for output in $(swww query | grep -oP '(?<=image: ).*' | cut -d: -f1); do swww img ${wallpaper} -o "$output"; done''
 
         # Autostart Apps (Ensure these are installed in your apps.nix)
+        "[workspace 10 silent] anki"
         "librewolf"
-        "[workspace 4 silent] obsidian"
-        "[workspace 5 silent] vesktop"
-        "[workspace 6 silent] spotify"
-        "[workspace 7 silent] thunderbird"
-        "[workspace 8 silent] zotero"
-        "[workspace 9 silent] ticktick"
         "[workspace 2 silent] wezterm"
+        "[workspace 4 silent] spotify"
+        "[workspace 5 silent] vesktop"
+        "[workspace 6 silent] obsidian"
+        "[workspace 7 silent] zotero"
+        "[workspace 8 silent] thunderbird"
+        "[workspace 9 silent] ticktick"
       ];
 
       input = {
@@ -198,7 +206,8 @@ in
         "$modifier ALT, 45, swapwindow, u" # k
         "$modifier ALT, 44, swapwindow, d" # j
 
-        # --- Workspace switching (1-10) ---
+        # --- Workspace switching (1-11) ---
+        "$modifier, 0, workspace, 10"
         "$modifier, 1, workspace, 1"
         "$modifier, 2, workspace, 2"
         "$modifier, 3, workspace, 3"
@@ -208,10 +217,10 @@ in
         "$modifier, 7, workspace, 7"
         "$modifier, 8, workspace, 8"
         "$modifier, 9, workspace, 9"
-        "$modifier, 0, workspace, name:audio"
-        "$modifier, backslash, workspace, 10"
+        "$modifier, backslash, workspace, 11"
 
         # --- Move window to workspace ---
+        "$modifier SHIFT, 0, movetoworkspace, 10"
         "$modifier SHIFT, 1, movetoworkspace, 1"
         "$modifier SHIFT, 2, movetoworkspace, 2"
         "$modifier SHIFT, 3, movetoworkspace, 3"
@@ -221,8 +230,7 @@ in
         "$modifier SHIFT, 7, movetoworkspace, 7"
         "$modifier SHIFT, 8, movetoworkspace, 8"
         "$modifier SHIFT, 9, movetoworkspace, 9"
-        "$modifier SHIFT, 0, movetoworkspace, name:audio"
-        "$modifier SHIFT, backslash, movetoworkspace, 10"
+        "$modifier SHIFT, backslash, movetoworkspace, 11"
 
         # --- Special workspace (scratchpad) ---
         #"$modifier SHIFT, SPACE, movetoworkspace, special"
@@ -253,7 +261,7 @@ in
 
         # --- Utilities / screenshots ---
         # NOTE: Using 'XDG_CURRENT_DESKTOP=sway' is a common fix for flameshot on Hyprland
-        ", Print, exec, XDG_CURRENT_DESKTOP=sway flameshot gui"
+        ", Print, exec, flameshot gui"
         "$modifier, G, exec, gimp"
         "$modifier, O, exec, obs"
         "$modifier ALT, C, exec, hyprpicker -a"
@@ -278,6 +286,11 @@ in
         "VST_PATH, /etc/profiles/per-user/ergoash/lib/vst:/run/current-system/sw/lib/vst"
       ];
     };
+
+    # Allow nwg-displays to override monitor config dynamically
+    extraConfig = ''
+      source = ~/.config/hypr/monitors.conf
+    '';
   };
 
   programs.rofi = {
@@ -469,17 +482,17 @@ in
           format = "{icon}";
           on-click = "activate";
           format-icons = {
-            "1" = "";
+            "1" = "󰈹";
             "2" = "";
             "3" = "";
-            "4" = "";
+            "4" = "󰓇";
             "5" = "󰭹";
-            "6" = "";
-            "7" = "";
-            "8" = "";
-            "9" = "";
-            "10" = "󰝚";
-            "audio" = "󰎆";
+            "6" = "󰈙";
+            "7" = "󰂺";
+            "8" = "󰇰";
+            "9" = "󰄬";
+            "10" = "󰗚";
+            "11" = "󰎆";
             "default" = "";
           };
           persistent-workspaces = {
@@ -493,6 +506,8 @@ in
               7
               8
               9
+              10
+              11
             ];
           };
         };
