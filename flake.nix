@@ -19,6 +19,8 @@
     let
       system = "x86_64-linux";
 
+      pkgs = nixpkgs.legacyPackages.${system};
+
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
@@ -32,24 +34,30 @@
       ];
 
       # Home-manager config generator
-      mkHome = { extraModules ? [] }: {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.users.ergoash = {
-          imports = homeBase ++ extraModules;
+      mkHome =
+        {
+          extraModules ? [ ],
+        }:
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.ergoash = {
+            imports = homeBase ++ extraModules;
 
-          home.username = "ergoash";
-          home.homeDirectory = "/home/ergoash";
-          home.stateVersion = "24.11";
+            home.username = "ergoash";
+            home.homeDirectory = "/home/ergoash";
+            home.stateVersion = "24.11";
+          };
+          home-manager.extraSpecialArgs = {
+            inherit inputs;
+            inherit pkgs-unstable;
+          };
+          home-manager.backupFileExtension = "backup";
         };
-        home-manager.extraSpecialArgs = {
-          inherit inputs;
-          inherit pkgs-unstable;
-        };
-        home-manager.backupFileExtension = "backup";
-      };
     in
     {
+      formatter.${system} = pkgs.nixfmt-tree;
+
       nixosConfigurations = {
 
         # Host: ergo-laptop
