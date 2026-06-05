@@ -29,6 +29,7 @@
       gnome-disk-utility
       file-roller
       xarchiver
+      xfce.mousepad
 
       # --- Music ---
       ardour
@@ -62,6 +63,14 @@
     enable = true;
     defaultApplications = {
       "inode/directory" = [ "thunar.desktop" ];
+      "application/x-zerosize" = [ "org.xfce.mousepad.desktop" ];
+      "text/plain" = [ "org.xfce.mousepad.desktop" ];
+      "text/markdown" = [ "org.xfce.mousepad.desktop" ];
+      "text/x-typst" = [ "org.xfce.mousepad.desktop" ];
+      "text/x-log" = [ "org.xfce.mousepad.desktop" ];
+      "application/json" = [ "org.xfce.mousepad.desktop" ];
+      "application/xml" = [ "org.xfce.mousepad.desktop" ];
+      "application/x-typst" = [ "org.xfce.mousepad.desktop" ];
     };
   };
 

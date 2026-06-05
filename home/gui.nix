@@ -71,6 +71,11 @@ in
         "center, class:^([Tt]hunar)$"
         "size 900 600, class:^([Tt]hunar)$"
 
+        # Float text editor
+        "float, class:^(org\\.xfce\\.mousepad|[Mm]ousepad)$"
+        "center, class:^(org\\.xfce\\.mousepad|[Mm]ousepad)$"
+        "size 900 600, class:^(org\\.xfce\\.mousepad|[Mm]ousepad)$"
+
         # Float volume control (pavucontrol)
         "float, class:^(pavucontrol|org.pulseaudio.pavucontrol)$"
         "size 800 600, class:^(pavucontrol|org.pulseaudio.pavucontrol)$"

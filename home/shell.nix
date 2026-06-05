@@ -80,7 +80,6 @@
     };
 
     shellAbbrs = {
-      cat = "bat";
       grep = "rg";
       find = "fd";
       df = "duf";
@@ -249,6 +248,10 @@
     gdb
     perf
     valgrind
+    nixfmt-rfc-style
     nodejs_22
+    pnpm
+
+    code-cursor
   ];
 }
