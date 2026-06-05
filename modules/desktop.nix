@@ -1,4 +1,10 @@
-{ pkgs, pkgs-unstable, lib, config, ... }:
+{
+  pkgs,
+  pkgs-unstable,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.customConfig.primaryMonitor = lib.mkOption {
@@ -11,6 +17,20 @@
     # --- Hyprland (system level) ---
     programs.hyprland = {
       enable = true;
+    };
+
+    # --- Desktop portals ---
+    # Required by Electron/GTK apps for file choosers, screen sharing, and desktop integration.
+    xdg.portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-hyprland
+        xdg-desktop-portal-gtk
+      ];
+      config.common.default = [
+        "hyprland"
+        "gtk"
+      ];
     };
 
     # --- Display manager (greeter) ---
@@ -32,9 +52,8 @@
         default_session = {
           command =
             let
-              monitorArg = if config.customConfig.primaryMonitor != ""
-                          then "-m ${config.customConfig.primaryMonitor}"
-                          else "";
+              monitorArg =
+                if config.customConfig.primaryMonitor != "" then "-m ${config.customConfig.primaryMonitor}" else "";
             in
             "${pkgs.cage}/bin/cage -s ${monitorArg} -- ${pkgs.regreet}/bin/regreet";
           user = "greeter";
@@ -42,7 +61,7 @@
       };
     };
 
-  # --- Audio and sound (Pipewire) ---
+    # --- Audio and sound (Pipewire) ---
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
 

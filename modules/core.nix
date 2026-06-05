@@ -68,6 +68,12 @@
     openssl # common crypto
   ];
 
+  # AppImage support
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
   # --- Basic System Utilities ---
   # Packages that should be available on every single machine
   environment.systemPackages = with pkgs; [
