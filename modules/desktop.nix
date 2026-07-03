@@ -37,6 +37,10 @@
     # Using Regreet sitting on top of Cage (Wayland kiosk)
     programs.regreet = {
       enable = true;
+      cursorTheme = {
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Ice";
+      };
       settings = {
         background = {
           path = ../wallpapers/wallhaven-lyz3d2.png;
@@ -54,8 +58,9 @@
             let
               monitorArg =
                 if config.customConfig.primaryMonitor != "" then "-m ${config.customConfig.primaryMonitor}" else "";
+              cageCmd = "${pkgs.cage}/bin/cage -s ${monitorArg} -- ${pkgs.regreet}/bin/regreet";
             in
-            "${pkgs.cage}/bin/cage -s ${monitorArg} -- ${pkgs.regreet}/bin/regreet";
+            "${pkgs.dbus}/bin/dbus-run-session sh -lc 'export XCURSOR_SIZE=16; exec ${cageCmd}'";
           user = "greeter";
         };
       };
@@ -113,7 +118,7 @@
     # to work correctly for mounting drives.
     programs.thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      plugins = with pkgs; [
         thunar-archive-plugin
         thunar-volman
       ];

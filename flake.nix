@@ -2,9 +2,9 @@
   description = "NixOS Fleet Configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -46,7 +46,7 @@
 
             home.username = "ergoash";
             home.homeDirectory = "/home/ergoash";
-            home.stateVersion = "24.11";
+            home.stateVersion = "26.05";
           };
           home-manager.extraSpecialArgs = {
             inherit inputs;
@@ -84,7 +84,12 @@
           modules = [
             ./hosts/ergo-pc/default.nix
             home-manager.nixosModules.home-manager
-            (mkHome { extraModules = [ ./home/games.nix ]; })
+            (mkHome {
+              extraModules = [
+                ./home/games.nix
+                ./home/hyprland-pc.nix
+              ];
+            })
           ];
         };
 

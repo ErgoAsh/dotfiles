@@ -19,6 +19,6 @@
 
     #jdk8   # For versions 1.16 and older (like 1.12.2 or 1.7.10)
     #jdk17  # For versions 1.17 - 1.20.4
-    jdk21 # For versions 1.20.5 and newer
+    # jdk21 lives in modules/gaming.nix (systemPackages) to avoid HM path collisions with JetBrains JDKs
   ];
 }

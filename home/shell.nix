@@ -157,7 +157,7 @@
       pkgs.tinymist
       pkgs.typstyle
       pkgs.nixd
-      pkgs.nixfmt-rfc-style
+      pkgs.nixfmt
     ];
 
     settings = {
@@ -248,10 +248,12 @@
     gdb
     perf
     valgrind
-    nixfmt-rfc-style
+    nixfmt
     nodejs_22
     pnpm
+    python3Packages.pip
 
     code-cursor
+    cursor-cli
   ];
 }

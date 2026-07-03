@@ -1,63 +1,59 @@
 {
   pkgs,
-  pkgs-unstable,
   lib,
   ...
 }:
 
 {
-  home.packages =
-    with pkgs;
-    [
-      # --- Productivity & office ---
-      obsidian
-      vesktop
-      anki
-      (lib.lowPrio pcloud)
-      xournalpp
-      hardinfo2
-      geany
-      ticktick
-      thunderbird
-      teams-for-linux
-      libreoffice-fresh
+  home.packages = with pkgs; [
+    # --- Productivity & office ---
+    obsidian
+    vesktop
+    anki
+    (lib.lowPrio pcloud)
+    xournalpp
+    hardinfo2
+    geany
+    ticktick
+    thunderbird
+    teams-for-linux
+    libreoffice-fresh
+    zotero
 
-      openrgb-with-all-plugins
+    openrgb-with-all-plugins
 
-      mission-center
-      qdirstat
-      gnome-disk-utility
-      file-roller
-      xarchiver
-      xfce.mousepad
+    mission-center
+    qdirstat
+    gnome-disk-utility
+    file-roller
+    xarchiver
+    mousepad
 
-      # --- Music ---
-      ardour
-      qpwgraph
+    # --- Music ---
+    ardour
+    qpwgraph
+    sfizz-ui
 
-      # --- Media ---
-      spotify
-      vlc
-      imv
-      zathura
+    # --- Media ---
+    spotify
+    vlc
+    imv
+    zathura
 
-      # --- Development & tools ---
-      hardinfo2
-      claude-code
-      jetbrains.pycharm
-      jetbrains.clion
-      jre25_minimal
+    # --- Development & tools ---
+    hardinfo2
+    jetbrains.pycharm
+    jetbrains.clion
+    jre25_minimal
+    savvycan
+    can-utils
 
-      # --- Audio ---
-      ncpamixer
+    # --- Audio ---
+    ncpamixer
 
-      # --- Browser extensions (native connectors) ---
-      tridactyl-native
-    ]
-    ++ (with pkgs-unstable; [
-      sfizz-ui
-      zotero
-    ]);
+    # --- Browser extensions (native connectors) ---
+    tridactyl-native
+  ];
 
   xdg.mimeApps = {
     enable = true;
@@ -74,10 +70,38 @@
     };
   };
 
+  # Thunar: right-click → copy full path (Wayland clipboard)
+  xdg.configFile."Thunar/uca.xml".text = ''
+    <?xml version="1.0" encoding="UTF-8"?>
+    <actions>
+      <action>
+        <icon>edit-copy</icon>
+        <name>_Kopiuj ścieżkę</name>
+        <submenu></submenu>
+        <unique-id>1749230000000000-1</unique-id>
+        <command>wl-copy -- %f</command>
+        <description>Skopiuj pełną ścieżkę do schowka</description>
+        <range></range>
+        <patterns>*</patterns>
+        <directories/>
+        <audio-files/>
+        <image-files/>
+        <other-files/>
+        <text-files/>
+        <video-files/>
+      </action>
+    </actions>
+  '';
+
+  xdg.configFile."tridactyl/tridactylrc".text = ''
+    set newtab about:blank
+  '';
+
   # --- Browser (LibreWolf) ---
   programs.firefox = {
     enable = true;
     package = pkgs.librewolf;
+    profilesPath = ".mozilla/firefox";
 
     policies = {
       DisableTelemetry = true;
@@ -118,6 +142,8 @@
 
     profiles.ergoash = {
       id = 0;
+      name = "default";
+      path = "pin2b8jg.default";
       isDefault = true;
 
       bookmarks = {
@@ -168,11 +194,21 @@
         "browser.privatebrowsing.autostart" = false;
         "privacy.history.custom" = true;
         "browser.startup.homepage" = "https://google.com";
+        "browser.startup.page" = 3;
+        "browser.sessionstore.privacy_level" = 0;
         "network.cookie.lifetimePolicy" = 0;
 
+        "privacy.clearOnShutdown.cache" = false;
         "privacy.clearOnShutdown.history" = false;
         "privacy.clearOnShutdown.cookies" = false;
+        "privacy.clearOnShutdown.offlineApps" = false;
+        "privacy.clearOnShutdown.siteSettings" = false;
         "privacy.clearOnShutdown.sessions" = false;
+        "privacy.clearOnShutdown_v2.cache" = false;
+        "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+        "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
+        "privacy.clearOnShutdown_v2.siteSettings" = false;
+        "privacy.sanitize.pending" = "[]";
         "privacy.sanitize.sanitizeOnShutdown" = false;
 
         "media.eme.enabled" = true;
@@ -192,12 +228,12 @@
   programs.wezterm = {
     enable = true;
     extraConfig = ''
-      local wezterm = require 'wezterm'
       return {
         font = wezterm.font 'FiraCode Nerd Font',
         font_size = 12.0,
         color_scheme = 'Catppuccin Mocha',
-        window_background_opacity = 0.75,
+        window_background_opacity = 0.72,
+        text_background_opacity = 0.0,
         enable_tab_bar = true,
         window_close_confirmation = 'NeverPrompt',
       }
@@ -208,6 +244,10 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
+    profiles.default.userSettings = {
+      "editor.fontFamily" = "'FiraCode Nerd Font', 'Symbols Nerd Font', monospace";
+      "editor.fontLigatures" = true;
+    };
   };
 
   # --- Screenshot tool (flameshot) ---

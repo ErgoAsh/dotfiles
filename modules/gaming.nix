@@ -40,5 +40,6 @@
   environment.systemPackages = with pkgs; [
     mangohud # FPS overlay
     protonup-qt # GUI to install GE-Proton versions
+    jdk21 # Minecraft / Prism Launcher (1.20.5+); kept out of HM to avoid JDK header collisions with JetBrains IDEs
   ];
 }
