@@ -249,11 +249,24 @@ in
         for line in file:lines() do
           local spec = line:match("^monitor%s*=%s*(.+)")
           if spec and not spec:match("^%s*#") then
-            hl.dispatch(hl.dsp.global("monitor " .. spec))
+            local output, mode, position, scale =
+              spec:match("^%s*([^,]+),([^,]+),([^,]+),([^,]+)%s*$")
+            if output then
+              hl.monitor({
+                output = output,
+                mode = mode,
+                position = position,
+                scale = tonumber(scale) or scale,
+              })
+            end
           end
         end
         file:close()
       end
+
+      hl.on("config.reloaded", function()
+        load_monitors_conf()
+      end)
 
       hl.on("hyprland.start", function()
         load_monitors_conf()

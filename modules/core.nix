@@ -77,6 +77,7 @@
   # --- Basic System Utilities ---
   # Packages that should be available on every single machine
   environment.systemPackages = with pkgs; [
+    bubblewrap
     git
     neovim
     wget

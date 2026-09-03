@@ -88,7 +88,7 @@
       c = "qalc";
       vi = "hx";
       neofetch = "fastfetch";
-      rebuild = "sudo nixos-rebuild switch --flake .#$hostname";
+      rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#$hostname";
     };
 
     plugins = [

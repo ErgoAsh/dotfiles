@@ -1,12 +1,17 @@
 {
+  config,
   pkgs,
   lib,
   ...
 }:
 
+let
+  chatgpt = pkgs.callPackage ../packages/chatgpt.nix { };
+in
 {
   home.packages = with pkgs; [
     # --- Productivity & office ---
+    chatgpt
     obsidian
     vesktop
     anki
@@ -44,6 +49,8 @@
     hardinfo2
     jetbrains.pycharm
     jetbrains.clion
+    positron-bin
+    R
     jre25_minimal
     savvycan
     can-utils
@@ -58,6 +65,9 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
+      "text/html" = [ "librewolf.desktop" ];
+      "x-scheme-handler/http" = [ "librewolf.desktop" ];
+      "x-scheme-handler/https" = [ "librewolf.desktop" ];
       "inode/directory" = [ "thunar.desktop" ];
       "application/x-zerosize" = [ "org.xfce.mousepad.desktop" ];
       "text/plain" = [ "org.xfce.mousepad.desktop" ];
@@ -225,6 +235,10 @@
   };
 
   # --- Terminal (WezTerm) ---
+  home.sessionVariables.WEZTERM_CONFIG_FILE = "${config.xdg.configHome}/wezterm/wezterm.lua";
+  home.file.".wezterm.lua".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.xdg.configHome}/wezterm/wezterm.lua";
+
   programs.wezterm = {
     enable = true;
     extraConfig = ''
@@ -232,10 +246,14 @@
         font = wezterm.font 'FiraCode Nerd Font',
         font_size = 12.0,
         color_scheme = 'Catppuccin Mocha',
+        front_end = 'OpenGL',
         window_background_opacity = 0.72,
         text_background_opacity = 0.0,
         enable_tab_bar = true,
         window_close_confirmation = 'NeverPrompt',
+        keys = {
+          { key = 'Enter', mods = 'SHIFT', action = wezterm.action { SendString = '\x1b\r' } },
+        },
       }
     '';
   };
