@@ -60,19 +60,19 @@ in
         {
           output = "desc:BOE 0x0A2A";
           mode = "1920x1200@60";
-          position = "0x0";
+          position = "1920x0";
           scale = 1;
         }
         {
           output = "desc:Synaptics Inc Non-PnP 0x00BC614E";
           mode = "1920x1080@60";
-          position = "-1920x0";
+          position = "0x0";
           scale = 1;
         }
         {
-          output = "desc:LG Electronics L1740P 0x00016B3F";
+          output = "desc:Iiyama North America PL1906 11013A9702441";
           mode = "1280x1024@60";
-          position = "-3200x0";
+          position = "-1280x0";
           scale = 1;
         }
       ];
@@ -80,24 +80,24 @@ in
       workspace_rule = [
         {
           workspace = "3";
-          monitor = "desc:LG Electronics L1740P 0x00016B3F";
+          monitor = "desc:Iiyama North America PL1906 11013A9702441";
         }
         {
           workspace = "4";
-          monitor = "desc:LG Electronics L1740P 0x00016B3F";
+          monitor = "desc:Iiyama North America PL1906 11013A9702441";
         }
         {
           workspace = "8";
-          monitor = "desc:LG Electronics L1740P 0x00016B3F";
+          monitor = "desc:Iiyama North America PL1906 11013A9702441";
         }
         {
           workspace = "9";
-          monitor = "desc:LG Electronics L1740P 0x00016B3F";
+          monitor = "desc:Iiyama North America PL1906 11013A9702441";
           default = true;
         }
         {
           workspace = "10";
-          monitor = "desc:LG Electronics L1740P 0x00016B3F";
+          monitor = "desc:Iiyama North America PL1906 11013A9702441";
         }
         {
           workspace = "1";
@@ -119,6 +119,10 @@ in
         }
         {
           workspace = "7";
+          monitor = "desc:Synaptics Inc Non-PnP 0x00BC614E";
+        }
+        {
+          workspace = "11";
           monitor = "desc:BOE 0x0A2A";
         }
       ];

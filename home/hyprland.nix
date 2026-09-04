@@ -192,6 +192,7 @@ in
                 hl.exec_cmd("thunderbird", { workspace = "8 silent" })
                 hl.exec_cmd("ticktick", { workspace = "9 silent" })
                 hl.exec_cmd("librewolf", { workspace = "1 silent" })
+                hl.exec_cmd("chatgpt", { workspace = "10 silent" })
                 hl.timer(function()
                   hl.dispatch(hl.dsp.focus({ workspace = 1 }))
                 end, { timeout = 3000, type = "oneshot" })
@@ -210,17 +211,43 @@ in
       hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "linear", style = "fade" })
 
       local window_rules = {
-        { match = { class = "^[Aa]nki$" }, workspace = "10 silent" },
-        { match = { class = "^[Ll]ibre[Ww]olf$" }, workspace = "1 silent" },
+        {
+          match = { class = "^[Aa]nki$" },
+          workspace = "10 silent",
+          opacity = "0.93 override 0.93 override 0.93 override",
+        },
+        {
+          match = { class = "^[Ll]ibre[Ww]olf$" },
+          workspace = "1 silent",
+          opacity = "0.93 override 0.93 override 0.93 override",
+        },
         { match = { class = "^[Rr]io$" }, workspace = "2 silent" },
         { match = { class = "^jetbrains%-.*$" }, workspace = "3 silent" },
         { match = { class = "^(code%-url%-handler|code%-oss|Code)$" }, workspace = "3 silent" },
+        {
+          match = { class = "^[Pp]ositron$" },
+          workspace = "3 silent",
+          opacity = "0.93 override 0.93 override 0.93 override",
+        },
         { match = { class = "^[Ss]potify$" }, workspace = "4 silent" },
         { match = { class = "^([Vv]esktop|[Dd]iscord)$" }, workspace = "5 silent" },
         { match = { class = "^[Oo]bsidian$" }, workspace = "6 silent" },
-        { match = { class = "^[Zz]otero$" }, workspace = "7 silent" },
-        { match = { class = "^[Tt]hunderbird$" }, workspace = "8 silent" },
+        {
+          match = { class = "^[Zz]otero$" },
+          workspace = "7 silent",
+          opacity = "0.93 override 0.93 override 0.93 override",
+        },
+        {
+          match = { class = "^[Tt]hunderbird$" },
+          workspace = "8 silent",
+          opacity = "0.93 override 0.93 override 0.93 override",
+        },
         { match = { title = "^[Tt]ick[Tt]ick.*$" }, workspace = "9 silent" },
+        {
+          match = { class = "^[Cc]hat[Gg][Pp][Tt]$" },
+          workspace = "10 silent",
+          opacity = "0.93 override 0.93 override 0.93 override",
+        },
         { match = { class = "^[Aa]rdour.*$" }, workspace = "11 silent" },
         { match = { class = "^steam$" }, float = true },
         { match = { class = "^steam$", title = "^$" }, no_shadow = true },

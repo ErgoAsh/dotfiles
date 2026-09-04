@@ -161,11 +161,16 @@
     ];
 
     settings = {
-      theme = "catppuccin_mocha";
+      theme = "catppuccin_mocha_transparent";
       editor = {
         line-number = "relative";
         mouse = true;
       };
+    };
+
+    themes.catppuccin_mocha_transparent = {
+      inherits = "catppuccin_mocha";
+      "ui.background" = { };
     };
 
     languages = {

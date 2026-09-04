@@ -39,12 +39,10 @@
 
   # --- Bootloader and kernel ---
   boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 1; # 96 MB EFI partition
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Systemd initrd (~54 MB) + zen kernel (~14 MB) + ESP overhead (~28 MB) ≈ 97 MB > 96 MB.
-  # Scripted initrd is smaller and fits; use systemd initrd after resizing EFI to ≥128 MB.
-  boot.initrd.systemd.enable = false;
+  boot.initrd.systemd.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
