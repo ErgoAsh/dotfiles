@@ -197,6 +197,9 @@
     };
   };
 
+  # A stale Home Manager store symlink must not block the whole activation.
+  xdg.configFile."helix/config.toml".force = true;
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
