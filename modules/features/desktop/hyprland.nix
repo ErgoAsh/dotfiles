@@ -252,17 +252,35 @@ in
               workspace = "${toString ws.browser.id} silent",
               opacity = "0.93 override 0.93 override 1.0 override",
             },
-            { match = { class = "^[Rr]io$" }, workspace = "${toString ws.terminal.id} silent" },
-            { match = { class = "^jetbrains%-.*$" }, workspace = "${toString ws.editors.id} silent" },
-            { match = { class = "^(code%-url%-handler|code%-oss|Code)$" }, workspace = "${toString ws.editors.id} silent" },
+            {
+              match = { class = "^[Rr]io$" },
+              workspace = "${toString ws.terminal.id} silent",
+            },
+            {
+              match = { class = "^jetbrains%-.*$" },
+              workspace = "${toString ws.editors.id} silent",
+            },
+            {
+              match = { class = "^(code%-url%-handler|code%-oss|Code)$" },
+              workspace = "${toString ws.editors.id} silent",
+            },
             {
               match = { class = "^[Pp]ositron$" },
               workspace = "${toString ws.editors.id} silent",
               opacity = "0.93 override 0.93 override 1.0 override",
             },
-            { match = { class = "^[Ss]potify$" }, workspace = "${toString ws.music.id} silent" },
-            { match = { class = "^([Vv]esktop|[Dd]iscord)$" }, workspace = "${toString ws.chat.id} silent" },
-            { match = { class = "^[Oo]bsidian$" }, workspace = "${toString ws.notes.id} silent" },
+            {
+              match = { class = "^[Ss]potify$" },
+              workspace = "${toString ws.music.id} silent",
+            },
+            {
+              match = { class = "^([Vv]esktop|[Dd]iscord)$" },
+              workspace = "${toString ws.chat.id} silent",
+            },
+            {
+              match = { class = "^[Oo]bsidian$" },
+              workspace = "${toString ws.notes.id} silent",
+            },
             {
               match = { class = "^[Zz]otero$" },
               workspace = "${toString ws.references.id} silent",
@@ -273,24 +291,100 @@ in
               workspace = "${toString ws.mail.id} silent",
               opacity = "0.93 override 0.93 override 1.0 override",
             },
-            { match = { title = "^[Tt]ick[Tt]ick.*$" }, workspace = "${toString ws.tasks.id} silent" },
+            {
+              match = { class = "^[Tt]hunderbird$", initial_title = "^$" },
+              float = true,
+              size = "900 650",
+              center = true,
+            },
+            {
+              match = {
+                class = "^[Tt]hunderbird$",
+                initial_title = "^(Write: [(]no subject[)]|Edit Item|Account Settings|Address Book|Message Filters)$",
+              },
+              float = true,
+              size = "1200 850",
+              center = true,
+            },
+            {
+              match = { class = "^[Tt]hunderbird$", modal = true },
+              float = true,
+              size = "900 650",
+              center = true,
+            },
+            {
+              match = { title = "^[Tt]ick[Tt]ick.*$" },
+              workspace = "${toString ws.tasks.id} silent",
+            },
             {
               match = { class = "^[Cc]hat[Gg][Pp][Tt]$" },
               workspace = "${toString ws.chatgpt.id} silent",
               opacity = "0.93 override 0.93 override 1.0 override",
             },
-            { match = { class = "^[Aa]rdour.*$" }, workspace = "${toString ws.audio.id} silent" },
-            { match = { class = "^steam$" }, float = true },
-            { match = { class = "^steam$", title = "^$" }, no_shadow = true },
-            { match = { class = "^steam$", title = "^Steam$" }, float = false },
-            { match = { class = "^steam$", title = "^Big Picture$" }, float = false },
-            { match = { class = "^librewolf$", title = "^Extension:.*$" }, float = true, size = "450 650", center = true },
-            { match = { title = "Bitwarden Password Manager" }, float = true },
-            { match = { class = "^[Tt]hunar$" }, float = true, center = true, size = "900 600" },
-            { match = { class = "^(org%.xfce%.mousepad|[Mm]ousepad)$" }, float = true, center = true, size = "900 600" },
-            { match = { class = "^(pavucontrol|org%.pulseaudio%.pavucontrol)$" }, float = true, size = "800 600", center = true },
-            { match = { class = "^%.blueman%-manager%-wrapped$" }, float = true, size = "800 600", center = true },
-            { match = { class = "^nm%-connection%-editor$" }, float = true },
+            {
+              match = { class = "^[Aa]rdour.*$" },
+              workspace = "${toString ws.audio.id} silent",
+            },
+            {
+              match = { class = "^steam$" },
+              float = true,
+            },
+            {
+              match = { class = "^steam$", title = "^$" },
+              no_shadow = true,
+            },
+            {
+              match = { class = "^steam$", title = "^Steam$" },
+              float = false,
+            },
+            {
+              match = { class = "^steam$", title = "^Big Picture$" },
+              float = false,
+            },
+            {
+              match = { class = "^librewolf$", title = "^Picture-in-Picture$" },
+              float = true,
+              pin = true,
+              opacity = "1.0 override 1.0 override 1.0 override",
+            },
+            {
+              match = { class = "^librewolf$", title = "^Extension:.*$" },
+              float = true,
+              size = "450 650",
+              center = true,
+            },
+            {
+              match = { title = "Bitwarden Password Manager" },
+              float = true,
+            },
+            {
+              match = { class = "^[Tt]hunar$" },
+              float = true,
+              center = true,
+              size = "900 600",
+            },
+            {
+              match = { class = "^(org%.xfce%.mousepad|[Mm]ousepad)$" },
+              float = true,
+              center = true,
+              size = "900 600",
+            },
+            {
+              match = { class = "^(pavucontrol|org%.pulseaudio%.pavucontrol)$" },
+              float = true,
+              size = "800 600",
+              center = true,
+            },
+            {
+              match = { class = "^%.blueman%-manager%-wrapped$" },
+              float = true,
+              size = "800 600",
+              center = true,
+            },
+            {
+              match = { class = "^nm%-connection%-editor$" },
+              float = true,
+            },
           }
 
           for _, rule in ipairs(window_rules) do

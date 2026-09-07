@@ -9,8 +9,30 @@
   and contains host choices. Generated hardware settings live in `modules/hardware/`.
 - `modules/infrastructure/` defines fleet assembly, Home Manager integration,
   shared data and development tooling. It is infrastructure, not a host profile.
+- `modules/private/` is an optional Git submodule containing private, non-secret
+  flake-parts modules. When checked out, its Nix files are discovered automatically
+  by `import-tree` and may extend public named modules. The public repository must
+  remain evaluable and useful when this directory is absent or uninitialized.
 - Exported hosts are `ergo-laptop` and `ergo-pc`. Treat `flake.nix`, named modules
   and `dotfiles.hosts` as the source of truth.
+
+## Public and private configuration
+- Keep reusable behavior, package installation and safe defaults in the public
+  modules. Put personal account addresses, private service endpoints, local-network
+  addresses and similar identifiers in matching modules under `modules/private/`.
+- Do not explicitly import a file from `modules/private/` or make the private
+  repository a required flake input. Optional discovery through `import-tree` is
+  what allows a public-only checkout to work.
+- The private repository is not a secrets store. Never put passwords, OAuth tokens,
+  cookies, API keys or private keys in either repository or in values copied to the
+  Nix store. Use runtime application credential storage or a dedicated secret
+  manager for those values.
+- `.gitmodules` and the public repository record the private repository URL and a
+  commit hash, not its contents. Commit and push private changes first, then stage
+  `modules/private` in the public repository so the gitlink points at that commit.
+- After pulling public changes, use `git submodule update --init --recursive` when
+  the private configuration is wanted. Do not require this command for a public-only
+  evaluation or build.
 
 ## Changes
 - Use the `dotfiles-program` skill for adding, removing, or updating programs.
@@ -35,6 +57,8 @@
   old system generations or shared dependencies still used by other programs.
 
 ## Validation
+- `nix eval` and `nix build` are pre-authorized for this repository; run them when
+  useful without asking the user for confirmation.
 - Format only changed Nix files, e.g. `nixfmt modules/features/apps/packages.nix`; the flake formatter
   is `nixfmt-tree`. Avoid formatting unrelated user changes.
 - Discover hosts: `just hosts`, or use
@@ -42,6 +66,9 @@
 - Evaluate each affected host, e.g.:
   `nix eval --no-write-lock-file --raw .#nixosConfigurations.ergo-laptop.config.system.build.toplevel.drvPath`.
   Shared changes require both exported hosts; replace the host name for PC.
+- For changes involving `modules/private/`, evaluate both modes: use `.#` to verify
+  the public Git source without submodule contents and `path:.#` to verify the local
+  source with the checked-out private modules. Run both modes for every affected host.
 - Build affected system configurations when needed to verify package or activation
   closure changes: `nix build --no-write-lock-file --no-link .#nixosConfigurations.ergo-laptop.config.system.build.toplevel`.
   A successful evaluation alone does not establish that a package builds or runs.

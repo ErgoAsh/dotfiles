@@ -17,6 +17,8 @@ in
       h.mime
       h.thunar
       h.librewolf
+      h.thunderbird
+      h.obs-studio
       h.wezterm
       h.vscode
       h.flameshot
@@ -27,6 +29,7 @@ in
       h.lock
       h.idle
       h.midi-idle
+      h.watykanczyk
       h.desktop-utilities
     ];
   };

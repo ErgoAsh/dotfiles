@@ -1,0 +1,3 @@
+[submodule "modules/private"]
+	path = modules/private
+	url = https://github.com/ErgoAsh/dotfiles-private.git

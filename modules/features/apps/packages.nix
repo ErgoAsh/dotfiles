@@ -18,7 +18,6 @@
         hardinfo2
         geany
         ticktick
-        thunderbird
         teams-for-linux
         libreoffice-fresh
         zotero
