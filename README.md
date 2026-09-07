@@ -1,85 +1,73 @@
 <div align="center">
 
-# ❄️ NixOS dotfile configuration
+# ❄️ NixOS dotfiles
 
 </div>
 
-My personal declarative configuration for NixOS, managing my laptop and PC via **Nix Flakes** and **Home Manager**.
+Declarative configuration for two NixOS machines, with Home Manager integrated
+into each system build. The repository follows the dendritic pattern: files define
+named features, profiles compose them, and hosts explicitly select profiles.
 
-## Bootstrap (fresh install)
+## Machines
 
-To set up this configuration on a fresh machine with NixOS installed, run:
+- `ergo-laptop` — laptop profile and multi-monitor/touch configuration.
+- `ergo-pc` — desktop profile with gaming support.
 
-```bash
-# 1. Clone the repo
+## Repository map
+
+```text
+flake.nix                 flake entry point; starts flake-parts + import-tree
+modules/
+├── features/             programs and capabilities (NixOS and/or Home Manager)
+├── profiles/             explicit groups such as base, desktop, laptop, gaming
+├── hosts/                profile selection and machine-specific settings
+├── hardware/             generated hardware configuration
+└── infrastructure/       fleet assembly, shared workspaces and tooling
+.agents/skills/           repository-specific Codex workflows
+docs/usage.md             everyday operations
+wallpapers/               desktop assets
+```
+
+Every `.nix` file under `modules/` is a top-level flake-parts module discovered by
+import-tree. Discovery defines a named module; it does not enable it on a host.
+Open `modules/hosts/ergo-laptop.nix` or `modules/hosts/ergo-pc.nix` to see the
+complete profile selection for a machine.
+
+## Bootstrap
+
+On a fresh NixOS installation:
+
+```console
 nix-shell -p git --run "git clone https://github.com/ErgoAsh/dotfiles.git ~/dotfiles"
-
-# 2. Enter directory
 cd ~/dotfiles
-
-# 3. Apply the configuration
-# Replace 'HOSTNAME' with: ergo-laptop, ergo-pc, or ergo-vm
-sudo nixos-rebuild switch --flake .#HOSTNAME --option extra-experimental-features "nix-command flakes"
+sudo nixos-rebuild switch --flake .#ergo-laptop
 ```
 
-## Structure
-```
-dotfiles/
-├── flake.nix           # Main entry point and fleet definition
-├── hosts/              # Machine-specific configurations
-│   ├── ergo-laptop/    # Laptop configuration
-│   ├── ergo-pc/        # Desktop PC configuration
-│   └── ergo-vm/        # VM configuration
-├── home/               # User-space configurations (home-manager)
-│   ├── apps.nix        # GUI applications and programs
-│   ├── gui.nix         # Hyprland, Waybar, window rules
-│   ├── gui-laptop.nix  # Laptop-specific GUI settings
-│   ├── shell.nix       # Shell configuration (Fish)
-│   └── games.nix       # Gaming-related packages
-├── modules/            # Reusable NixOS modules
-│   ├── core.nix        # Base system configuration
-│   ├── desktop.nix     # Desktop environment setup
-│   ├── laptop.nix      # Laptop-specific settings
-│   └── gaming.nix      # Gaming configuration
-└── wallpapers/         # Desktop wallpapers
+Replace `ergo-laptop` with `ergo-pc` when appropriate.
+
+## Common commands
+
+The development shell supplies `just`, `nixfmt` and Git:
+
+```console
+nix develop
+just hosts
+just check
+just build ergo-laptop
 ```
 
-## Main tools
-* **Window Manager:** Hyprland (Wayland)
-* **Shell:** Fish with vi keybindings
-* **Terminal:** WezTerm
-* **Browser:** LibreWolf + Tridactyl
-* **Editor:** Helix
-* **Notes:** Obsidian
-* **Reference Manager:** Zotero
-* **Communication:** Vesktop (Discord), Thunderbird
+Building validates the system closure but does not activate it. Activate a reviewed
+configuration explicitly with `just switch ergo-laptop` or `just switch ergo-pc`.
+See [docs/usage.md](docs/usage.md) for adding, removing, updating and rolling back.
 
-## Workspace layout
-1. LibreWolf
-2. Terminal
-3. IDEs
-4. Spotify
-5. Discord
-6. Obsidian
-7. Zotero
-8. Thunderbird
-9. TickTick
-10. Anki (key: 0)
-11. Ardour (key: \)
+## Desktop
 
-## Utility commands
+- Window manager: Hyprland (Wayland, Lua configuration)
+- Shell: Fish with vi bindings
+- Terminal: WezTerm
+- Browser: LibreWolf with Tridactyl
+- Editor: Helix
+- Notes and references: Obsidian and Zotero
 
-Update dotfiles after changes:
-
-```shell
-cd ~/dotfiles
-git add .
-sudo nixos-rebuild switch --flake .#HOSTNAME
-```
-
-Remove NixOS garbage manually (automatic cleanup is set to every 7 days):
-
-```shell
-sudo nix-collect-garbage -d
-```
-
+Workspace IDs, keys, labels, icons and laptop monitor placement have one source of
+truth in `modules/infrastructure/workspaces.nix`.
