@@ -79,6 +79,7 @@ in
           ws.mail
           ws.tasks
           ws.audio
+          ws.chatgpt
         ];
 
       focusBinds =

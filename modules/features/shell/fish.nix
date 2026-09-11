@@ -80,7 +80,8 @@
 
         shellAliases = {
           dotfiles = "git --git-dir=$HOME/dotfiles --work-tree=$HOME";
-          dot = "git --git-dir=$HOME/dotfiles --work-tree=$HOME";
+          dot = "cd ~/dotfiles";
+          dots = "cd ~/dotfiles";
           ll = "eza -ahl --no-user --time-style=long-iso --group-directories-first";
           paths = "echo $PATH | tr -s ':' '\n'";
           fonts = "fc-list : family | sort";
@@ -97,6 +98,8 @@
           c = "qalc";
           vi = "hx";
           neofetch = "fastfetch";
+          check-config = "nix flake check --no-build --no-write-lock-file path:$HOME/dotfiles";
+          build-config = "nix build --no-link --no-write-lock-file path:$HOME/dotfiles#nixosConfigurations.$hostname.config.system.build.toplevel";
           rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#$hostname";
         };
 

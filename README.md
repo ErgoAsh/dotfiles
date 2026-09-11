@@ -47,17 +47,15 @@ Replace `ergo-laptop` with `ergo-pc` when appropriate.
 
 ## Common commands
 
-The development shell supplies `just`, `nixfmt` and Git:
-
 ```console
-nix develop
-just hosts
-just check
-just build ergo-laptop
+check-config
+build-config
+rebuild
 ```
 
-Building validates the system closure but does not activate it. Activate a reviewed
-configuration explicitly with `just switch ergo-laptop` or `just switch ergo-pc`.
+Fish provides these abbreviations for checking the flake, building the current
+host without activation, and rebuilding and activating it. They work from any
+directory. The development shell (`nix develop`) supplies `nixfmt` and Git.
 See [docs/usage.md](docs/usage.md) for adding, removing, updating and rolling back.
 
 ## Desktop

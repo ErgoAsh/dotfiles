@@ -93,14 +93,14 @@
     };
     audio = {
       id = 11;
-      key = "backslash";
+      key = "minus";
       label = "Ardour";
       icon = "󰎆";
       laptopMonitor = "desc:BOE 0x0A2A";
     };
     chatgpt = {
       id = 12;
-      key = "minus";
+      key = "backslash";
       label = "ChatGPT";
       icon = "󰚩";
       laptopMonitor = "desc:Iiyama North America PL1906 11013A9702441";

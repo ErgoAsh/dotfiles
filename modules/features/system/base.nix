@@ -21,6 +21,11 @@
 
       nix.settings.auto-optimise-store = true;
 
+      systemd.sleep.settings.Sleep = {
+        HibernateDelaySec = "2h";
+        HibernateOnACPower = true;
+      };
+
       # --- Locale & Time ---
       time.timeZone = "Europe/Warsaw";
 

@@ -42,7 +42,7 @@
             "󰂂"
             "󰁹"
           ];
-          tooltip-format = "{timeTo}";
+          tooltip-format = "Estimated time: {time}\nBattery health: {health}%\nCharge cycles: {cycles}";
         };
       };
 
