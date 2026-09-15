@@ -22,6 +22,32 @@ in
         ;
     in
     {
+      home.packages = [ pkgs.wvkbd ];
+
+      systemd.user.services.wvkbd = {
+        Unit = {
+          Description = "On-screen keyboard";
+          After = [ "hyprland-session.target" ];
+          PartOf = [ "hyprland-session.target" ];
+        };
+        Service = {
+          ExecStart = toString (
+            pkgs.writeShellScript "start-wvkbd" ''
+              exec ${pkgs.wvkbd}/bin/wvkbd-mobintl \
+                --hidden \
+                -H 480 \
+                -L 360 \
+                --fn "FiraCode Nerd Font 20" \
+                -l full,special,emoji,nav \
+                --landscape-layers landscape,landscapespecial,emoji,nav
+            ''
+          );
+          Restart = "on-failure";
+          RestartSec = 2;
+        };
+        Install.WantedBy = [ "hyprland-session.target" ];
+      };
+
       wayland.windowManager.hyprland = {
         settings = {
           monitor = [
@@ -82,15 +108,21 @@ in
                 output = "eDP-1";
                 transform = 0;
               };
+
+              tablet = {
+                output = "eDP-1";
+                transform = 0;
+              };
             };
 
             gestures = {
               workspace_swipe_distance = 500;
               workspace_swipe_invert = true;
               workspace_swipe_min_speed_to_force = 30;
-              workspace_swipe_cancel_ratio = 0.5;
+              workspace_swipe_cancel_ratio = 0.15;
               workspace_swipe_create_new = true;
               workspace_swipe_forever = true;
+              workspace_swipe_touch = true;
             };
 
           };
