@@ -137,6 +137,7 @@ in
             (bindMod "TAB" (execCmd "qs ipc -c overview call overview toggle"))
             (bindModOpts "SHIFT + T" (execCmd "pypr toggle term") { })
           ];
+
         };
 
       };
