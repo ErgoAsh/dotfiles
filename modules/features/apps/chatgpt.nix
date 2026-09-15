@@ -18,6 +18,7 @@ let
         dpkg
         makeWrapper
         python3
+        wrapGAppsHook3
       ];
 
       buildInputs = [
