@@ -37,8 +37,13 @@
 ## Changes
 - Use the `dotfiles-program` skill for adding, removing, or updating programs.
 - Preserve unrelated working-tree changes. Inspect the diff before editing.
-- The user prefers stable. Preserve existing exceptions; explain why stable cannot
-  meet the request before proposing unstable or new custom packaging.
+- Always use the stable package version provided by the repository's locked inputs.
+  Do not manually override a package version or use an unstable, unreleased commit
+  by default. Make an exception only for a concrete, important requirement that the
+  stable package cannot satisfy and that has been verified against the locked inputs.
+  Before introducing an exception, explain the exact reason to the user. Document
+  the reason, relevant upstream issue or source, affected scope and removal condition
+  next to the override; remove the override once the stable package satisfies it.
 - Prefer an existing Home Manager program module when it manages the needed
   configuration. Use `home.packages` for user packages without such configuration.
   Put system services, drivers and system integration in NixOS modules.

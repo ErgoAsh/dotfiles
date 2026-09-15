@@ -16,25 +16,12 @@ in
 
       {
 
-        # wf-touch fails to link doctest tests on 26.05; hyprgrass in nixpkgs is too old for Hyprland 0.55.
+        # wf-touch fails to link doctest tests on 26.05.
         nixpkgs.overlays = [
           (final: prev: {
             wf-touch = prev.wf-touch.overrideAttrs (oldAttrs: {
               mesonFlags = (oldAttrs.mesonFlags or [ ]) ++ [ "-Dtests=disabled" ];
             });
-
-            hyprlandPlugins = prev.hyprlandPlugins // {
-              hyprgrass = prev.hyprlandPlugins.hyprgrass.overrideAttrs (oldAttrs: {
-                version = "0.8.2-unstable-2026-06-06";
-                src = prev.fetchFromGitHub {
-                  owner = "horriblename";
-                  repo = "hyprgrass";
-                  rev = "c9968ba79b3537eff127d6ab6df767d76f17544a";
-                  hash = "sha256-rVLdIs67in1fhaatayWrLu+kCOJ0cveKze/BRjYtxRw=";
-                };
-                doCheck = false;
-              });
-            };
           })
         ];
 
