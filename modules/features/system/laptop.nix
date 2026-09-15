@@ -27,16 +27,16 @@
       swapDevices = [
         {
           device = "/swapfile";
-          size = 16 * 1024;
+          size = 24 * 1024;
         }
       ];
 
       # Lid switch behavior
       services.logind.settings = {
         Login = {
-          HandleLidSwitch = "suspend";
+          HandleLidSwitch = "suspend-then-hibernate";
           HandleLidSwitchDocked = "ignore";
-          HandleLidSwitchExternalPower = "suspend";
+          HandleLidSwitchExternalPower = "suspend-then-hibernate";
         };
       };
 
