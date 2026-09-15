@@ -23,7 +23,7 @@
       key = "1";
       label = "LibreWolf";
       icon = "󰈹";
-      laptopMonitor = "desc:Synaptics Inc Non-PnP 0x00BC614E";
+      laptopMonitor = "desc:Lenovo Group Limited E22-20 VY036074";
       laptopDefault = true;
     };
     terminal = {
@@ -67,7 +67,7 @@
       key = "7";
       label = "Zotero";
       icon = "󰂺";
-      laptopMonitor = "desc:Synaptics Inc Non-PnP 0x00BC614E";
+      laptopMonitor = "desc:Lenovo Group Limited E22-20 VY036074";
     };
     mail = {
       id = 8;

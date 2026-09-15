@@ -58,7 +58,7 @@ in
               scale = 1;
             }
             {
-              output = "desc:Synaptics Inc Non-PnP 0x00BC614E";
+              output = "desc:Lenovo Group Limited E22-20 VY036074";
               mode = "1920x1080@60";
               position = "0x0";
               scale = 1;
