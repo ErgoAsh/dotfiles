@@ -100,7 +100,8 @@
           neofetch = "fastfetch";
           check-config = "nix flake check --no-build --no-write-lock-file path:$HOME/dotfiles";
           build-config = "nix build --no-link --no-write-lock-file path:$HOME/dotfiles#nixosConfigurations.$hostname.config.system.build.toplevel";
-          rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#$hostname";
+          update-config = "nix flake update --flake path:/home/ergoash/dotfiles";
+          rebuild = "sudo nixos-rebuild switch --flake path:/home/ergoash/dotfiles#$hostname";
         };
 
         plugins = [
