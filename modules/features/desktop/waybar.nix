@@ -1,14 +1,8 @@
-{ config, ... }:
-let
-  workspaces = builtins.attrValues config.dotfiles.workspaces;
-in
-{
+{ ... }: {
 
   flake.modules.homeManager.waybar =
     {
-      config,
       pkgs,
-      lib,
       ...
     }:
     let
@@ -22,40 +16,6 @@ in
         };
         version = "0.15.0";
       });
-      workspaceNumbers = builtins.sort builtins.lessThan (map (w: w.id) workspaces);
-      workspaceIcons = builtins.listToAttrs (
-        map (w: {
-          name = toString w.id;
-          value = w.icon;
-        }) workspaces
-      );
-      workspaceModules = map (ws: "custom/ws${toString ws}") workspaceNumbers;
-      workspaceModuleSelectors = lib.concatStringsSep ",\n" (
-        map (ws: "#custom-ws${toString ws}") workspaceNumbers
-      );
-      workspaceModuleHoverSelectors = lib.concatStringsSep ",\n" (
-        map (ws: "#custom-ws${toString ws}:hover") workspaceNumbers
-      );
-      workspaceModuleActiveSelectors = lib.concatStringsSep ",\n" (
-        map (ws: "#custom-ws${toString ws}.active") workspaceNumbers
-      );
-      workspaceStatus = pkgs.writeShellScript "waybar-workspace-status" ''
-        ws="$1"
-        icon="$2"
-        active="$(${pkgs.hyprland}/bin/hyprctl activeworkspace -j | ${pkgs.jq}/bin/jq -r '.id')"
-
-        class=""
-        if [ "$active" = "$ws" ]; then
-          class="active"
-        fi
-
-        printf '{"text":"%s","class":"%s","tooltip":"Workspace %s"}\n' "$icon" "$class" "$ws"
-      '';
-      workspaceFocus = pkgs.writeShellScript "waybar-workspace-focus" ''
-        ws="$1"
-        ${pkgs.hyprland}/bin/hyprctl dispatch "hl.dsp.focus({ workspace = $ws })"
-        ${pkgs.procps}/bin/pkill -RTMIN+8 waybar || true
-      '';
     in
     {
       programs.waybar = {
@@ -71,7 +31,6 @@ in
             height = 33;
             fixed-center = false;
 
-            modules-left = workspaceModules;
             modules-center = [ "hyprland/window" ];
             modules-right = [
               "tray"
@@ -215,22 +174,7 @@ in
               ];
               on-click = "nm-connection-editor";
             };
-
-          }
-          // lib.genAttrs workspaceModules (
-            module:
-            let
-              ws = lib.removePrefix "custom/ws" module;
-            in
-            {
-              exec = "${workspaceStatus} ${ws} ${lib.escapeShellArg workspaceIcons.${ws}}";
-              interval = 1;
-              signal = 8;
-              return-type = "json";
-              format = "{}";
-              on-click = "${workspaceFocus} ${ws}";
-            }
-          );
+          };
         };
 
         style = ''
@@ -246,27 +190,6 @@ in
           window#waybar {
             background: rgba(43, 48, 59, 0.9);
             color: #ffffff;
-          }
-
-          ${workspaceModuleSelectors} {
-            padding: 0 10px;
-            margin: 0;
-            border-radius: 0;
-            background-color: transparent;
-            color: #ffffff;
-            min-height: 30px;
-            min-width: 14px;
-            border-bottom: 3px solid transparent;
-          }
-
-          ${workspaceModuleHoverSelectors} {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: none;
-          }
-
-          ${workspaceModuleActiveSelectors} {
-            background-color: #64727d;
-            border-bottom: 3px solid #ffffff;
           }
 
           #clock,

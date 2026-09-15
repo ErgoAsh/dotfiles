@@ -25,6 +25,7 @@ in
       h.chatgpt
       h.hyprland
       h.waybar
+      h.waybar-workspaces
       h.notifications
       h.lock
       h.idle
