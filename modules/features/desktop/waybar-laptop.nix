@@ -1,12 +1,8 @@
 { config, ... }:
 let
   leftMonitor = "Iiyama North America PL1906 11013A9702441";
-  leftWorkspaceModules = map (w: "custom/ws${toString w.id}") (
-    builtins.sort (a: b: a.id < b.id) (
-      builtins.filter (w: w.laptopMonitor == "desc:${leftMonitor}") (
-        builtins.attrValues config.dotfiles.workspaces
-      )
-    )
+  workspaceModules = map (w: "custom/ws${toString w.id}") (
+    builtins.sort (a: b: a.id < b.id) (builtins.attrValues config.dotfiles.workspaces)
   );
 in
 {
@@ -47,7 +43,7 @@ in
           '{ text: "N/A 󰋊", tooltip: "Nie znaleziono czujnika temperatury NVMe", class: "unavailable" }'
       '';
       mainBar = config.programs.waybar.settings.mainBar;
-      leftWorkspaceSettings = lib.genAttrs leftWorkspaceModules (module: mainBar.${module});
+      workspaceSettings = lib.genAttrs workspaceModules (module: mainBar.${module});
     in
     {
       programs.waybar.settings.mainBar = {
@@ -146,7 +142,7 @@ in
         passthrough = false;
         height = 33;
         fixed-center = false;
-        modules-left = leftWorkspaceModules;
+        modules-left = workspaceModules;
         modules-center = [ "hyprland/window" ];
         modules-right = [ "clock" ];
         tooltip = mainBar.tooltip;
@@ -157,7 +153,7 @@ in
           format = "{:%H:%M}";
         };
       }
-      // leftWorkspaceSettings;
+      // workspaceSettings;
 
       programs.waybar.style = lib.mkBefore ''
         #custom-keyboard {

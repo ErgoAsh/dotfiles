@@ -70,12 +70,24 @@ in
           UNIX-CONNECT:"''${XDG_RUNTIME_DIR:?}/hypr/''${HYPRLAND_INSTANCE_SIGNATURE:?}/.socket2.sock" - \
           | while IFS= read -r event; do
             case "$event" in
-              workspace* | focusedmon*) printf 'workspace\n' ;;
+              workspace* | focusedmon* | moveworkspace* | createworkspace* | destroyworkspace*)
+                printf 'workspace\n'
+                ;;
             esac
           done > "$events" &
 
         updateState() {
-          active="$(${pkgs.hyprland}/bin/hyprctl activeworkspace -j 2>/dev/null | ${pkgs.jq}/bin/jq -r '.id // empty')"
+          activeWorkspaces="$(${pkgs.hyprland}/bin/hyprctl monitors -j 2>/dev/null | ${pkgs.jq}/bin/jq -r '
+            .[]
+            | .activeWorkspace.id
+            | select(. > 0)
+            | "active:\(.)"
+          ')"
+          workspaceMonitors="$(${pkgs.hyprland}/bin/hyprctl workspaces -j 2>/dev/null | ${pkgs.jq}/bin/jq -r '
+            .[]
+            | select(.id > 0)
+            | "monitor:\(.id):\(.monitor)"
+          ')"
           notifications="$(${pkgs.mako}/bin/makoctl list -j 2>/dev/null | ${pkgs.jq}/bin/jq -r '
             [
               .[]
@@ -90,7 +102,10 @@ in
             | "notification:\(.)"
           ')"
 
-          printf 'active:%s\n' "$active" > "$nextState"
+          printf '%s\n' "$activeWorkspaces" > "$nextState"
+          if [ -n "$workspaceMonitors" ]; then
+            printf '%s\n' "$workspaceMonitors" >> "$nextState"
+          fi
           if [ -n "$notifications" ]; then
             printf '%s\n' "$notifications" >> "$nextState"
           fi
@@ -116,14 +131,25 @@ in
 
         active=false
         notification=false
-        while IFS=: read -r kind value; do
+        visible=false
+        while IFS=: read -r kind value monitor; do
           if [ "$value" = "$ws" ]; then
             case "$kind" in
               active) active=true ;;
               notification) notification=true ;;
+              monitor)
+                if [ "$monitor" = "''${WAYBAR_OUTPUT_NAME:-}" ]; then
+                  visible=true
+                fi
+                ;;
             esac
           fi
         done < "$state" 2>/dev/null
+
+        if ! $visible; then
+          ${pkgs.jq}/bin/jq -cn '{ text: "" }'
+          exit 0
+        fi
 
         class=""
         if $active && $notification; then
@@ -176,6 +202,7 @@ in
           signal = 8;
           return-type = "json";
           format = "{}";
+          hide-empty-text = true;
           on-click = "${workspaceFocus} ${ws}";
         }
       );
