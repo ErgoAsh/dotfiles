@@ -21,7 +21,7 @@ in
       h.obs-studio
       h.wezterm
       h.vscode
-      h.flameshot
+      h.satty
       h.chatgpt
       h.hyprland
       h.waybar

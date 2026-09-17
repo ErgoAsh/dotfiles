@@ -179,7 +179,7 @@ in
             (bindMod "F8" (execCmd "${pkgs.playerctl}/bin/playerctl -p spotify play-pause"))
 
             # Utilities / screenshots
-            (bindKey "Print" (execCmd "flameshot gui"))
+            (bindKey "Print" (execCmd "screenshot-region"))
             (bindMod "G" (execCmd "gimp"))
             (bindMod "O" (execCmd "obs"))
             (bindModOpts "ALT + C" (execCmd "hyprpicker -a") { })

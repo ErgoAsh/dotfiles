@@ -19,7 +19,6 @@
         wl-clipboard # Clipboard manager
         grim # Screenshot tool
         slurp # Screen area selection
-        swappy # Screenshot editor
         pavucontrol # Audio control GUI
         playerctl # Media player control
         nerd-fonts.fira-code
