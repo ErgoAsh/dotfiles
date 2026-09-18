@@ -6,11 +6,11 @@ let
     with pkgs;
     stdenv.mkDerivation rec {
       pname = "chatgpt";
-      version = "26.901.51231";
+      version = "26.915.31945";
 
       src = fetchurl {
         url = "https://persistent.oaistatic.com/codex-app-prod/linux/deb/pool/main/c/chatgpt/chatgpt_${version}_amd64.deb";
-        hash = "sha256-YlgBiNh8PTqTadq3xztCqKMlGNTfii1brmRm3erFwF4=";
+        hash = "sha256-0nqcApGc/khNzF80WEueqf0NemXGncyHK1vc+g77WYM=";
       };
 
       nativeBuildInputs = [
@@ -78,12 +78,12 @@ let
         data = path.read_bytes()
         replacements = [
             (
-                b"process.platform===`linux`&&n.recursive!==!1?F9(n,{ignoredPaths:[]}):e.startFileWatch(n)",
-                b"process.platform===`win32`&&n.recursive!==!1?F9(n,{ignoredPaths:[]}):e.startFileWatch(n)",
+                b"process.platform===`linux`&&n.recursive!==!1?j9(n,{ignoredPaths:[]}):e.startFileWatch(n)",
+                b"process.platform===`win32`&&n.recursive!==!1?j9(n,{ignoredPaths:[]}):e.startFileWatch(n)",
             ),
             (
-                b"process.platform===`linux`?F9(n,{ignoredPaths:[E.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
-                b"process.platform===`win32`?F9(n,{ignoredPaths:[E.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
+                b"process.platform===`linux`?j9(n,{ignoredPaths:[h.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
+                b"process.platform===`win32`?j9(n,{ignoredPaths:[h.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
             ),
         ]
 

@@ -113,7 +113,7 @@
       label = "Anki";
       notificationApps = [ "anki" ];
       icon = "󰗚";
-      laptopMonitor = "desc:Iiyama North America PL1906 11013A9702441";
+      laptopMonitor = "desc:BOE 0x0A2A";
     };
     audio = {
       id = 11;
