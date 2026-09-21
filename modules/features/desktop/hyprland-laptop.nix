@@ -69,6 +69,12 @@ in
               position = "-1280x0";
               scale = 1;
             }
+            {
+              output = "";
+              mode = "preferred";
+              position = "auto-right";
+              scale = 1;
+            }
           ];
 
           workspace_rule =

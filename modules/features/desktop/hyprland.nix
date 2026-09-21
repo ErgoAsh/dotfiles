@@ -423,6 +423,10 @@ in
           hl.on("hyprland.start", function()
             load_monitors_conf()
           end)
+
+          hl.on("monitor.added", function()
+            hl.exec_cmd(${builtins.toJSON "${applyWallpaper}"})
+          end)
         '';
       };
     };
