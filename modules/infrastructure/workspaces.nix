@@ -53,7 +53,7 @@
         "visual studio code"
       ];
       icon = "";
-      laptopMonitor = "desc:Iiyama North America PL1906 11013A9702441";
+      laptopMonitor = "desc:BOE 0x0A2A";
     };
     music = {
       id = 4;
@@ -72,7 +72,7 @@
         "vesktop"
       ];
       icon = "󰭹";
-      laptopMonitor = "desc:BOE 0x0A2A";
+      laptopMonitor = "desc:Iiyama North America PL1906 11013A9702441";
     };
     notes = {
       id = 6;

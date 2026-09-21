@@ -253,7 +253,7 @@ in
               opacity = "0.93 override 0.93 override 1.0 override",
             },
             {
-              match = { class = "^[Rr]io$" },
+              match = { class = "^([Rr]io|org%.wezfurlong%.wezterm|[Ww]ez[Tt]erm)$" },
               workspace = "${toString ws.terminal.id} silent",
             },
             {

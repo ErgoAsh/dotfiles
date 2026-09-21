@@ -46,6 +46,7 @@
         jetbrains.pycharm
         jetbrains.clion
         positron-bin
+        tinymist
         R
         jre25_minimal
         savvycan
