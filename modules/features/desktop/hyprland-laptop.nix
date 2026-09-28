@@ -138,7 +138,6 @@ in
             (bindKey "XF86MonBrightnessUp" (execCmd "brightnessctl set +5%"))
             (bindMod "Y" (execCmd "wezterm -e yazi"))
             (bindModOpts "SHIFT + W" (execCmd "qs-wallpapers-apply") { })
-            (bindModOpts "SHIFT + N" (execCmd "swaync-client -rs") { })
             (bindModOpts "CTRL + D" (execCmd "dock") { })
             (bindMod "TAB" (execCmd "qs ipc -c overview call overview toggle"))
             (bindModOpts "SHIFT + T" (execCmd "pypr toggle term") { })

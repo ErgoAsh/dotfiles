@@ -30,6 +30,8 @@
         file-roller
         xarchiver
         mousepad
+        gimp
+        inkscape
 
         # --- Music ---
         ardour

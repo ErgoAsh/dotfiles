@@ -80,6 +80,10 @@ in
               layout = "dwindle";
             };
 
+            dwindle = {
+              preserve_split = true;
+            };
+
             decoration = {
               rounding = 5;
               fullscreen_opacity = 1.0;
@@ -180,7 +184,6 @@ in
 
             # Utilities / screenshots
             (bindKey "Print" (execCmd "screenshot-region"))
-            (bindMod "G" (execCmd "gimp"))
             (bindMod "O" (execCmd "obs"))
             (bindModOpts "ALT + C" (execCmd "hyprpicker -a") { })
             (bindModOpts "ALT + M" (execCmd "ncpamixer") { })
@@ -189,9 +192,7 @@ in
             (bindMod "K" (execCmd "qs-keybinds"))
             (bindModOpts "CTRL + C" (execCmd "qs-cheatsheets") { })
             (bindModOpts "SHIFT + K" (execCmd "list-keybinds") { })
-            (bindModOpts "CTRL + S" (execCmd "hyprshot -m output -o $HOME/Pictures/ScreenShots") { })
-            (bindModOpts "SHIFT + S" (execCmd "hyprshot -m window -o $HOME/Pictures/ScreenShots") { })
-            (bindModOpts "ALT + S" (execCmd "hyprshot -m region -o $HOME/Pictures/ScreenShots") { })
+            (bindModOpts "SHIFT + S" (execCmd "screenshot-region") { })
           ]
           ++ focusBinds
           ++ moveWinBinds
@@ -390,6 +391,28 @@ in
           for _, rule in ipairs(window_rules) do
             hl.window_rule(rule)
           end
+
+          for _, rule in ipairs(window_rules) do
+            if rule.workspace then
+              local match = {}
+              for key, value in pairs(rule.match) do
+                match[key] = value
+              end
+              match.float = true
+              hl.window_rule({
+                match = match,
+                workspace = "unset",
+                center = true,
+              })
+            end
+          end
+
+          hl.window_rule({
+            match = { modal = true },
+            float = true,
+            workspace = "unset",
+            center = true,
+          })
 
           -- nwg-displays writes hyprlang monitor= lines; apply them after static rules
           local function load_monitors_conf()
