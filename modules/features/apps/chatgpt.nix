@@ -6,11 +6,11 @@ let
     with pkgs;
     stdenv.mkDerivation rec {
       pname = "chatgpt";
-      version = "26.915.31945";
+      version = "26.1007.21434";
 
       src = fetchurl {
         url = "https://persistent.oaistatic.com/codex-app-prod/linux/deb/pool/main/c/chatgpt/chatgpt_${version}_amd64.deb";
-        hash = "sha256-0nqcApGc/khNzF80WEueqf0NemXGncyHK1vc+g77WYM=";
+        hash = "sha256-J2tTQcPXSyYdOtUhBvf6ft3gaEHkdn/ipAy1QJmx8+0=";
       };
 
       nativeBuildInputs = [
@@ -82,8 +82,8 @@ let
                 b"process.platform===`win32`&&n.recursive!==!1?j9(n,{ignoredPaths:[]}):e.startFileWatch(n)",
             ),
             (
-                b"process.platform===`linux`?j9(n,{ignoredPaths:[h.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
-                b"process.platform===`win32`?j9(n,{ignoredPaths:[h.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
+                b"process.platform===`linux`?j9(n,{ignoredPaths:[g.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
+                b"process.platform===`win32`?j9(n,{ignoredPaths:[g.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
             ),
         ]
 

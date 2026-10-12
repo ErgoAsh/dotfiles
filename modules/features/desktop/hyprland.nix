@@ -322,6 +322,7 @@ in
               match = { class = "^[Cc]hat[Gg][Pp][Tt]$" },
               workspace = "${toString ws.chatgpt.id} silent",
               opacity = "0.93 override 0.93 override 1.0 override",
+              suppress_event = "maximize",
             },
             {
               match = { class = "^[Aa]rdour.*$" },
