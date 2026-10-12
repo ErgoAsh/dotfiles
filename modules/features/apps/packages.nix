@@ -54,6 +54,7 @@
           jre25_minimal
           savvycan
           can-utils
+          simulide
 
           # --- Audio ---
           ncpamixer
