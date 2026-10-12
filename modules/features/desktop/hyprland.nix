@@ -48,7 +48,7 @@ in
         bindMouseMod
         execCmd
         focusBinds
-        moveWinBinds
+        moveWinMonitorBinds
         swapWinBinds
         workspaceBinds
         mkLuaInline
@@ -148,7 +148,8 @@ in
             (bindMod "V" "hl.dsp.window.float()")
             (bindMod "F" "hl.dsp.window.fullscreen()")
             (bindMod "P" "hl.dsp.window.pseudo()")
-            (bindModOpts "SHIFT + I" "hl.dsp.global(\"layoutmsg togglesplit\")" { })
+            (bindModOpts "SHIFT + R" "hl.dsp.layout(\"togglesplit\")" { })
+            (bindModOpts "SHIFT + M" "hl.dsp.layout(\"movetoroot\")" { })
             (bindModOpts "SHIFT + F" "hl.dsp.window.float()" { })
             (bindModOpts "ALT + F" "hl.dsp.global(\"workspaceopt allfloat\")" { })
             (bindModOpts "SHIFT + C" "hl.dsp.exit()" { })
@@ -195,8 +196,8 @@ in
             (bindModOpts "SHIFT + S" (execCmd "screenshot-region") { })
           ]
           ++ focusBinds
-          ++ moveWinBinds
           ++ swapWinBinds
+          ++ moveWinMonitorBinds
           ++ workspaceBinds
           ++ [
             (bindMouseMod "mouse:272" "hl.dsp.window.drag()")
