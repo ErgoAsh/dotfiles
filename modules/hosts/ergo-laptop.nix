@@ -61,10 +61,6 @@ in
         zramSwap.enable = true;
         services.fstrim.enable = true;
 
-        # --- Insecure packages (if needed) ---
-        nixpkgs.config.permittedInsecurePackages = [
-          "ciscoPacketTracer8-8.2.2"
-        ];
       }
     )
   ];
