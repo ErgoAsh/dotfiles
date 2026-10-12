@@ -414,6 +414,11 @@ in
             center = true,
           })
 
+          hl.window_rule({
+            match = { class = "^[Aa]rdour.*$" },
+            center = false,
+          })
+
           -- nwg-displays writes hyprlang monitor= lines; apply them after static rules
           local function load_monitors_conf()
             local path = (os.getenv("HOME") or "") .. "/.config/hypr/monitors.conf"

@@ -1,13 +1,26 @@
 { ... }: {
+  flake.modules.homeManager.music =
+    { pkgs, ... }:
+    let
+      ardourWithPipeWireJack = pkgs.symlinkJoin {
+        name = "ardour-with-pipewire-jack";
+        paths = [ pkgs.ardour ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          rm "$out/bin/ardour9"
+          makeWrapper "${pkgs.pipewire.jack}/bin/pw-jack" "$out/bin/ardour9" \
+            --add-flags "${pkgs.ardour}/bin/ardour9"
+        '';
+      };
+    in
+    {
+      home.packages = [
+        ardourWithPipeWireJack
+        pkgs.qpwgraph
+        pkgs.sfizz-ui
+        pkgs.x42-plugins
+      ];
 
-  flake.modules.homeManager.midi-idle =
-    {
-      config,
-      pkgs,
-      lib,
-      ...
-    }:
-    {
       systemd.user.services.midi-idle-inhibit = {
         Unit = {
           Description = "Inhibit hypridle on MIDI input";
@@ -72,6 +85,5 @@
         };
         Install.WantedBy = [ "default.target" ];
       };
-
     };
 }

@@ -14,6 +14,7 @@ in
     ];
     home-manager.users.ergoash.imports = [
       h.apps
+      h.music
       h.mime
       h.thunar
       h.librewolf
@@ -29,7 +30,6 @@ in
       h.notifications
       h.lock
       h.idle
-      h.midi-idle
       h.watykanczyk
       h.desktop-utilities
     ];

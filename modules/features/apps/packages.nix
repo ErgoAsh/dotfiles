@@ -33,11 +33,6 @@
         gimp
         inkscape
 
-        # --- Music ---
-        ardour
-        qpwgraph
-        sfizz-ui
-
         # --- Media ---
         spotify
         vlc
