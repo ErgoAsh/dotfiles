@@ -14,6 +14,8 @@
       };
     in
     {
+      xdg.configFile."ardour9/scripts/velocity-expand.lua".source = ./ardour-velocity-expand.lua;
+
       home.packages = [
         ardourWithPipeWireJack
         pkgs.qpwgraph
