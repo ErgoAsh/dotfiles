@@ -19,6 +19,7 @@
         geany
         ticktick
         teams-for-linux
+        webex
         libreoffice-fresh
         zotero
 
