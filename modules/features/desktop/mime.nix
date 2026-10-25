@@ -57,6 +57,25 @@
         "application/vnd.openxmlformats-officedocument.presentationml.slideshow"
         "application/vnd.openxmlformats-officedocument.presentationml.template"
       ];
+      imageMimeTypes = [
+        "image/avif"
+        "image/bmp"
+        "image/gif"
+        "image/heic"
+        "image/heif"
+        "image/jpeg"
+        "image/png"
+        "image/svg+xml"
+        "image/tiff"
+        "image/webp"
+        "image/x-icon"
+        "image/x-portable-anymap"
+        "image/x-portable-bitmap"
+        "image/x-portable-graymap"
+        "image/x-portable-pixmap"
+        "image/x-xbitmap"
+        "image/x-xpixmap"
+      ];
     in
     {
       xdg.mimeApps = {
@@ -79,7 +98,8 @@
         }
         // lib.genAttrs writerMimeTypes (_: [ "writer.desktop" ])
         // lib.genAttrs calcMimeTypes (_: [ "calc.desktop" ])
-        // lib.genAttrs impressMimeTypes (_: [ "impress.desktop" ]);
+        // lib.genAttrs impressMimeTypes (_: [ "impress.desktop" ])
+        // lib.genAttrs imageMimeTypes (_: [ "org.gnome.gThumb.desktop" ]);
       };
 
     };
