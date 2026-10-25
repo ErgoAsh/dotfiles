@@ -431,15 +431,23 @@ in
             for line in file:lines() do
               local spec = line:match("^monitor%s*=%s*(.+)")
               if spec and not spec:match("^%s*#") then
-                local output, mode, position, scale =
-                  spec:match("^%s*([^,]+),([^,]+),([^,]+),([^,]+)%s*$")
+                local output, mode, position, scale, mirror =
+                  spec:match("^%s*([^,]+),([^,]+),([^,]+),([^,]+),mirror,([^,]+)%s*$")
+                if not output then
+                  output, mode, position, scale =
+                    spec:match("^%s*([^,]+),([^,]+),([^,]+),([^,]+)%s*$")
+                end
                 if output then
-                  hl.monitor({
+                  local monitor = {
                     output = output,
                     mode = mode,
                     position = position,
                     scale = tonumber(scale) or scale,
-                  })
+                  }
+                  if mirror and mirror ~= output then
+                    monitor.mirror = mirror
+                  end
+                  hl.monitor(monitor)
                 end
               end
             end
