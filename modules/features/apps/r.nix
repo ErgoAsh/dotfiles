@@ -6,6 +6,8 @@
       packages = with pkgs.rPackages; [
         tidyverse
         plotly
+        ggspatial
+        prettymapr
       ];
       rEnvironment = pkgs.rWrapper.override { inherit packages; };
       positron = pkgs.symlinkJoin {
@@ -15,7 +17,7 @@
         buildInputs = [ pkgs.R ] ++ packages;
         postBuild = ''
           wrapProgram "$out/bin/positron" \
-            --prefix PATH : "${rEnvironment}/bin" \
+            --prefix PATH : "${pkgs.R}/bin" \
             --prefix R_LIBS_SITE : "$R_LIBS_SITE" \
             --prefix R_LIBS : "$R_LIBS_SITE"
 

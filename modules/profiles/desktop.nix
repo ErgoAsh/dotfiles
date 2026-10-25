@@ -15,6 +15,7 @@ in
     home-manager.users.ergoash.imports = [
       h.apps
       h.music
+      h.r
       h.mime
       h.thunar
       h.librewolf
