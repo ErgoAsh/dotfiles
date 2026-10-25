@@ -42,19 +42,18 @@
           # --- Media ---
           spotify
           vlc
-          imv
+          gthumb
           zathura
 
           # --- Development & tools ---
           jetbrains.pycharm
           jetbrains.clion
-          positron-bin
           tinymist
-          R
           jre25_minimal
           savvycan
           can-utils
           simulide
+          oh-my-git
 
           # --- Audio ---
           ncpamixer
