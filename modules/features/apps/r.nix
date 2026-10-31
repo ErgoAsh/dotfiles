@@ -5,6 +5,10 @@
     let
       packages = with pkgs.rPackages; [
         tidyverse
+        readxl
+        ggplot2
+        ggpmisc
+        patchwork
         plotly
         ggspatial
         prettymapr
