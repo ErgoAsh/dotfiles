@@ -9,6 +9,11 @@
     }:
     let
       packetTracerInstaller = ../../../CiscoPacketTracer_901_Ubuntu_64bit.deb;
+      packetTracerInstallerAvailable =
+        builtins.pathExists packetTracerInstaller
+        &&
+          builtins.hashFile "sha256" packetTracerInstaller
+          != "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
     in
     {
       home.packages =
@@ -61,7 +66,7 @@
           # --- Browser extensions (native connectors) ---
           tridactyl-native
         ]
-        ++ lib.optionals (builtins.pathExists packetTracerInstaller) [
+        ++ lib.optionals packetTracerInstallerAvailable [
           (pkgs.cisco-packet-tracer_9.override {
             requireFile = _: packetTracerInstaller;
           })
