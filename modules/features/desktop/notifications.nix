@@ -41,6 +41,12 @@
             border-color = "#f38ba8ff";
             default-timeout = 0;
           };
+
+          "app-name=blueman actionable" = {
+            on-button-left = ''exec ${pkgs.mako}/bin/makoctl menu -n "$id" -- ${pkgs.rofi}/bin/rofi -dmenu -p Bluetooth'';
+            default-timeout = 0;
+            group-by = "none";
+          };
         };
       };
 
