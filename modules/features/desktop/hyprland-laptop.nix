@@ -54,19 +54,19 @@ in
             {
               output = "desc:BOE 0x0A2A";
               mode = "1920x1200@60";
-              position = "1920x0";
-              scale = 1;
-            }
-            {
-              output = "desc:Lenovo Group Limited E22-20 VY036074";
-              mode = "1920x1080@60";
               position = "0x0";
               scale = 1;
             }
             {
-              output = "desc:Iiyama North America PL1906 11013A9702441";
-              mode = "1280x1024@60";
-              position = "-1280x0";
+              output = "desc:AOC Q27P4CV 2SUS4HA000566";
+              mode = "2560x1440@120";
+              position = "1920x0";
+              scale = 1;
+            }
+            {
+              output = "desc:AOC Q27P4CV 2SUS4HA000741";
+              mode = "2560x1440@120";
+              position = "4480x0";
               scale = 1;
             }
             {

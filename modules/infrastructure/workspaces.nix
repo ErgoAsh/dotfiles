@@ -28,7 +28,7 @@
       label = "LibreWolf";
       notificationApps = [ "librewolf" ];
       icon = "󰈹";
-      laptopMonitor = "desc:Lenovo Group Limited E22-20 VY036074";
+      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000566";
       laptopDefault = true;
     };
     terminal = {
@@ -61,7 +61,7 @@
       label = "Spotify";
       notificationApps = [ "spotify" ];
       icon = "󰓇";
-      laptopMonitor = "desc:Iiyama North America PL1906 11013A9702441";
+      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000741";
     };
     chat = {
       id = 5;
@@ -72,7 +72,7 @@
         "vesktop"
       ];
       icon = "󰭹";
-      laptopMonitor = "desc:Iiyama North America PL1906 11013A9702441";
+      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000741";
     };
     notes = {
       id = 6;
@@ -88,7 +88,7 @@
       label = "Zotero";
       notificationApps = [ "zotero" ];
       icon = "󰂺";
-      laptopMonitor = "desc:Lenovo Group Limited E22-20 VY036074";
+      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000566";
     };
     mail = {
       id = 8;
@@ -96,7 +96,7 @@
       label = "Thunderbird";
       notificationApps = [ "thunderbird" ];
       icon = "󰇰";
-      laptopMonitor = "desc:Iiyama North America PL1906 11013A9702441";
+      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000741";
     };
     tasks = {
       id = 9;
@@ -104,7 +104,7 @@
       label = "TickTick";
       notificationApps = [ "ticktick" ];
       icon = "󰄬";
-      laptopMonitor = "desc:Iiyama North America PL1906 11013A9702441";
+      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000741";
       laptopDefault = true;
     };
     study = {
@@ -129,7 +129,7 @@
       label = "ChatGPT";
       notificationApps = [ "chatgpt" ];
       icon = "󰚩";
-      laptopMonitor = "desc:Iiyama North America PL1906 11013A9702441";
+      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000741";
     };
   };
   config.flake.lib.workspaces = config.dotfiles.workspaces;
