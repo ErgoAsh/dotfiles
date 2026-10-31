@@ -96,9 +96,9 @@
           "application/xml" = [ "org.xfce.mousepad.desktop" ];
           "application/x-typst" = [ "org.xfce.mousepad.desktop" ];
         }
-        // lib.genAttrs writerMimeTypes (_: [ "writer.desktop" ])
-        // lib.genAttrs calcMimeTypes (_: [ "calc.desktop" ])
-        // lib.genAttrs impressMimeTypes (_: [ "impress.desktop" ])
+        // lib.genAttrs (writerMimeTypes ++ calcMimeTypes ++ impressMimeTypes) (_: [
+          "onlyoffice-desktopeditors.desktop"
+        ])
         // lib.genAttrs imageMimeTypes (_: [ "org.gnome.gThumb.desktop" ]);
       };
 

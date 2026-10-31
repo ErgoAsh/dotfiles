@@ -31,6 +31,7 @@
           teams-for-linux
           webex
           libreoffice-fresh
+          onlyoffice-desktopeditors
           zotero
 
           openrgb-with-all-plugins
