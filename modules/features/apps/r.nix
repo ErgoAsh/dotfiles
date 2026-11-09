@@ -12,6 +12,11 @@
         plotly
         ggspatial
         prettymapr
+        pracma
+        foreach
+        future
+        doParallel
+        doRNG
       ];
       rEnvironment = pkgs.rWrapper.override { inherit packages; };
       positron = pkgs.symlinkJoin {
