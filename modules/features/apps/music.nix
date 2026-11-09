@@ -9,6 +9,7 @@
         postBuild = ''
           rm "$out/bin/ardour9"
           makeWrapper "${pkgs.pipewire.jack}/bin/pw-jack" "$out/bin/ardour9" \
+            --set PIPEWIRE_QUANTUM "128/48000" \
             --add-flags "${pkgs.ardour}/bin/ardour9"
         '';
       };
