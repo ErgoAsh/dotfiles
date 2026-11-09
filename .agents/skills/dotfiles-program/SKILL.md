@@ -12,7 +12,10 @@ the requested program, operation, configuration needs and affected hosts.
 Preserve unrelated working-tree changes. Ask about host scope only when the
 answer changes the implementation and cannot be inferred from the request.
 The user prefers stable. Keep existing exceptions; explain a need for a new one.
-Editing and validation are the default; switch only on the user's request.
+Editing and evaluation are the default. Never start package or system builds
+unless the user explicitly requests them; custom recipes and compatibility
+patches do not imply build authorization. The user normally runs builds
+themselves. Switch only on the user's request.
 
 Search for both package attributes and runtime names: a desktop ID, executable,
 window class and package name may differ. Trace package declarations, program
@@ -58,14 +61,18 @@ is present or needed. Installation does not imply adding autostart or a shortcut
 ## Validate and report
 
 Use the validation commands in AGENTS.md. Format changed Nix files, evaluate
-affected hosts and build the changed package/system when needed. Ensure newly
-created files are visible to the Git flake before drawing conclusions from checks.
+affected hosts. Evaluation is the default validation for all changes, including
+custom recipes, patches, wrappers and input updates. Never run `nix build`,
+`nix-build` or another build-triggering check unless the user explicitly requests
+build validation. When requested, build the relevant package and system scope;
+do not duplicate a build the user is running themselves.
 Distinguish parse, evaluation, build and runtime checks. If access, network or
 cache restrictions prevent a check, report that limitation rather than weakening
 configuration or claiming success.
 
 Review the final diff and remaining references. Report source/version changes,
 affected hosts, integrations, checks actually completed and activation status.
+When skipping a build, say so; evaluation does not establish build or runtime success.
 Documentation changes should describe user-visible effects when relevant.
 
 Edit the owning module in `modules/features/` and its explicit profile or host

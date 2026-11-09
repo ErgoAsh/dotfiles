@@ -62,8 +62,12 @@
   old system generations or shared dependencies still used by other programs.
 
 ## Validation
-- `nix eval` and `nix build` are pre-authorized for this repository; run them when
-  useful without asking the user for confirmation.
+- `nix eval` is pre-authorized for this repository; run it when useful without
+  asking the user for confirmation.
+- Never start package or system builds unless the user explicitly requests them.
+  This includes `nix build`, `nix-build` and build-triggering validation commands.
+  Updates and custom package changes authorize edits and evaluation only.
+  The user normally runs builds themselves; do not duplicate their build.
 - Format only changed Nix files, e.g. `nixfmt modules/features/apps/packages.nix`; the flake formatter
   is `nixfmt-tree`. Avoid formatting unrelated user changes.
 - Discover hosts: `just hosts`, or use
@@ -74,8 +78,8 @@
 - For changes involving `modules/private/`, evaluate both modes: use `.#` to verify
   the public Git source without submodule contents and `path:.#` to verify the local
   source with the checked-out private modules. Run both modes for every affected host.
-- Build affected system configurations when needed to verify package or activation
-  closure changes: `nix build --no-write-lock-file --no-link .#nixosConfigurations.ergo-laptop.config.system.build.toplevel`.
+- Only when the user explicitly requests build validation, build the requested
+  package or affected system configurations: `nix build --no-write-lock-file --no-link .#nixosConfigurations.ergo-laptop.config.system.build.toplevel`.
   A successful evaluation alone does not establish that a package builds or runs.
 - New files must be visible to the flake source. Git flakes omit untracked files:
   inspect and stage only intended files when appropriate; never use `git add .`

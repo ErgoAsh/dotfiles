@@ -6,11 +6,11 @@ let
     with pkgs;
     stdenv.mkDerivation rec {
       pname = "chatgpt";
-      version = "26.1007.21434";
+      version = "26.1103.60933";
 
       src = fetchurl {
         url = "https://persistent.oaistatic.com/codex-app-prod/linux/deb/pool/main/c/chatgpt/chatgpt_${version}_amd64.deb";
-        hash = "sha256-J2tTQcPXSyYdOtUhBvf6ft3gaEHkdn/ipAy1QJmx8+0=";
+        hash = "sha256-B0bpuldRgvXb4yYXuCpkXrk61XyliOWpNYaVprZa7nE=";
       };
 
       nativeBuildInputs = [
@@ -78,12 +78,16 @@ let
         data = path.read_bytes()
         replacements = [
             (
-                b"process.platform===`linux`&&n.recursive!==!1?j9(n,{ignoredPaths:[]}):e.startFileWatch(n)",
-                b"process.platform===`win32`&&n.recursive!==!1?j9(n,{ignoredPaths:[]}):e.startFileWatch(n)",
+                b'"linux"===process.platform&&!1!==r.recursive?CA(r,{ignoredPaths:[]}):t.startFileWatch(r)',
+                b'"win32"===process.platform&&!1!==r.recursive?CA(r,{ignoredPaths:[]}):t.startFileWatch(r)',
             ),
             (
-                b"process.platform===`linux`?j9(n,{ignoredPaths:[g.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
-                b"process.platform===`win32`?j9(n,{ignoredPaths:[g.posix.join(n.path,`.git`),...r]}):e.startFileWatch(n)",
+                b'if("linux"===process.platform)return CA(r,{ignoredPaths:[cz().join(r.path,".git"),...n]});',
+                b'if("win32"===process.platform)return CA(r,{ignoredPaths:[cz().join(r.path,".git"),...n]});',
+            ),
+            (
+                b'"linux"===process.platform?async function(e,t){return new Kx(await Promise.resolve().then(r.t.bind(r,16242,23)),e,t).start()}(t,{ignoredPaths:lM.map(e=>ee().join(i,e))}):new ed._2M().startFileWatch(t)',
+                b'"win32"===process.platform?async function(e,t){return new Kx(await Promise.resolve().then(r.t.bind(r,16242,23)),e,t).start()}(t,{ignoredPaths:lM.map(e=>ee().join(i,e))}):new ed._2M().startFileWatch(t)',
             ),
         ]
 

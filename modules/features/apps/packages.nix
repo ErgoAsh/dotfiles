@@ -52,6 +52,7 @@
           zathura
 
           # --- Development & tools ---
+          _7zz
           jetbrains.pycharm
           jetbrains.clion
           tinymist

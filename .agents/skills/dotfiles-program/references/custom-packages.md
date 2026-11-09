@@ -9,10 +9,12 @@ Use this reference only for local package expressions or overrides.
 2. Update the minimal source/version fields. Inspect upstream changes that may
    invalidate patches or runtime dependencies. A successful download does not
    establish compatibility.
-3. Build the package itself where an output exists. Otherwise use the actual
+3. Only when the user explicitly requests build validation, build the package
+   itself where an output exists. Otherwise use the actual
    host package set/callPackage expression, preserving its overlays; do not test
    a different package set and claim that validates the installed package.
-4. Evaluate affected host configurations and build their closure as appropriate.
+4. Evaluate affected host configurations. Build their closure only when the user
+   explicitly requests it. Custom package changes do not authorize builds.
    Runtime smoke testing requires the relevant environment; disclose when absent.
 
 Current exceptions to inspect:
