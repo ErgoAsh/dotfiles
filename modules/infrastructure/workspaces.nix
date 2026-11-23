@@ -53,7 +53,7 @@
         "visual studio code"
       ];
       icon = "";
-      laptopMonitor = "desc:BOE 0x0A2A";
+      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000741";
     };
     music = {
       id = 4;
@@ -72,7 +72,7 @@
         "vesktop"
       ];
       icon = "󰭹";
-      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000741";
+      laptopMonitor = "desc:BOE 0x0A2A";
     };
     notes = {
       id = 6;
@@ -80,7 +80,7 @@
       label = "Obsidian";
       notificationApps = [ "obsidian" ];
       icon = "󰈙";
-      laptopMonitor = "desc:BOE 0x0A2A";
+      laptopMonitor = "desc:AOC Q27P4CV 2SUS4HA000741";
     };
     references = {
       id = 7;

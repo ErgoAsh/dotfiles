@@ -68,6 +68,7 @@ in
               mode = "2560x1440@120";
               position = "4480x0";
               scale = 1;
+              transform = 1;
             }
             {
               output = "";
