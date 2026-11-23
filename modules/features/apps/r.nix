@@ -10,6 +10,7 @@
         ggpmisc
         patchwork
         plotly
+        leaflet
         ggspatial
         prettymapr
         pracma
