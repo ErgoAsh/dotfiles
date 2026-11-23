@@ -10,16 +10,11 @@
       screenshotRegion = pkgs.writeShellApplication {
         name = "screenshot-region";
         runtimeInputs = with pkgs; [
-          grim
+          hyprshot
           satty
-          slurp
         ];
         text = ''
-          if ! geometry="$(slurp -d)"; then
-            exit 0
-          fi
-
-          grim -g "$geometry" -t ppm - | satty --filename -
+          hyprshot --mode region --freeze --raw | satty --filename -
         '';
       };
     in
