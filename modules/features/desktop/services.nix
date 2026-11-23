@@ -25,6 +25,8 @@
     # --- Fonts ---
     # Essential for the Greeter to render text/icons correctly before user login
     fonts.packages = with pkgs; [
+      fira-code
+      linux-libertine-g
       nerd-fonts.fira-code
       nerd-fonts.jetbrains-mono
     ];
